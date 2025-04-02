@@ -1,9 +1,20 @@
+import Container from "@/components/Container";
+import { Button } from "@/components/ui/button";
 import React from "react";
 
-export default function Home() {
+const page = () => {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center">
-      <h1>Tapiceria Confort</h1>
-    </div>
+    <Container>
+      <h1 className="text-2xl font-semibold">Tapiceria Confort</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quaerat
+        distinctio alias, eos iure dolorem, quisquam nostrum facere incidunt
+        natus, exercitationem debitis. Molestias nihil obcaecati deleniti,
+        fugavoluptate amet assumenda.
+      </p>
+      <Button size="lg">Check Out</Button>
+    </Container>
   );
-}
+};
+
+export default page;

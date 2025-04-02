@@ -3,6 +3,46 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-poppins: "Poppins", sans-serif;
+  --color-shop-dark-pink: #4d2a4d;
+  --color-shop-light-pink: #ffc0cb;
+  --color-shop-pink: #ff69b4;
+  --color-shop-deep-pink: #ff1493;
+  --color-shop-primary: #4f46e5;
+  --color-shop-primary-dark: #4338ca;
+  --color-shop-secondary: #10b981;
+  --color-shop-accent: #f59e0b;
+
+  /* Tonos de gris */
+  --color-shop-gray-light: #f9fafb;
+  --color-shop-gray: #6b7280;
+  --color-shop-gray-dark: #1f2937;
+
+  /* Colores de estado */
+  --color-shop-success: #10b981;
+  --color-shop-warning: #f59e0b;
+  --color-shop-error: #ef4444;
+  --color-shop-info: #3b82f6;
+
+  /* Colores para etiquetas */
+  --color-shop-discount: #dc2626;
+  --color-shop-new: #8b5cf6;
+  --color-shop-bestseller: #f59e0b;
+
+  /* Colores de interfaz */
+  --color-shop-background: #ffffff;
+  --color-shop-text: #1f2937;
+  --color-shop-card: #f9fafb;
+  --color-shop-border: #e5e7eb;
+
+  /* Versión oscura */
+  --color-shop-background: #1f2937;
+  --color-shop-text: #f9fafb;
+  --color-shop-card: #374151;
+  --color-shop-border: #4b5563;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
