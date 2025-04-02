@@ -1,9 +1,9 @@
-import React from "react";
+"use client";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center">
-      <h1>Tapiceria Confort</h1>
+    <div>
+      <h1>Page init</h1>
     </div>
   );
 }
