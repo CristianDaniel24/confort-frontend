@@ -1,0 +1,9 @@
+{
+  "rol": [
+    {
+      "id": 1,
+      "name": "Administrador",
+      "salary": 800
+    }
+  ]
+}
