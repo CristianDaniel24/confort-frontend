@@ -1,0 +1,39 @@
+{
+  "car": [
+    {
+      "id": "1",
+      "type": "Bmw-plus",
+      "color": "Negro",
+      "plate": "2BD-283",
+      "year_model": 2024
+    },
+    {
+      "type": "Audi-todoterreno",
+      "color": "Azul",
+      "plate": "GH2-245",
+      "year_model": 2018,
+      "id": "2"
+    },
+    {
+      "type": "Mazda-familiar",
+      "color": "Blanco",
+      "plate": "YUT-284",
+      "year_model": 2020,
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "type": "Audi",
+      "color": "Rojo",
+      "plate": "BGJ-235",
+      "year_model": 2025
+    },
+    {
+      "id": "5",
+      "type": "Kia",
+      "color": "Negro",
+      "plate": "KLR-800",
+      "year_model": 2025
+    }
+  ]
+}
