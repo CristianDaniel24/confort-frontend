@@ -10,6 +10,7 @@ import {
   Frame,
   Map,
   PencilRuler,
+  PersonStanding,
   PieChart,
   Route,
   Settings2,
@@ -56,6 +57,11 @@ const data = {
   ],
 
   projects: [
+    {
+      name: "Roles",
+      url: "/home/rols",
+      icon: PersonStanding,
+    },
     {
       name: "Empleados",
       url: "/home/employees",
