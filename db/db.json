@@ -1,8 +1,13 @@
 {
   "rol": [
     {
-      "id": 1,
       "name": "Administrador",
+      "salary": 900,
+      "id": "1"
+    },
+    {
+      "id": "8e89",
+      "name": "Tapicero general",
       "salary": 800
     }
   ]
