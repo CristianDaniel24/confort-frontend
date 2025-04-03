@@ -9,12 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IRol } from "@/types/rol-interface";
+import { IProvider } from "@/types/provider-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
-export const columns: ColumnDef<IRol>[] = [
+export const columns: ColumnDef<IProvider>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -30,8 +30,12 @@ export const columns: ColumnDef<IRol>[] = [
     },
   },
   {
-    accessorKey: "salary",
-    header: "Salary",
+    accessorKey: "address",
+    header: "Correo",
+  },
+  {
+    accessorKey: "phone",
+    header: "Telefono",
   },
   {
     id: "actions",

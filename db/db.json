@@ -10,5 +10,25 @@
       "name": "Tapicero general",
       "salary": 800
     }
+  ],
+  "provider": [
+    {
+      "name": "Tapitodo autos",
+      "address": "patitodoautos34@gmail.com",
+      "phone": "3103948539",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "name": "Renovautos",
+      "address": "renovautos56@gmail.com",
+      "phone": "3203989132"
+    },
+    {
+      "id": "7486",
+      "name": "RinoTelas",
+      "address": "rinotelasoga21@gmail.com",
+      "phone": "3003468145"
+    }
   ]
 }
