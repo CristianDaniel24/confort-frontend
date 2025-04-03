@@ -2,19 +2,12 @@
 
 import * as React from "react";
 import {
-  Apple,
-  AudioWaveform,
   Car,
   CarFront,
-  Command,
-  Frame,
-  Map,
   PencilRuler,
   PersonStanding,
-  PieChart,
   Route,
   Settings2,
-  SquareTerminal,
   Truck,
   UserCog,
 } from "lucide-react";
@@ -43,16 +36,6 @@ const data = {
       name: "Confort",
       logo: Car,
       plan: "Tapiceria Confort",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
     },
   ],
 
