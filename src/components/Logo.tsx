@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-// import { Link } from "lucide-react";
 import React from "react";
 
 const Logo = ({ className }: { className?: string }) => {
@@ -10,7 +9,10 @@ const Logo = ({ className }: { className?: string }) => {
         className
       )}
     >
-      TAPICERIA CONFORT <span>t</span>
+      TAPICERIA CONFOR
+      <span className="text-shop-discount group-hover:text-shop-primary-dark hoverEffect">
+        T
+      </span>
     </h2>
   );
 };
