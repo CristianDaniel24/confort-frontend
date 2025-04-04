@@ -19,16 +19,22 @@
       "id": "1"
     },
     {
-      "id": "2",
-      "name": "Renovautos",
-      "address": "renovautos56@gmail.com",
-      "phone": "3203989132"
+      "name": "RenovautosSoga",
+      "address": "renovautosjs56@gmail.com",
+      "phone": "3203989134",
+      "id": "2"
     },
     {
       "id": "7486",
       "name": "RinoTelas",
       "address": "rinotelasoga21@gmail.com",
       "phone": "3003468145"
+    },
+    {
+      "id": "f720",
+      "name": "Telas",
+      "address": "telas29034@gmail.com",
+      "phone": "3232432811"
     }
   ]
 }

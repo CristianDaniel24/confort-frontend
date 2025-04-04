@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   Car,
   CarFront,
+  KeySquare,
   PencilRuler,
   PersonStanding,
   Route,
@@ -46,9 +47,9 @@ const data = {
       icon: PersonStanding,
     },
     {
-      name: "Empleados",
-      url: "/home/employees",
-      icon: UserCog,
+      name: "Tipos de carros",
+      url: "/home/typeCar",
+      icon: KeySquare,
     },
     {
       name: "Carros",
