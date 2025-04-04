@@ -36,9 +36,9 @@ export default function RolForm({ rol, onSubmit }: Readonly<Props>) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Nombre</FormLabel>
               <FormControl>
-                <Input placeholder="Name" {...field} />
+                <Input placeholder="Nombre" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -49,9 +49,9 @@ export default function RolForm({ rol, onSubmit }: Readonly<Props>) {
           name="salary"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Salary</FormLabel>
+              <FormLabel>Salario</FormLabel>
               <FormControl>
-                <Input placeholder="Salary" {...field} />
+                <Input placeholder="Salario" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

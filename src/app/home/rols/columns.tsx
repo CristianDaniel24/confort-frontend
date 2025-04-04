@@ -6,7 +6,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IRol } from "@/types/rol-interface";
@@ -31,7 +30,7 @@ export const columns: ColumnDef<IRol>[] = [
   },
   {
     accessorKey: "salary",
-    header: "Salary",
+    header: "Salario",
   },
   {
     id: "actions",
