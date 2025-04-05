@@ -5,6 +5,8 @@ import {
   Car,
   CarFront,
   KeySquare,
+  Package,
+  PackageSearch,
   PencilRuler,
   PersonStanding,
   Route,
@@ -60,6 +62,11 @@ const data = {
       name: "Proveedores",
       url: "/home/providers",
       icon: Truck,
+    },
+    {
+      name: "Tipos de productos",
+      url: "/home/typeProduct",
+      icon: PackageSearch,
     },
     {
       name: "Productos",

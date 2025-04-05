@@ -20,11 +20,11 @@ class RolService {
     return rol;
   }
 
-  async create(Rol: IRol): Promise<IRol> {
+  async create(rol: IRol): Promise<IRol> {
     const res = await fetch(this.url, {
       method: "POST",
       headers: { "Content-type": "Application/json" },
-      body: JSON.stringify(Rol),
+      body: JSON.stringify(rol),
     });
     const restRol = await res.json();
     return restRol;

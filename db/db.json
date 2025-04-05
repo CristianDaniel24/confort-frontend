@@ -36,5 +36,19 @@
       "address": "telas29034@gmail.com",
       "phone": "3232432811"
     }
+  ],
+  "typeProduct": [
+    {
+      "type": "automotriz",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "type": "herramientas"
+    },
+    {
+      "id": "7bd1",
+      "type": "limpieza"
+    }
   ]
 }
