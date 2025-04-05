@@ -10,9 +10,9 @@ import {
   Route,
   Settings2,
   Truck,
-  UserCog,
 } from "lucide-react";
 
+import Link from "next/link";
 import { NavMain } from "./nav-main";
 import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
@@ -104,7 +104,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <Link href="/home" className="block w-full">
+          <TeamSwitcher teams={data.teams} />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={data.projects} />

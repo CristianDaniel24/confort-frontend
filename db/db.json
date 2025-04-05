@@ -36,5 +36,22 @@
       "address": "telas29034@gmail.com",
       "phone": "3232432811"
     }
+  ],
+  "typeCar": [
+    {
+      "model": "Clasico",
+      "year": null,
+      "id": "1"
+    },
+    {
+      "model": "Antiguo",
+      "year": 567993600000,
+      "id": "2"
+    },
+    {
+      "model": "Familiar",
+      "year": 1704067200000,
+      "id": "2851"
+    }
   ]
 }
