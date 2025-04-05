@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -11,24 +10,23 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { getYearsRange } from "@/app/home/typeCar/_components/getCarYears";
 import {
   typeCarFormDefinition,
   TypeCarFormType,
 } from "@/lib/definitions/typeCar-form-definitions";
-import { cn } from "@/lib/utils";
 import { ITypeCar } from "@/types/typeCar-interface";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Props {
   typeCar: ITypeCar;
@@ -66,14 +64,29 @@ export default function TypeCarForm({ typeCar, onSubmit }: Readonly<Props>) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Año</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value.toString()}
+              >
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a verified email to display" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {years.map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {/*
               <FormControl>
-                <select
+                
+                 <select
                   name={field.name}
-                  value={
-                    field.value instanceof Date
-                      ? field.value.getFullYear().toString()
-                      : field.value
-                  }
+                  value={field.value}
                   onChange={field.onChange}
                   ref={field.ref}
                   className="input w-full border rounded-md px-3 py-2"
@@ -83,8 +96,9 @@ export default function TypeCarForm({ typeCar, onSubmit }: Readonly<Props>) {
                       {year}
                     </option>
                   ))}
-                </select>
+                </select> 
               </FormControl>
+              */}
               <FormMessage />
             </FormItem>
           )}

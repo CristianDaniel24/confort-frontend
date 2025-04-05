@@ -9,9 +9,7 @@ export type TypeCarFormType = z.infer<
 class TypeCarFormDefinition {
   readonly typeCarFormSchema = z.object({
     model: z.string({ message: "El modelo es requerido" }),
-    year: z.coerce.date({
-      invalid_type_error: "El año del carro debe tener una fecha válida",
-    }),
+    year: z.string({ message: "El año es requerido" }),
   });
 
   readonly defaultTypeCar = {
@@ -24,7 +22,7 @@ class TypeCarFormDefinition {
       resolver: zodResolver(this.typeCarFormSchema),
       defaultValues: {
         model: typeCar.model,
-        year: new Date(typeCar.year), // convierte timestamp a Date
+        year: typeCar.year,
       },
     };
     return typeCarFormDefaultValues;

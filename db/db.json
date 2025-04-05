@@ -40,18 +40,28 @@
   "typeCar": [
     {
       "model": "Clasico",
-      "year": null,
+      "year": 2019,
       "id": "1"
     },
     {
-      "model": "Antiguo",
-      "year": 567993600000,
+      "model": "Muy antiguo",
+      "year": 2000,
       "id": "2"
     },
     {
       "model": "Familiar",
-      "year": 1704067200000,
+      "year": 2010,
       "id": "2851"
+    },
+    {
+      "id": "f185",
+      "model": "Antiguo",
+      "year": 2016
+    },
+    {
+      "id": "37d9",
+      "model": "Familiar",
+      "year": 2009
     }
   ]
 }

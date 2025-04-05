@@ -31,11 +31,6 @@ export const columns: ColumnDef<ITypeCar>[] = [
   {
     accessorKey: "year",
     header: "Año",
-    cell: ({ getValue }) => {
-      const value = getValue<number>(); // asume que es tipo number
-      const year = new Date(value).getFullYear();
-      return <span>{year}</span>;
-    },
   },
   {
     id: "actions",
@@ -54,11 +49,6 @@ export const columns: ColumnDef<ITypeCar>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => router.push(`${currPath}/${element.id}`)}
-            >
-              Ver
-            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => router.push(`${currPath}/edit/${element.id}`)}
             >

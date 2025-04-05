@@ -15,7 +15,7 @@ export default function CreateTypeCar() {
   const handleSubmit = (values: TypeCarFormType) => {
     const typeCar = {
       model: values.model,
-      year: Number(values.year),
+      year: +values.year,
     } as ITypeCar;
     typeCarService
       .create(typeCar)

@@ -16,7 +16,7 @@ export default function EditTypeCar() {
   const handleSubmit = (values: TypeCarFormType) => {
     const typeCarUpdate = {
       model: values.model,
-      year: values.year.getTime(), // convierte Date a timestamp
+      year: +values.year,
     } as ITypeCar;
     typeCarService
       .update(+id, typeCarUpdate)
