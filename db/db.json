@@ -37,18 +37,31 @@
       "phone": "3232432811"
     }
   ],
-  "typeProduct": [
+  "typeCar": [
     {
-      "type": "automotriz",
+      "model": "Clasico",
+      "year": 2019,
       "id": "1"
     },
     {
-      "id": "2",
-      "type": "herramientas"
+      "model": "Muy antiguo",
+      "year": 2000,
+      "id": "2"
     },
     {
-      "id": "7bd1",
-      "type": "limpieza"
+      "model": "Familiar",
+      "year": 2010,
+      "id": "2851"
+    },
+    {
+      "id": "f185",
+      "model": "Antiguo",
+      "year": 2016
+    },
+    {
+      "id": "37d9",
+      "model": "Familiar",
+      "year": 2009
     }
   ]
 }
