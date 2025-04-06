@@ -5,7 +5,7 @@ class TypeCarService {
   private readonly url: string;
 
   constructor() {
-    this.url = `${getApiUrl()}/typeCar`;
+    this.url = `${getApiUrl()}/types-car`;
   }
 
   async getAll(): Promise<ITypeCar[]> {
