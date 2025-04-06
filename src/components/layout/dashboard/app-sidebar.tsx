@@ -54,11 +54,6 @@ const data = {
       icon: KeySquare,
     },
     {
-      name: "Carros",
-      url: "/home/cars",
-      icon: CarFront,
-    },
-    {
       name: "Proveedores",
       url: "/home/providers",
       icon: Truck,
@@ -67,16 +62,6 @@ const data = {
       name: "Tipos de productos",
       url: "/home/typeProduct",
       icon: PackageSearch,
-    },
-    {
-      name: "Productos",
-      url: "/home/products",
-      icon: PencilRuler,
-    },
-    {
-      name: "Servicios",
-      url: "/home/services",
-      icon: Route,
     },
   ],
 

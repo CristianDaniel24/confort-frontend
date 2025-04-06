@@ -6,7 +6,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IProvider } from "@/types/provider-interface";
@@ -31,7 +30,7 @@ export const columns: ColumnDef<IProvider>[] = [
   },
   {
     accessorKey: "address",
-    header: "Correo",
+    header: "Direccion",
   },
   {
     accessorKey: "phone",

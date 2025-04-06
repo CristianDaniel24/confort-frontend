@@ -51,9 +51,9 @@ export default function ProviderForm({ provider, onSubmit }: Readonly<Props>) {
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Correo</FormLabel>
+              <FormLabel>Direccion</FormLabel>
               <FormControl>
-                <Input placeholder="Correo" {...field} />
+                <Input placeholder="Direccion" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
