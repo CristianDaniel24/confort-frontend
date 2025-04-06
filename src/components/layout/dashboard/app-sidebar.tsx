@@ -9,6 +9,7 @@ import {
   PackageSearch,
   PencilRuler,
   PersonStanding,
+  Pickaxe,
   Route,
   Settings2,
   Truck,
@@ -62,6 +63,11 @@ const data = {
       name: "Tipos de productos",
       url: "/home/typeProduct",
       icon: PackageSearch,
+    },
+    {
+      name: "Tipos de procedimientos",
+      url: "/home/typeProcedure",
+      icon: Pickaxe,
     },
   ],
 
