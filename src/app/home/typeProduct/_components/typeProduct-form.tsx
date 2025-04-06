@@ -14,13 +14,6 @@ import {
   typeProductFormDefinition,
   TypeProductFormType,
 } from "@/lib/definitions/typeProduct-form-definition";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ITypeProduct } from "@/types/typeProduct-interface";
 import { useRouter } from "next/navigation";
 
@@ -49,19 +42,9 @@ export default function TypeProductForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tipo</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Selecciona el tipo"></SelectValue>
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="automotriz">Automotriz</SelectItem>
-                  <SelectItem value="limpieza">Limpieza</SelectItem>
-                  <SelectItem value="herramientas">Herramientas</SelectItem>
-                  <SelectItem value="otro">Otro</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormControl>
+                <Input placeholder="Tipo" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

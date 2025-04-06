@@ -46,11 +46,6 @@ export const columns: ColumnDef<ITypeProduct>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => router.push(`${currPath}/${element.id}`)}
-            >
-              Ver
-            </DropdownMenuItem>
-            <DropdownMenuItem
               onClick={() => router.push(`${currPath}/edit/${element.id}`)}
             >
               Editar

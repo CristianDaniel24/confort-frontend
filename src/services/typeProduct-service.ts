@@ -5,7 +5,7 @@ class TypeProductService {
   private readonly url: string;
 
   constructor() {
-    this.url = `${getApiUrl()}/typeProduct`;
+    this.url = `${getApiUrl()}/type-product`;
   }
 
   async getAll(): Promise<ITypeProduct[]> {
