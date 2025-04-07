@@ -12,6 +12,7 @@ import {
   Pickaxe,
   Route,
   Settings2,
+  ShoppingBasket,
   Truck,
 } from "lucide-react";
 
@@ -63,6 +64,11 @@ const data = {
       name: "Tipos de productos",
       url: "/home/typeProduct",
       icon: PackageSearch,
+    },
+    {
+      name: "Productos",
+      url: "/home/products",
+      icon: ShoppingBasket,
     },
     {
       name: "Tipos de procedimientos",
