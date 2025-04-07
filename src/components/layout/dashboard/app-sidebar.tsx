@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  Cable,
   Car,
   CarFront,
   KeySquare,
@@ -73,6 +74,11 @@ const data = {
     {
       name: "Tipos de procedimientos",
       url: "/home/typeProcedure",
+      icon: Cable,
+    },
+    {
+      name: "Procedimiento",
+      url: "/home/procedure",
       icon: Pickaxe,
     },
   ],
