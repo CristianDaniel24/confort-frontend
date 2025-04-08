@@ -39,6 +39,15 @@ class TypeCarService {
     const resTypeCar = res.json();
     return resTypeCar;
   }
+
+  async delete(id: number): Promise<boolean> {
+    try {
+      await fetch(`${this.url}/${id}`, { method: "DELETE" });
+      return Promise.resolve(true);
+    } catch (e) {
+      return Promise.resolve(false);
+    }
+  }
 }
 
 export const typeCarService = new TypeCarService();

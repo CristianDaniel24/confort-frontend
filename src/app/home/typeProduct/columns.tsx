@@ -12,6 +12,7 @@ import { ITypeProduct } from "@/types/typeProduct-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import DeleteTypeProductDialog from "./_components/typeProduct-delete";
 
 export const columns: ColumnDef<ITypeProduct>[] = [
   {
@@ -55,6 +56,9 @@ export const columns: ColumnDef<ITypeProduct>[] = [
                 navigator.clipboard.writeText(element.id.toString())
               }
             ></DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => e.preventDefault()}>
+              <DeleteTypeProductDialog id={element.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -18,7 +18,8 @@ export default function CreateProduct() {
       cost: Number(values.cost),
       code: values.code,
       stock: Number(values.stock),
-      //Faltan los demas campos
+      typeProduct: { id: +values.typeProduct },
+      provider: { id: +values.provider },
     } as IProduct;
     productService
       .create(product)

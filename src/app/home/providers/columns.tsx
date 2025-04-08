@@ -12,6 +12,7 @@ import { IProvider } from "@/types/provider-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import DeleteProviderDialog from "./_components/provider-delete";
 
 export const columns: ColumnDef<IProvider>[] = [
   {
@@ -68,6 +69,9 @@ export const columns: ColumnDef<IProvider>[] = [
                 navigator.clipboard.writeText(element.id.toString())
               }
             ></DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => e.preventDefault()}>
+              <DeleteProviderDialog id={element.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

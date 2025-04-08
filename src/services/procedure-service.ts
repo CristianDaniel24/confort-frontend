@@ -39,6 +39,15 @@ class ProcedureService {
     const resProcedure = res.json();
     return resProcedure;
   }
+
+  async delete(id: number): Promise<boolean> {
+    try {
+      await fetch(`${this.url}/${id}`, { method: "DELETE" });
+      return Promise.resolve(true);
+    } catch (e) {
+      return Promise.resolve(false);
+    }
+  }
 }
 
 export const procedureService = new ProcedureService();

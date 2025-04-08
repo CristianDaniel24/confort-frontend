@@ -12,6 +12,7 @@ import { ITypeCar } from "@/types/typeCar-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import DeleteTypeCarDialog from "./_components/typeCar-delete";
 
 export const columns: ColumnDef<ITypeCar>[] = [
   {
@@ -59,6 +60,9 @@ export const columns: ColumnDef<ITypeCar>[] = [
                 navigator.clipboard.writeText(element.id.toString())
               }
             ></DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => e.preventDefault()}>
+              <DeleteTypeCarDialog id={element.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

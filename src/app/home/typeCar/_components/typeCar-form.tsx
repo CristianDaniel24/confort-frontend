@@ -81,24 +81,6 @@ export default function TypeCarForm({ typeCar, onSubmit }: Readonly<Props>) {
                   ))}
                 </SelectContent>
               </Select>
-              {/*
-              <FormControl>
-                
-                 <select
-                  name={field.name}
-                  value={field.value}
-                  onChange={field.onChange}
-                  ref={field.ref}
-                  className="input w-full border rounded-md px-3 py-2"
-                >
-                  {years.map((year) => (
-                    <option key={year} value={year.toString()}>
-                      {year}
-                    </option>
-                  ))}
-                </select> 
-              </FormControl>
-              */}
               <FormMessage />
             </FormItem>
           )}

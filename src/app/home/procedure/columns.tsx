@@ -12,6 +12,7 @@ import { IProcedure } from "@/types/procedure-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import DeleteBookDialog from "./_components/procedure-delete";
 
 export const columns: ColumnDef<IProcedure>[] = [
   {
@@ -70,6 +71,9 @@ export const columns: ColumnDef<IProcedure>[] = [
                 navigator.clipboard.writeText(element.id.toString())
               }
             ></DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => e.preventDefault()}>
+              <DeleteBookDialog id={element.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

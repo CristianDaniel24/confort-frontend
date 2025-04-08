@@ -90,11 +90,11 @@ const data = {
       icon: Settings2,
       items: [
         {
-          title: "General",
+          title: "Perfil",
           url: "#",
         },
         {
-          title: "Team",
+          title: "Accesibilidad",
           url: "#",
         },
         {

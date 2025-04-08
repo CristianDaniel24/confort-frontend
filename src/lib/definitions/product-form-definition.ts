@@ -30,12 +30,10 @@ class ProductFormDefinition {
     code: "",
     stock: 0,
     typeProduct: {
-      type: "Herramienta",
+      id: 1,
     },
     provider: {
-      name: "Rinotech",
-      address: "rinothech49@gmail.com",
-      phone: "3102389384",
+      id: 1,
     },
   } as IProduct;
 

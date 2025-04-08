@@ -12,6 +12,7 @@ import { IRol } from "@/types/rol-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import DeleteRolDialog from "./_components/rol-delete";
 
 export const columns: ColumnDef<IRol>[] = [
   {
@@ -50,11 +51,6 @@ export const columns: ColumnDef<IRol>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => router.push(`${currPath}/${element.id}`)}
-            >
-              Ver
-            </DropdownMenuItem>
-            <DropdownMenuItem
               onClick={() => router.push(`${currPath}/edit/${element.id}`)}
             >
               Editar
@@ -64,6 +60,9 @@ export const columns: ColumnDef<IRol>[] = [
                 navigator.clipboard.writeText(element.id.toString())
               }
             ></DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => e.preventDefault()}>
+              <DeleteRolDialog id={element.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

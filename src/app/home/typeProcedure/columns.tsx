@@ -12,6 +12,7 @@ import { ITypeProcedure } from "@/types/typeProcedure-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import DeleteTypeProcedureDialog from "./_components/typeProcedure-delete";
 
 export const columns: ColumnDef<ITypeProcedure>[] = [
   {
@@ -55,6 +56,9 @@ export const columns: ColumnDef<ITypeProcedure>[] = [
                 navigator.clipboard.writeText(element.id.toString())
               }
             ></DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => e.preventDefault()}>
+              <DeleteTypeProcedureDialog id={element.id} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
