@@ -124,9 +124,18 @@ export default function ProcedureForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Estado</FormLabel>
-              <FormControl>
-                <Input placeholder="Estado" {...field} />
-              </FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecciona un estado"></SelectValue>
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="POR_EMPEZAR">POR_EMPEZAR</SelectItem>
+                  <SelectItem value="EN_CURSO">EN_CURSO</SelectItem>
+                  <SelectItem value="TERMINADO">TERMINADO</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}

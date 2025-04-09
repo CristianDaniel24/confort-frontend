@@ -10,7 +10,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { IPerson } from "@/types/person-interface";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
@@ -25,6 +24,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 
 export default function Signup() {
@@ -36,166 +42,181 @@ export default function Signup() {
   const handleSubmit = () => {};
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="grid gap-y-5">
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Primer nombre</FormLabel>
-              <FormControl>
-                <Input placeholder="Primer nombre" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="secondName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Segundo nombre</FormLabel>
-              <FormControl>
-                <Input placeholder="Segundo nombre" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Primer apellido</FormLabel>
-              <FormControl>
-                <Input placeholder="Primer apellido" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="secondLastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Segundo apellido</FormLabel>
-              <FormControl>
-                <Input placeholder="Segundo apellido" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="document"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Documento</FormLabel>
-              <FormControl>
-                <Input placeholder="Documento" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Correo</FormLabel>
-              <FormControl>
-                <Input placeholder="Correo" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Telefono</FormLabel>
-              <FormControl>
-                <Input placeholder="Telefono" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Direccion</FormLabel>
-              <FormControl>
-                <Input placeholder="Direccion" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="dateOfBirth"
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel>Fecha de cumpleaños</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 ">
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl">Formulario de registro</CardTitle>
+          <CardDescription>
+            A continuacion ingresa tus datos para registrar tu cuenta =)
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="grid w-[800px] p-8 bg-white rounded-xl gap-y-8"
+            >
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Primer nombre</FormLabel>
                     <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-full pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Selecciona una fecha</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
+                      <Input placeholder="Primer nombre" {...field} />
                     </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
-        <div className="flex justify-end space-x-5">
-          <Button
-            variant={"secondary"}
-            type="button"
-            onClick={() => router.back()}
-          >
-            Cancelar
-          </Button>
-          <Button type="submit">Guardar</Button>
-        </div>
-      </form>
-    </Form>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="secondName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Segundo nombre</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Segundo nombre" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Primer apellido</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Primer apellido" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="secondLastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Segundo apellido</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Segundo apellido" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="document"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Documento</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Documento" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Correo</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Correo" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Telefono</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Telefono" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Direccion</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Direccion" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="dateOfBirth"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>Fecha de cumpleaños</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-full pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Selecciona una fecha</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+              <div className="flex justify-end space-x-5">
+                <Button
+                  variant={"secondary"}
+                  type="button"
+                  onClick={() => router.push("/auth/signin")}
+                >
+                  Cancelar
+                </Button>
+                <Button type="submit">Guardar</Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
