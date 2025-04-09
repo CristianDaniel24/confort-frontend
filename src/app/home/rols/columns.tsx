@@ -55,11 +55,6 @@ export const columns: ColumnDef<IRol>[] = [
             >
               Editar
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(element.id.toString())
-              }
-            ></DropdownMenuItem>
             <DropdownMenuItem onClick={(e) => e.preventDefault()}>
               <DeleteRolDialog id={element.id} />
             </DropdownMenuItem>
