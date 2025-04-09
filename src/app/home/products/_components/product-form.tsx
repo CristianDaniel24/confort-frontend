@@ -21,8 +21,13 @@ import {
   productFormDefinition,
   ProductFormType,
 } from "@/lib/definitions/product-form-definition";
+import { providerService } from "@/services/provider-service";
+import { typeProductService } from "@/services/typeProduct-service";
 import { IProduct } from "@/types/product-interface";
+import { IProvider } from "@/types/provider-interface";
+import { ITypeProduct } from "@/types/typeProduct-interface";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 
@@ -36,6 +41,18 @@ export default function ProductForm({ product, onSubmit }: Readonly<Props>) {
     productFormDefinition.asignDefaultValues(product)
   );
   const router = useRouter();
+  const [typeProduct, setTypeProduct] = useState<ITypeProduct[]>([]);
+  const [provider, setProvider] = useState<IProvider[]>([]);
+
+  useEffect(() => {
+    typeProductService
+      .getAll()
+      .then((typeProduct) => setTypeProduct(typeProduct));
+  }, [product.id]);
+
+  useEffect(() => {
+    providerService.getAll().then((provider) => setProvider(provider));
+  }, [product.id]);
 
   return (
     <Form {...form}>
@@ -101,11 +118,15 @@ export default function ProductForm({ product, onSubmit }: Readonly<Props>) {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Tipo de producto"></SelectValue>
+                    <SelectValue placeholder="Selecciona el tipo de producto"></SelectValue>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value={field.value}>Por defecto</SelectItem>
+                  {typeProduct.map((g) => (
+                    <SelectItem key={g.id} value={g.id.toString()}>
+                      {g.type}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -121,11 +142,15 @@ export default function ProductForm({ product, onSubmit }: Readonly<Props>) {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Proveedor"></SelectValue>
+                    <SelectValue placeholder="Selecciona el proveedor"></SelectValue>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value={field.value}>Por defecto</SelectItem>
+                  {provider.map((g) => (
+                    <SelectItem key={g.id} value={g.id.toString()}>
+                      {g.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />

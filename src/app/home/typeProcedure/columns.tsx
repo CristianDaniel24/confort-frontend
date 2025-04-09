@@ -51,11 +51,6 @@ export const columns: ColumnDef<ITypeProcedure>[] = [
             >
               Editar
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(element.id.toString())
-              }
-            ></DropdownMenuItem>
             <DropdownMenuItem onClick={(e) => e.preventDefault()}>
               <DeleteTypeProcedureDialog id={element.id} />
             </DropdownMenuItem>

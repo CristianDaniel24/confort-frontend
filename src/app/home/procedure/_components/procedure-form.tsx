@@ -32,8 +32,11 @@ import { format } from "date-fns";
 import { IProcedure } from "@/types/procedure-interface";
 import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
+import { ITypeProcedure } from "@/types/typeProcedure-interface";
+import { typeProcedureService } from "@/services/typeProcedure-service";
 
 interface Props {
   procedure: IProcedure;
@@ -48,6 +51,13 @@ export default function ProcedureForm({
     procedureFormDefinition.asignDefaultValues(procedure)
   );
   const router = useRouter();
+  const [typeProcedure, setTypeProcedure] = useState<ITypeProcedure[]>([]);
+
+  useEffect(() => {
+    typeProcedureService
+      .getAll()
+      .then((procedure) => setTypeProcedure(procedure));
+  }, [procedure.id]);
 
   return (
     <Form {...form}>
@@ -126,21 +136,26 @@ export default function ProcedureForm({
           name="typeProcedure"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipo de producto</FormLabel>
+              <FormLabel>Tipo de procedimiento</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Tipo de procedimiento"></SelectValue>
+                    <SelectValue placeholder="Selecciona el tipo de procedimiento"></SelectValue>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value={field.value}>Por defecto</SelectItem>
+                  {typeProcedure.map((g) => (
+                    <SelectItem key={g.id} value={g.id.toString()}>
+                      {g.type}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <div className="flex justify-end space-x-5">
           <Button
             variant={"secondary"}

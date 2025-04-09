@@ -64,11 +64,6 @@ export const columns: ColumnDef<IProvider>[] = [
             >
               Editar
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(element.id.toString())
-              }
-            ></DropdownMenuItem>
             <DropdownMenuItem onClick={(e) => e.preventDefault()}>
               <DeleteProviderDialog id={element.id} />
             </DropdownMenuItem>

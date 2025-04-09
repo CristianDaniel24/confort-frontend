@@ -55,11 +55,6 @@ export const columns: ColumnDef<ITypeCar>[] = [
             >
               Editar
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(element.id.toString())
-              }
-            ></DropdownMenuItem>
             <DropdownMenuItem onClick={(e) => e.preventDefault()}>
               <DeleteTypeCarDialog id={element.id} />
             </DropdownMenuItem>
