@@ -17,7 +17,7 @@ export default function CreateProcedure() {
       description: values.description,
       date: Number(values.date),
       status: values.status,
-      //Faltan los demas campos
+      typeProcedure: { id: +values.typeProcedure },
     } as IProcedure;
     procedureService
       .create(procedure)

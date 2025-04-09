@@ -32,6 +32,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
+import { IPerson } from "@/types/person-interface";
+import { personService } from "@/services/person-service";
+import { toast } from "sonner";
 
 export default function Signup() {
   const form = useForm<PersonFormType>(
@@ -39,7 +42,31 @@ export default function Signup() {
   );
   const router = useRouter();
 
-  const handleSubmit = () => {};
+  const handleSubmit = (values: PersonFormType) => {
+    const person = {
+      firstName: values.firstName,
+      secondName: values.secondName,
+      lastName: values.lastName,
+      secondLastName: values.secondLastName,
+      document: values.document,
+      email: values.email,
+      phone: values.phone,
+      address: values.address,
+      dateOfBirth: Number(values.dateOfBirth),
+    } as IPerson;
+
+    personService
+      .create(person)
+      .then(() => {
+        toast.success("Tu cuenta ha sido creada con exito!");
+        router.push("/auth/signin");
+      })
+      .catch(() => {
+        toast.error("Ho algo salio mal", {
+          description: "Hubo un problema con tu solicitud",
+        });
+      });
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 ">
