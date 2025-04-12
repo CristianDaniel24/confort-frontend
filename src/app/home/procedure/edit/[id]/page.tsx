@@ -16,9 +16,9 @@ export default function EditProcedure() {
   const handleSubmit = (values: ProcedureFormType) => {
     const procedureUpdate = {
       description: values.description,
-      date: Number(values.date),
+      date: values.date,
       status: values.status,
-      //Faltan los demas campos
+      typeProcedure: { id: +values.typeProcedure },
     } as IProcedure;
     procedureService
       .update(+id, procedureUpdate)

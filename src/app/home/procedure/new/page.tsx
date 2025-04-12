@@ -15,7 +15,7 @@ export default function CreateProcedure() {
   const handleSubmit = (values: ProcedureFormType) => {
     const procedure = {
       description: values.description,
-      date: Number(values.date),
+      date: values.date,
       status: values.status,
       typeProcedure: { id: +values.typeProcedure },
     } as IProcedure;

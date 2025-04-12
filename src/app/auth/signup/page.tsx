@@ -1,40 +1,29 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import {
   personFormDefinition,
   PersonFormType,
 } from "@/lib/definitions/person-form-definition";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
+
+import { Car } from "lucide-react";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Calendar } from "@/components/ui/calendar";
 import { IPerson } from "@/types/person-interface";
 import { personService } from "@/services/person-service";
 import { toast } from "sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 export default function Signup() {
   const form = useForm<PersonFormType>(
@@ -72,164 +61,117 @@ export default function Signup() {
     <div className="flex justify-center items-center min-h-screen bg-gray-50 ">
       <Card>
         <CardHeader className="text-center">
+          <div className="flex w-[800px] flex-col gap-6">
+            <Link
+              href="#"
+              className="flex items-center gap-2 self-center font-medium"
+            >
+              <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                <Car className="size-4" />
+              </div>
+              Tapiceria Confort.
+            </Link>
+          </div>
           <CardTitle className="text-xl">Formulario de registro</CardTitle>
           <CardDescription>
-            A continuacion ingresa tus datos para registrar tu cuenta =)
+            Formulario de registro de cuenta para la tapiceria confort =)
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleSubmit)}
-              className="grid w-[800px] p-8 bg-white rounded-xl gap-y-8"
-            >
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Primer nombre</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Primer nombre" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="secondName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Segundo nombre</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Segundo nombre" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Primer apellido</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Primer apellido" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="secondLastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Segundo apellido</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Segundo apellido" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="document"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Documento</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Documento" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Correo</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Correo" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Telefono</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Telefono" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Direccion</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Direccion" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="dateOfBirth"
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel>Fecha de cumpleaños</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Selecciona una fecha</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
-              />
+
+        <form action=""></form>
+        <Tabs defaultValue="personal" className="w-[800px]">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="personal">Identidad</TabsTrigger>
+            <TabsTrigger value="contact">Contactos</TabsTrigger>
+            <TabsTrigger value="security">Seguridad</TabsTrigger>
+          </TabsList>
+          <TabsContent value="personal">
+            <CardHeader>
+              <CardTitle>Identidad</CardTitle>
+              <CardDescription>
+                A continuacion ingresa tus datos de identidad basicos para
+                registrar tu cuenta. Haz clic en "Crear cuenta" cuando hayas
+                terminado de llenar todos los formularios.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="space-y-1">
+                <Label htmlFor="firstName">Primer nombre</Label>
+                <Input id="firstName" defaultValue="" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="secondName">
+                  Segundo nombre (No obligatorio)
+                </Label>
+                <Input id="secondName" defaultValue="" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="lastName">Primer apellido</Label>
+                <Input id="lastName" defaultValue="" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="secondLastName">
+                  Segundo apellido (No obligatorio)
+                </Label>
+                <Input id="secondLastName" defaultValue="" />
+                <div className="space-y-1">
+                  <Label htmlFor="document">Documento</Label>
+                  <Input id="document" defaultValue="" />
+                </div>
+              </div>
+            </CardContent>
+          </TabsContent>
+
+          <TabsContent value="contact">
+            <CardHeader>
+              <CardTitle>Contacto</CardTitle>
+              <CardDescription>
+                A continuacion ingresa tus datos de contacto para poder
+                contactar contigo de forma sencilla. Haz clic en "Crear cuenta"
+                cuando hayas terminado de llenar todos los formularios.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="space-y-1">
+                <Label htmlFor="phone">Telefono</Label>
+                <Input id="phone" name="phone" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="address">Direccion</Label>
+                <Input id="address" name="address" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="dateOfBirth">Fecha de cumpleaños</Label>
+                <Input id="dateOfBirth" type="date" />
+              </div>
+            </CardContent>
+          </TabsContent>
+
+          <TabsContent value="security">
+            <CardHeader>
+              <CardTitle>Seguridad</CardTitle>
+              <CardDescription>
+                A continuacion ingresa tus datos sobre la seguridad y tu correo
+                para iniciar sesion para poder contactar contigo de forma
+                sencilla. Haz clic en "Crear cuenta" cuando hayas terminado de
+                llenar todos los formularios.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="space-y-1">
+                <Label htmlFor="email">Correo</Label>
+                <Input id="email" type="email" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="password">Contraseña</Label>
+                <Input id="password" type="password" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="password">Repite tu contraseña</Label>
+                <Input id="password" type="password" />
+              </div>
+            </CardContent>
+            <CardFooter>
               <div className="flex justify-end space-x-5">
                 <Button
                   variant={"secondary"}
@@ -238,11 +180,11 @@ export default function Signup() {
                 >
                   Cancelar
                 </Button>
-                <Button type="submit">Guardar</Button>
               </div>
-            </form>
-          </Form>
-        </CardContent>
+              <Button type="submit">Crear cuenta</Button>
+            </CardFooter>
+          </TabsContent>
+        </Tabs>
       </Card>
     </div>
   );

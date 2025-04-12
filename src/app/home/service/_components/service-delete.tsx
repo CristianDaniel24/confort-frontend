@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { providerService } from "@/services/provider-service";
+import { serviceService } from "@/services/service-service";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -17,12 +17,12 @@ interface Props {
   id: number;
 }
 
-export default function DeleteProviderDialog({ id }: Readonly<Props>) {
+export default function DeleteServiceDialog({ id }: Readonly<Props>) {
   const router = useRouter();
   const handleDelete = async () => {
-    const result = await providerService.delete(id);
+    const result = await serviceService.delete(id);
     if (result) {
-      toast.success("Proveedor eliminado!");
+      toast.success("Servicio eliminado!");
       router.refresh();
     } else {
       toast.error("Uh oh! algo salio mal.", {

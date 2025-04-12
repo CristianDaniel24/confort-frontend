@@ -1,4 +1,4 @@
-import { Car, GalleryVerticalEnd } from "lucide-react";
+import { Car } from "lucide-react";
 
 import { LoginForm } from "@/components/layout/auth/login-form";
 

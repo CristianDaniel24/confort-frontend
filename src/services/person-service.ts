@@ -5,7 +5,7 @@ class PersonService {
   private readonly url: string;
 
   constructor() {
-    this.url = `${getApiUrl()}/home`;
+    this.url = `${getApiUrl()}/auth/signup/client`;
   }
 
   async getAll(): Promise<IPerson[]> {

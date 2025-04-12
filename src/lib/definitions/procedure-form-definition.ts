@@ -20,10 +20,10 @@ class ProcedureFormDefinition {
 
   readonly defaultProcedure = {
     description: "",
-    date: 0,
+    date: new Date(),
     status: "",
     typeProcedure: {
-      type: "Herramienta",
+      id: 0,
     },
   } as IProcedure;
 
@@ -32,9 +32,9 @@ class ProcedureFormDefinition {
       resolver: zodResolver(this.procedureFormSchema),
       defaultValues: {
         description: procedure.description,
-        date: procedure.date,
+        date: new Date(procedure.date),
         status: procedure.status,
-        typeProcedure: procedure.typeProcedure,
+        typeProcedure: procedure.typeProcedure.id.toString(),
       },
     };
     return procedureFormDefaultValues;

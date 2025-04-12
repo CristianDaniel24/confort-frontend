@@ -4,11 +4,8 @@ import * as React from "react";
 import {
   Cable,
   Car,
-  CarFront,
   KeySquare,
-  Package,
   PackageSearch,
-  PencilRuler,
   PersonStanding,
   Pickaxe,
   Route,
@@ -77,9 +74,14 @@ const data = {
       icon: Cable,
     },
     {
-      name: "Procedimiento",
+      name: "Procedimientos",
       url: "/home/procedure",
       icon: Pickaxe,
+    },
+    {
+      name: "Servicios",
+      url: "/home/service",
+      icon: Route,
     },
   ],
 

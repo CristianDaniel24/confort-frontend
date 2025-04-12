@@ -25,8 +25,8 @@ export default function DeleteTypeProcedureDialog({ id }: Readonly<Props>) {
       toast.success("Tipo de procedimiento eliminado!");
       router.refresh();
     } else {
-      toast.error("Uh oh! Something went wrong.", {
-        description: "There was a problem with your request",
+      toast.error("Uh oh! algo salio mal.", {
+        description: "Hubo un problema con tu solicitud.",
       });
     }
   };

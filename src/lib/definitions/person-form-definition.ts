@@ -5,6 +5,8 @@ import { z } from "zod";
 export type PersonFormType = z.infer<
   typeof personFormDefinition.personFormSchema
 >;
+const correoRegex =
+  /^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|outlook\.com)$/;
 
 class PersonFormDefinition {
   readonly personFormSchema = z.object({
@@ -28,7 +30,10 @@ class PersonFormDefinition {
       .string()
       .min(10, { message: "Debes ingresar un documento valido" })
       .max(12),
-    email: z.string({ message: "El correo es requerido" }),
+    email: z.string().refine((val) => correoRegex.test(val), {
+      message:
+        "Debes ingresar un correo valido y debe pertenecer a gmail.com, outlook.com o hotmail.com",
+    }),
     phone: z
       .string()
       .min(10, { message: "Debes ingresar un numero de telefono valido" })
