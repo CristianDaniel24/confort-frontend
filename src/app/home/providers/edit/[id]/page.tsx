@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { IProvider } from "@/types/provider-interface";
 import { ProviderFormType } from "@/lib/definitions/provider-form-definition";
-import { providerService } from "@/services/provider-service";
+import { providerService } from "@/services/provider.service";
 import ProviderForm from "../../_components/provider-form";
 
 export default function EditProvider() {

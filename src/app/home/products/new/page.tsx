@@ -8,7 +8,7 @@ import {
   ProductFormType,
 } from "@/lib/definitions/product-form-definition";
 import { IProduct } from "@/types/product-interface";
-import { productService } from "@/services/product-service";
+import { productService } from "@/services/product.service";
 
 export default function CreateProduct() {
   const router = useRouter();

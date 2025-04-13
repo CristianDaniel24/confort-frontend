@@ -1,6 +1,6 @@
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { productService } from "@/services/product-service";
+import { productService } from "@/services/product.service";
 
 export default async function Products() {
   const product = await productService.getAll();

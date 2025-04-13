@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { procedureService } from "@/services/procedure-service";
+import { procedureService } from "@/services/procedure.service";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 

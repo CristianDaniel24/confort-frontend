@@ -8,7 +8,7 @@ import {
   TypeProcedureFormType,
 } from "@/lib/definitions/typeProcedure-form-definition";
 import { ITypeProcedure } from "@/types/typeProcedure-interface";
-import { typeProcedureService } from "@/services/typeProcedure-service";
+import { typeProcedureService } from "@/services/typeProcedure.service";
 
 export default function CreateTypeProcedure() {
   const router = useRouter();

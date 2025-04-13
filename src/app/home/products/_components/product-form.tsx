@@ -21,8 +21,8 @@ import {
   productFormDefinition,
   ProductFormType,
 } from "@/lib/definitions/product-form-definition";
-import { providerService } from "@/services/provider-service";
-import { typeProductService } from "@/services/typeProduct-service";
+import { providerService } from "@/services/provider.service";
+import { typeProductService } from "@/services/typeProduct.service";
 import { IProduct } from "@/types/product-interface";
 import { IProvider } from "@/types/provider-interface";
 import { ITypeProduct } from "@/types/typeProduct-interface";

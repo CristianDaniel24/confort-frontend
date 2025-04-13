@@ -8,7 +8,7 @@ import {
   ProcedureFormType,
 } from "@/lib/definitions/procedure-form-definition";
 import { IProcedure } from "@/types/procedure-interface";
-import { procedureService } from "@/services/procedure-service";
+import { procedureService } from "@/services/procedure.service";
 
 export default function CreateProcedure() {
   const router = useRouter();

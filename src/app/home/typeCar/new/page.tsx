@@ -8,7 +8,7 @@ import {
   TypeCarFormType,
 } from "@/lib/definitions/typeCar-form-definitions";
 import { ITypeCar } from "@/types/typeCar-interface";
-import { typeCarService } from "@/services/typeCar-service";
+import { typeCarService } from "@/services/typeCar.service";
 
 export default function CreateTypeCar() {
   const router = useRouter();

@@ -1,6 +1,6 @@
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { rolService } from "@/services/rol-service";
+import { rolService } from "@/services/rol.service";
 
 export default async function Rols() {
   const rol = await rolService.getAll();

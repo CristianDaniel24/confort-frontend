@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { IRol } from "@/types/rol-interface";
 import { RolFormType } from "@/lib/definitions/rol-form-definition";
-import { rolService } from "@/services/rol-service";
+import { rolService } from "@/services/rol.service";
 import RolForm from "../../_components/rol-form";
 
 export default function EditRol() {

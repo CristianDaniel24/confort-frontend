@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ITypeProcedure } from "@/types/typeProcedure-interface";
 import { TypeProcedureFormType } from "@/lib/definitions/typeProcedure-form-definition";
-import { typeProcedureService } from "@/services/typeProcedure-service";
+import { typeProcedureService } from "@/services/typeProcedure.service";
 import TypeProcedureForm from "../../_components/typeProcedure-form";
 
 export default function EditTypeProcedure() {

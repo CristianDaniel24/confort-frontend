@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { typeCarService } from "@/services/typeCar-service";
+import { typeCarService } from "@/services/typeCar.service";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 

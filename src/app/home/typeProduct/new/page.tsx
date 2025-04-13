@@ -8,7 +8,7 @@ import {
   TypeProductFormType,
 } from "@/lib/definitions/typeProduct-form-definition";
 import { ITypeProduct } from "@/types/typeProduct-interface";
-import { typeProductService } from "@/services/typeProduct-service";
+import { typeProductService } from "@/services/typeProduct.service";
 
 export default function CreateTypeProduct() {
   const router = useRouter();

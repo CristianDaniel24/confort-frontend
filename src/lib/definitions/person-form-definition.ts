@@ -5,8 +5,8 @@ import { z } from "zod";
 export type PersonFormType = z.infer<
   typeof personFormDefinition.personFormSchema
 >;
-const correoRegex =
-  /^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|outlook\.com)$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|outlook\.com)$/;
+const passwordRegex = /^(?=(?:.*\d){2,})[A-Za-z\d.]{5,}$/;
 
 class PersonFormDefinition {
   readonly personFormSchema = z.object({
@@ -30,9 +30,13 @@ class PersonFormDefinition {
       .string()
       .min(10, { message: "Debes ingresar un documento valido" })
       .max(12),
-    email: z.string().refine((val) => correoRegex.test(val), {
+    email: z.string().refine((val) => emailRegex.test(val), {
       message:
         "Debes ingresar un correo valido y debe pertenecer a gmail.com, outlook.com o hotmail.com",
+    }),
+    password: z.string().refine((val) => passwordRegex.test(val), {
+      message:
+        "Debes ingresar una contraseña valida, solo puedes ingresar letras(mayuscula o minuscula), numeros(1-9) y puntos(.) ",
     }),
     phone: z
       .string()
@@ -53,9 +57,10 @@ class PersonFormDefinition {
     lastName: "",
     secondLastName: "",
     document: "",
-    email: "",
     phone: "",
     address: "",
+    email: "",
+    password: "",
     dateOfBirth: 0,
   } as IPerson;
 
@@ -68,9 +73,10 @@ class PersonFormDefinition {
         lastName: person.lastName,
         secondLastName: person.secondLastName,
         document: person.document,
-        email: person.email,
         phone: person.phone,
         address: person.address,
+        email: person.email,
+        password: person.password,
         dateOfBirth: person.dateOfBirth,
       },
     };

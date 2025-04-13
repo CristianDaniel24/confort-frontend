@@ -1,6 +1,6 @@
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { typeProcedureService } from "@/services/typeProcedure-service";
+import { typeProcedureService } from "@/services/typeProcedure.service";
 
 export default async function TypeProcedure() {
   const typeProcedure = await typeProcedureService.getAll();

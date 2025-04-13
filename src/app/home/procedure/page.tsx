@@ -1,6 +1,6 @@
 import { DataTable } from "./date-table";
 import { columns } from "./columns";
-import { procedureService } from "@/services/procedure-service";
+import { procedureService } from "@/services/procedure.service";
 
 export default async function Procedure() {
   const procedure = await procedureService.getAll();

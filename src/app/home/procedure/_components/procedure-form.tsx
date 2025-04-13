@@ -36,7 +36,7 @@ import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { ITypeProcedure } from "@/types/typeProcedure-interface";
-import { typeProcedureService } from "@/services/typeProcedure-service";
+import { typeProcedureService } from "@/services/typeProcedure.service";
 
 interface Props {
   procedure: IProcedure;

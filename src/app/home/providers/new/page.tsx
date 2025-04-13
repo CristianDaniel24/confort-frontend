@@ -7,7 +7,7 @@ import {
   ProviderFormType,
 } from "@/lib/definitions/provider-form-definition";
 import { IProvider } from "@/types/provider-interface";
-import { providerService } from "@/services/provider-service";
+import { providerService } from "@/services/provider.service";
 import ProviderForm from "../_components/provider-form";
 
 export default function CreateProvider() {

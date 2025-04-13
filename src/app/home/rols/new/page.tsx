@@ -8,7 +8,7 @@ import {
   RolFormType,
 } from "@/lib/definitions/rol-form-definition";
 import { IRol } from "@/types/rol-interface";
-import { rolService } from "@/services/rol-service";
+import { rolService } from "@/services/rol.service";
 
 export default function CreateRol() {
   const router = useRouter();

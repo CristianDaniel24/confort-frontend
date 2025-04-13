@@ -1,6 +1,6 @@
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { typeProductService } from "@/services/typeProduct-service";
+import { typeProductService } from "@/services/typeProduct.service";
 
 export default async function TypeProduct() {
   const typeProduct = await typeProductService.getAll();

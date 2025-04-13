@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ITypeCar } from "@/types/typeCar-interface";
 import { TypeCarFormType } from "@/lib/definitions/typeCar-form-definitions";
-import { typeCarService } from "@/services/typeCar-service";
+import { typeCarService } from "@/services/typeCar.service";
 import TypeCarForm from "../../_components/typeCar-form";
 
 export default function EditTypeCar() {

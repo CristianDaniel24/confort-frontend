@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { serviceService } from "@/services/service-service";
+import { serviceService } from "@/services/service.service";
 
 interface Props {
   params: Promise<{ id: string }>;

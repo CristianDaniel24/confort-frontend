@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { IProduct } from "@/types/product-interface";
 import { ProductFormType } from "@/lib/definitions/product-form-definition";
-import { productService } from "@/services/product-service";
+import { productService } from "@/services/product.service";
 import ProductForm from "../../_components/product-form";
 
 export default function EditProduct() {

@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { IService } from "@/types/service-interface";
-import { serviceService } from "@/services/service-service";
+import { serviceService } from "@/services/service.service";
 import { ServiceFormType } from "@/lib/definitions/service-form-definition";
 import ServiceForm from "../../_components/service-form";
 

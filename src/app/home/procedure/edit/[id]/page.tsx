@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { IProcedure } from "@/types/procedure-interface";
 import { ProcedureFormType } from "@/lib/definitions/procedure-form-definition";
-import { procedureService } from "@/services/procedure-service";
+import { procedureService } from "@/services/procedure.service";
 import ProcedureForm from "../../_components/procedure-form";
 
 export default function EditProcedure() {

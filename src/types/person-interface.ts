@@ -5,8 +5,9 @@ export interface IPerson {
   lastName: string;
   secondLastName: string;
   document: string;
-  email: string;
   phone: string;
   address: string;
+  email: string;
+  password: string;
   dateOfBirth: number;
 }
