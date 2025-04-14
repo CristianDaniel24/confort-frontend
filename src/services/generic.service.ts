@@ -2,10 +2,10 @@ import iAxios from "@/lib/axios-instance.utils";
 import { utils } from "@/lib/utils";
 
 export class GenericService<T> {
-  private readonly url: string;
+  protected readonly url: string;
 
-  constructor(endpoint: string) {
-    this.url = `${utils.baseUrl}${endpoint}`;
+  constructor({ endpoint }: { endpoint: string }) {
+    this.url = `${utils.baseUrl}/${endpoint}`;
   }
 
   async getAll(): Promise<T[]> {

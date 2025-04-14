@@ -53,10 +53,11 @@ export default function Signup() {
       lastName: values.lastName,
       secondLastName: values.secondLastName,
       document: values.document,
-      email: values.email,
       phone: values.phone,
       address: values.address,
-      dateOfBirth: Number(values.dateOfBirth),
+      dateOfBirth: values.dateOfBirth,
+      email: values.email,
+      password: values.password,
     } as IPerson;
 
     personService
@@ -325,6 +326,7 @@ export default function Signup() {
                           <Input
                             placeholder="Ingresa tu constraseña"
                             {...field}
+                            type="password"
                           />
                         </FormControl>
                         <FormMessage />
@@ -333,7 +335,7 @@ export default function Signup() {
                   />
                   <FormField
                     control={form.control}
-                    name="password"
+                    name="password2"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Repite tu contraseña</FormLabel>
@@ -341,6 +343,7 @@ export default function Signup() {
                           <Input
                             placeholder="Ingresa tu constraseña otra vez"
                             {...field}
+                            type="password"
                           />
                         </FormControl>
                         <FormMessage />

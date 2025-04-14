@@ -1,52 +1,25 @@
-import { getApiUrl } from "@/lib/utils";
 import { IPerson } from "@/types/person-interface";
+import { GenericService } from "./generic.service";
+import iAxios from "@/lib/axios-instance.utils";
 
-class PersonService {
-  private readonly url: string;
-
+class PersonService extends GenericService<IPerson> {
   constructor() {
-    this.url = `${getApiUrl()}/auth/signup/client`;
+    super({ endpoint: "client" });
   }
 
-  async getAll(): Promise<IPerson[]> {
-    const res = await fetch(this.url);
-    const person = await res.json();
-    return person;
-  }
+  async create(data: IPerson): Promise<IPerson> {
+    const wrappedData = {
+      person: {
+        ...data,
+        dateOfBirth:
+          typeof data.dateOfBirth === "string"
+            ? data.dateOfBirth
+            : new Date(data.dateOfBirth).toISOString(),
+      },
+    };
 
-  async findById(id: number): Promise<IPerson | undefined> {
-    const res = await fetch(`${this.url}/${id}`);
-    const person = await res.json();
-    return person;
-  }
-
-  async create(person: IPerson): Promise<IPerson> {
-    const res = await fetch(this.url, {
-      method: "POST",
-      headers: { "Content-type": "Application/json" },
-      body: JSON.stringify(person),
-    });
-    const restPerson = await res.json();
-    return restPerson;
-  }
-
-  async update(id: number, person: IPerson): Promise<IPerson> {
-    const res = await fetch(`${this.url}/${id}`, {
-      method: "PUT",
-      headers: { "Content-type": "Application/json" },
-      body: JSON.stringify(person),
-    });
-    const resPerson = res.json();
-    return resPerson;
-  }
-
-  async delete(id: number): Promise<boolean> {
-    try {
-      await fetch(`${this.url}/${id}`, { method: "DELETE" });
-      return Promise.resolve(true);
-    } catch (e) {
-      return Promise.resolve(false);
-    }
+    const res = await iAxios.post(this.url, wrappedData);
+    return res.data;
   }
 }
 

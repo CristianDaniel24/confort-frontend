@@ -1,13 +1,13 @@
 export interface IPerson {
   id: number;
   firstName: string;
-  secondName: string;
+  secondName?: string;
   lastName: string;
-  secondLastName: string;
+  secondLastName?: string;
   document: string;
   phone: string;
   address: string;
   email: string;
   password: string;
-  dateOfBirth: number;
+  dateOfBirth: string | Date;
 }
