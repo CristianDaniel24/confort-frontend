@@ -115,7 +115,10 @@ export default function ProductForm({ product, onSubmit }: Readonly<Props>) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tipo de producto</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value?.toString()}
+              >
                 <FormControl>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecciona el tipo de producto"></SelectValue>
@@ -139,7 +142,10 @@ export default function ProductForm({ product, onSubmit }: Readonly<Props>) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Proveedor</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value?.toString()}
+              >
                 <FormControl>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecciona el proveedor"></SelectValue>

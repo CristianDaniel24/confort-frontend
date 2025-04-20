@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   Cable,
   Car,
+  Hammer,
   KeySquare,
   PackageSearch,
   PersonStanding,
@@ -12,6 +13,7 @@ import {
   Settings2,
   ShoppingBasket,
   Truck,
+  UserPen,
 } from "lucide-react";
 
 import Link from "next/link";
@@ -49,6 +51,11 @@ const data = {
       icon: PersonStanding,
     },
     {
+      name: "Empleados",
+      url: "/home/employee",
+      icon: UserPen,
+    },
+    {
       name: "Tipos de carros",
       url: "/home/typeCar",
       icon: KeySquare,
@@ -84,32 +91,6 @@ const data = {
       icon: Route,
     },
   ],
-
-  navMain: [
-    {
-      title: "Configuraciones",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "Perfil",
-          url: "#",
-        },
-        {
-          title: "Accesibilidad",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -122,7 +103,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavProjects projects={data.projects} />
-        <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

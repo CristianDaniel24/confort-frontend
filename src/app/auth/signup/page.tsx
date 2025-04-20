@@ -353,18 +353,15 @@ export default function Signup() {
                 </CardContent>
               </TabsContent>
             </Tabs>
-            <CardFooter>
-              <div className="flex justify-end space-x-6">
-                <Button
-                  variant={"secondary"}
-                  type="button"
-                  onClick={() => router.push("/auth/signin")}
-                >
-                  Cancelar
-                </Button>
-
-                <Button type="submit">Crear cuenta</Button>
-              </div>
+            <CardFooter className="flex justify-end space-x-5">
+              <Button
+                variant={"secondary"}
+                type="button"
+                onClick={() => router.push("/auth/signin")}
+              >
+                Cancelar
+              </Button>
+              <Button type="submit">Crear cuenta</Button>
             </CardFooter>
           </form>
         </Form>

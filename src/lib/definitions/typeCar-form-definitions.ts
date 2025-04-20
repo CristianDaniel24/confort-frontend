@@ -8,7 +8,7 @@ export type TypeCarFormType = z.infer<
 
 class TypeCarFormDefinition {
   readonly typeCarFormSchema = z.object({
-    model: z.string({ message: "El modelo es requerido" }),
+    model: z.string().min(2, { message: "Debes ingresar un modelo correcto" }),
     year: z.string({ message: "El año es requerido" }),
   });
 

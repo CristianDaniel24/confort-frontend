@@ -8,14 +8,14 @@ export type ProcedureFormType = z.infer<
 
 class ProcedureFormDefinition {
   readonly procedureFormSchema = z.object({
-    description: z.string({ message: "La descripcion es requerida" }),
+    description: z.string().min(3, { message: "La descripcion es requerida" }),
     date: z.date({
       invalid_type_error: "Must be a valid date",
     }),
-    status: z.string({ message: "El estado es requerido" }),
-    typeProcedure: z.string({
-      message: "Debes ingresar un tipo de procedimiento correcto",
-    }),
+    status: z.string().min(3, { message: "El estado es requerido" }),
+    typeProcedure: z
+      .string()
+      .min(3, { message: "Debes ingresar un tipo de procedimiento correcto" }),
   });
 
   readonly defaultProcedure = {

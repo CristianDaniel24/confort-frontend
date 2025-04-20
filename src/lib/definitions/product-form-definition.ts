@@ -14,9 +14,10 @@ class ProductFormDefinition {
       .max(30),
     cost: z
       .string()
+      .min(1, { message: "Debes ingresar un costo valido" }) // primero obligatorio
       .transform((val) => Number(val))
-      .refine((val) => !isNaN(val), {
-        message: "Debes ingresar un costo valida",
+      .refine((val) => !isNaN(val) && val > 0, {
+        message: "Debes ingresar un costo valido",
       }),
     code: z
       .string()
@@ -24,14 +25,25 @@ class ProductFormDefinition {
       .max(30),
     stock: z
       .string()
+      .min(1, { message: "Debes ingresar una cantidad valida" })
       .transform((val) => Number(val))
-      .refine((val) => !isNaN(val), {
+      .refine((val) => !isNaN(val) && val > 0, {
         message: "Debes ingresar una cantidad valida",
       }),
-    typeProduct: z.string({
-      message: "Debes ingresar un tipo de producto correcto",
-    }),
-    provider: z.string({ message: "Debes ingresar un proveedor correcto" }),
+    typeProduct: z
+      .string()
+      .min(1, { message: "Debes seleccionar un tipo de producto" })
+      .transform((val) => Number(val))
+      .refine((val) => !isNaN(val) && val > 0, {
+        message: "Debes seleccionar un tipo de producto",
+      }),
+    provider: z
+      .string()
+      .min(1, { message: "Debes seleccionar un proveedor" })
+      .transform((val) => Number(val))
+      .refine((val) => !isNaN(val) && val > 0, {
+        message: "Debes seleccionar un proveedor",
+      }),
   });
 
   readonly defaultProduct = {

@@ -1,6 +1,5 @@
+import LoginForm from "@/components/layout/auth/login-form";
 import { Car } from "lucide-react";
-
-import { LoginForm } from "@/components/layout/auth/login-form";
 
 export default function LoginPage() {
   return (
