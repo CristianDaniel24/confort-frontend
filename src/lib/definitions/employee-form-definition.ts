@@ -102,9 +102,7 @@ class EmployeeFormDefinition {
         password: employee.person.password,
         password2: employee.person.password,
         dateOfBirth: new Date(employee.person.dateOfBirth),
-        rol: {
-          id: employee.rol.id,
-        },
+        rol: employee.rol.id.toString(),
       },
     };
   }

@@ -25,16 +25,32 @@ import {
 } from "@/lib/definitions/auth/login-form-definition";
 import { ILogin } from "@/types/login-interface";
 import { useForm } from "react-hook-form";
+import { authService } from "@/services/auth.service";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const login = {} as ILogin;
-
   const form = useForm<LoginFormType>(
-    loginFormDefinition.asignDefaultValues(login)
+    loginFormDefinition.asignDefaultValues(loginFormDefinition.defaultLogin)
   );
-
-  const handleSubmit = () => {
+  const router = useRouter();
+  const handleSubmit = (values: LoginFormType) => {
     // Se le manda la peticion al service con los datos del formulario
+    const login = {
+      email: values.email,
+      password: values.password,
+    } as ILogin;
+    authService
+      .logIn(login)
+      .then(() => {
+        toast.success("Bienvenido!");
+        router.push("/home");
+      })
+      .catch(() => {
+        toast.error("Ho algo salio mal", {
+          description: "Hubo un problema con tu solicitud",
+        });
+      });
   };
 
   return (
@@ -43,7 +59,7 @@ export default function LoginForm() {
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Bienvenido de nuevo</CardTitle>
           <CardDescription>
-            Inicie sesion con su cuenta de Google o Correo electronico
+            Inicie sesion con su correo electronico
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -55,48 +71,39 @@ export default function LoginForm() {
               <div className="grid gap-6">
                 <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border"></div>
                 <div className="grid gap-6">
-                  <div className="grid gap-2">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Correo</FormLabel>
-                          <FormControl>
-                            <Input placeholder="m@ejemplo.com" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <div className="flex items-center">
-                      <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Contraseña</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder=""
-                                type="password"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <a
-                      href="#"
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
-                    >
-                      ¿Olvidaste tu contraseña?
-                    </a>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Correo</FormLabel>
+                        <FormControl>
+                          <Input placeholder="ejemplo@gmail.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Contraseña</FormLabel>
+                        <FormControl>
+                          <Input type="password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <a
+                    href="#"
+                    className="ml-auto text-sm underline-offset-4 hover:underline"
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </a>
+
                   <Button type="submit" className="w-full">
                     Iniciar
                   </Button>

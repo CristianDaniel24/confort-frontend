@@ -15,7 +15,7 @@ class ProcedureFormDefinition {
     status: z.string().min(3, { message: "El estado es requerido" }),
     typeProcedure: z
       .string()
-      .min(3, { message: "Debes ingresar un tipo de procedimiento correcto" }),
+      .min(1, { message: "Debes ingresar un tipo de procedimiento correcto" }),
   });
 
   readonly defaultProcedure = {

@@ -13,6 +13,7 @@ import { employeeService } from "@/services/employee.service";
 export default function CreateEmployee() {
   const router = useRouter();
   const handleSubmit = (values: EmployeeFormType) => {
+    console.log("Hi ", values);
     const employee = {
       person: {
         firstName: values.firstName,

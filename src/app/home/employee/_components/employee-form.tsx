@@ -243,12 +243,12 @@ export default function EmployeeForm({ employee, onSubmit }: Readonly<Props>) {
         />
         <FormField
           control={form.control}
-          name="rol.id"
+          name="rol"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Rol</FormLabel>
               <Select
-                onValueChange={(value) => field.onChange(Number(value))}
+                onValueChange={(value) => field.onChange(value)}
                 defaultValue={field.value?.toString()}
               >
                 <FormControl>
