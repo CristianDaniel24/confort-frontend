@@ -1,17 +1,8 @@
 "use client";
 
-import {
-  BadgeCheck,
-  BadgeHelp,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-  User,
-} from "lucide-react";
+import { BadgeHelp, ChevronsUpDown, LogOut, User } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,23 +12,42 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cookieUtils } from "@/app/utils/cookies.utils";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useEffect, useState } from "react";
+import { IAuthResponse } from "@/types/auth-response-interface";
+import { authService } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar();
+  const router = useRouter();
+  const [person, setPerson] = useState<IAuthResponse>({} as IAuthResponse);
+
+  useEffect(() => {
+    const cookie = cookieUtils.getCookieValue("session");
+    const personCookie = cookie
+      ? (JSON.parse(cookie) as IAuthResponse)
+      : ({} as IAuthResponse);
+    console.log(person, cookie);
+    setPerson(personCookie);
+  }, [person.person?.id]);
+
+  const handleLogout = () => {
+    authService.logOut();
+    router.refresh();
+  };
+
+  const getInitials = () => {
+    const firstNameInitial = person.person?.firstName.charAt(0) || "";
+    const lastNameInitial = person.person?.lastName.charAt(0) || "";
+    return (firstNameInitial + lastNameInitial).toUpperCase();
+  };
 
   return (
     <SidebarMenu>
@@ -49,12 +59,17 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                {/*<AvatarImage src={user.avatar} alt={user.name} />*/}
+                <AvatarFallback className="rounded-lg">
+                  {getInitials()}
+                </AvatarFallback>
+                {/*Aqui va la letra del firstName y del lastName*/}
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">
+                  {person.person?.firstName}
+                </span>
+                <span className="truncate text-xs">{person.person?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -68,12 +83,18 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  {/** <AvatarImage src={user.avatar} alt={user.name} /> */}
+                  <AvatarFallback className="rounded-lg">
+                    {getInitials()}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold">
+                    {person.person?.firstName}
+                  </span>
+                  <span className="truncate text-xs">
+                    {person.person?.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -90,9 +111,9 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
-              Log out
+              Cerrar sesion
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

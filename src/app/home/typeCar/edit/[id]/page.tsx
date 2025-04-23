@@ -18,17 +18,10 @@ export default function EditTypeCar() {
       model: values.model,
       year: +values.year,
     } as ITypeCar;
-    typeCarService
-      .update(+id, typeCarUpdate)
-      .then(() => {
-        toast.success("Tipo de carro editado!");
-        router.push("/home/typeCar");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    typeCarService.update(+id, typeCarUpdate).then(() => {
+      toast.success("Tipo de carro editado!");
+      router.push("/home/typeCar");
+    });
   };
 
   useEffect(() => {

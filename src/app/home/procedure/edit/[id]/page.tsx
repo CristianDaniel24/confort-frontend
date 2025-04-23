@@ -20,17 +20,10 @@ export default function EditProcedure() {
       status: values.status,
       typeProcedure: { id: +values.typeProcedure },
     } as IProcedure;
-    procedureService
-      .update(+id, procedureUpdate)
-      .then(() => {
-        toast.success("Procedimiento editado!");
-        router.push("/home/procedure");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    procedureService.update(+id, procedureUpdate).then(() => {
+      toast.success("Procedimiento editado!");
+      router.push("/home/procedure");
+    });
   };
 
   useEffect(() => {

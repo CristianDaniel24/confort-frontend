@@ -4,9 +4,14 @@ import { z } from "zod";
 
 export type LoginFormType = z.infer<typeof loginFormDefinition.loginFormSchema>;
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|outlook\.com)$/;
+
 class LoginFormDefinition {
   readonly loginFormSchema = z.object({
-    email: z.string().trim(),
+    email: z.string().refine((val) => emailRegex.test(val), {
+      message:
+        "Debes ingresar un correo valido y debe pertenecer a gmail.com, outlook.com o hotmail.com",
+    }),
     password: z.string().trim(),
   });
 

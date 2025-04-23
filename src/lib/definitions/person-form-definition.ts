@@ -62,7 +62,7 @@ class PersonFormDefinition {
     })
     .refine((data) => data.password === data.password2, {
       message: "Las contraseñas deben ser iguales",
-      path: ["password2"], // Aqui se vera: "Las contraseñas deben ser iguales"
+      path: ["password2"],
     });
 
   readonly defaultPerson = {

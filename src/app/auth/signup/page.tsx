@@ -60,17 +60,10 @@ export default function Signup() {
       password: values.password,
     } as IPerson;
 
-    personService
-      .create(person)
-      .then(() => {
-        toast.success("Tu cuenta ha sido creada con exito!");
-        router.push("/auth/signin");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    personService.create(person).then(() => {
+      toast.success("Tu cuenta ha sido creada con exito!");
+      router.push("/auth/signin");
+    });
   };
 
   return (

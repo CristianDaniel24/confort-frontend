@@ -19,17 +19,10 @@ export default function CreateProcedure() {
       status: values.status,
       typeProcedure: { id: +values.typeProcedure },
     } as IProcedure;
-    procedureService
-      .create(procedure)
-      .then(() => {
-        toast.success("Procedimiento creado!");
-        router.push("/home/procedure");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    procedureService.create(procedure).then(() => {
+      toast.success("Procedimiento creado!");
+      router.push("/home/procedure");
+    });
   };
   return (
     <div className="container max-w-5xl mx-auto md:py-10">

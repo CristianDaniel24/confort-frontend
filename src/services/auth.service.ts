@@ -11,7 +11,6 @@ class AuthService {
     this.url = `${utils.baseUrl}/auth`;
   }
 
-  //Aqui se envia un objeto con el email y el password
   async logIn(values: LoginFormType) {
     const res = await iAxios.post<IPerson>(`${this.url}/signin`, values);
 

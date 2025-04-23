@@ -31,17 +31,10 @@ export default function EditEmployee() {
         id: values.rol.id,
       },
     } as IEmployee;
-    employeeService
-      .update(+id, employeeUpdate)
-      .then(() => {
-        toast.success("Empleado editado!");
-        router.push("/home/employee");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    employeeService.update(+id, employeeUpdate).then(() => {
+      toast.success("Empleado editado!");
+      router.push("/home/employee");
+    });
   };
 
   useEffect(() => {

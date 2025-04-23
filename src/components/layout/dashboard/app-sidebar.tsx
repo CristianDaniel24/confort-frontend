@@ -31,11 +31,6 @@ import {
 
 // This is sample data.
 const data = {
-  user: {
-    name: "Empleado",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "Confort",
@@ -43,7 +38,6 @@ const data = {
       plan: "Tapiceria Confort",
     },
   ],
-
   projects: [
     {
       name: "Roles",
@@ -105,7 +99,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

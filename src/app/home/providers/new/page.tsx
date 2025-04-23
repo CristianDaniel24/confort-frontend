@@ -18,17 +18,10 @@ export default function CreateProvider() {
       address: values.address,
       phone: values.phone,
     } as IProvider;
-    providerService
-      .create(provider)
-      .then(() => {
-        toast.success("Proveedor creado!");
-        router.push("/home/providers");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    providerService.create(provider).then(() => {
+      toast.success("Proveedor creado!");
+      router.push("/home/providers");
+    });
   };
   return (
     <div className="container max-w-5xl mx-auto md:py-10">

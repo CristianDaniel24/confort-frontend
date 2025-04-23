@@ -17,17 +17,10 @@ export default function EditTypeProcedure() {
     const typeProcedureUpdate = {
       type: values.type,
     } as ITypeProcedure;
-    typeProcedureService
-      .update(+id, typeProcedureUpdate)
-      .then(() => {
-        toast.success("Tipo de procedimiento editado!");
-        router.push("/home/typeProcedure");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    typeProcedureService.update(+id, typeProcedureUpdate).then(() => {
+      toast.success("Tipo de procedimiento editado!");
+      router.push("/home/typeProcedure");
+    });
   };
 
   useEffect(() => {

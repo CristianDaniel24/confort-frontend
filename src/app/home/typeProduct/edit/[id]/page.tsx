@@ -17,17 +17,10 @@ export default function EditTypeProduct() {
     const typeProductUpdate = {
       type: values.type,
     } as ITypeProduct;
-    typeProductService
-      .update(+id, typeProductUpdate)
-      .then(() => {
-        toast.success("Tipo de producto editado!");
-        router.push("/home/typeProduct");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    typeProductService.update(+id, typeProductUpdate).then(() => {
+      toast.success("Tipo de producto editado!");
+      router.push("/home/typeProduct");
+    });
   };
 
   useEffect(() => {

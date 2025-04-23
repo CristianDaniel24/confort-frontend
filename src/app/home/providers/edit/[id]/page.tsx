@@ -19,17 +19,10 @@ export default function EditProvider() {
       address: values.address,
       phone: values.phone,
     } as IProvider;
-    providerService
-      .update(+id, providerUpdate)
-      .then(() => {
-        toast.success("Proveedor editado!");
-        router.push("/home/providers");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    providerService.update(+id, providerUpdate).then(() => {
+      toast.success("Proveedor editado!");
+      router.push("/home/providers");
+    });
   };
 
   useEffect(() => {

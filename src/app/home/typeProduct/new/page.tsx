@@ -16,17 +16,10 @@ export default function CreateTypeProduct() {
     const typeProduct = {
       type: values.type,
     } as ITypeProduct;
-    typeProductService
-      .create(typeProduct)
-      .then(() => {
-        toast.success("Tipo de producto creado!");
-        router.push("/home/typeProduct");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    typeProductService.create(typeProduct).then(() => {
+      toast.success("Tipo de producto creado!");
+      router.push("/home/typeProduct");
+    });
   };
   return (
     <div className="container max-w-5xl mx-auto md:py-10">

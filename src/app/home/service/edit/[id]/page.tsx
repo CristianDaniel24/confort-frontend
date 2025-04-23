@@ -22,17 +22,10 @@ export default function EditService() {
       dueTo: Number(values.dueTo),
       completedAt: Number(values.completedAt),
     } as IService;
-    serviceService
-      .update(+id, serviceUpdate)
-      .then(() => {
-        toast.success("Servicio editado!");
-        router.push("/home/service");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    serviceService.update(+id, serviceUpdate).then(() => {
+      toast.success("Servicio editado!");
+      router.push("/home/service");
+    });
   };
 
   useEffect(() => {

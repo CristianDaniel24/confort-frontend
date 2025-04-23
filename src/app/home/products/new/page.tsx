@@ -21,17 +21,10 @@ export default function CreateProduct() {
       typeProduct: { id: +values.typeProduct },
       provider: { id: +values.provider },
     } as IProduct;
-    productService
-      .create(product)
-      .then(() => {
-        toast.success("Producto creado!");
-        router.push("/home/products");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    productService.create(product).then(() => {
+      toast.success("Producto creado!");
+      router.push("/home/products");
+    });
   };
   return (
     <div className="container max-w-5xl mx-auto md:py-10">

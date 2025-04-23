@@ -35,22 +35,14 @@ export default function LoginForm() {
   );
   const router = useRouter();
   const handleSubmit = (values: LoginFormType) => {
-    // Se le manda la peticion al service con los datos del formulario
     const login = {
       email: values.email,
       password: values.password,
     } as ILogin;
-    authService
-      .logIn(login)
-      .then(() => {
-        toast.success("Bienvenido!");
-        router.push("/home");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    authService.logIn(login).then(() => {
+      toast.success("Bienvenido!");
+      router.push("/home");
+    });
   };
 
   return (

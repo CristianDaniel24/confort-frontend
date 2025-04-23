@@ -17,17 +17,10 @@ export default function CreateRol() {
       name: values.name,
       salary: Number(values.salary),
     } as IRol;
-    rolService
-      .create(rol)
-      .then(() => {
-        toast.success("Rol creado!");
-        router.push("/home/rols");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    rolService.create(rol).then(() => {
+      toast.success("Rol creado!");
+      router.push("/home/rols");
+    });
   };
   return (
     <div className="container max-w-5xl mx-auto md:py-10">

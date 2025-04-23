@@ -18,17 +18,10 @@ export default function EditRol() {
       name: values.name,
       salary: Number(values.salary),
     } as IRol;
-    rolService
-      .update(+id, rolUpdate)
-      .then(() => {
-        toast.success("Rol editado!");
-        router.push("/home/rols");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    rolService.update(+id, rolUpdate).then(() => {
+      toast.success("Rol editado!");
+      router.push("/home/rols");
+    });
   };
 
   useEffect(() => {

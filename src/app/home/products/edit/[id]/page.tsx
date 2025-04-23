@@ -22,17 +22,10 @@ export default function EditProduct() {
       typeProduct: { id: +values.typeProduct },
       provider: { id: +values.provider },
     } as IProduct;
-    productService
-      .update(+id, productUpdate)
-      .then(() => {
-        toast.success("Producto editado!");
-        router.push("/home/products");
-      })
-      .catch(() => {
-        toast.error("Uh oh! algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    productService.update(+id, productUpdate).then(() => {
+      toast.success("Producto editado!");
+      router.push("/home/products");
+    });
   };
 
   useEffect(() => {

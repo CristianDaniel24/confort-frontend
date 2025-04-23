@@ -31,17 +31,10 @@ export default function CreateEmployee() {
         id: values.rol.id,
       },
     } as IEmployee;
-    employeeService
-      .create(employee)
-      .then(() => {
-        toast.success("Empleado creado!");
-        router.push("/home/employee");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    employeeService.create(employee).then(() => {
+      toast.success("Empleado creado!");
+      router.push("/home/employee");
+    });
   };
   return (
     <div className="container max-w-5xl mx-auto md:py-10">

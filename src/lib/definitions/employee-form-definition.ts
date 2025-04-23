@@ -47,7 +47,7 @@ class EmployeeFormDefinition {
         message:
           "Debes ingresar una contraseña valida, solo puedes ingresar letras(mayuscula o minuscula), numeros(1-9) y puntos(.) ",
       }),
-      password2: z.string(),
+      password2: z.string().trim(),
       phone: z
         .string()
         .min(10, { message: "Debes ingresar un numero de telefono valido" })
@@ -66,7 +66,7 @@ class EmployeeFormDefinition {
     })
     .refine((data) => data.password === data.password2, {
       message: "Las contraseñas deben ser iguales",
-      path: ["person.password2"],
+      path: ["password2"],
     });
 
   readonly defaultEmployee = {

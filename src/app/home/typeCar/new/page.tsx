@@ -17,17 +17,10 @@ export default function CreateTypeCar() {
       model: values.model,
       year: +values.year,
     } as ITypeCar;
-    typeCarService
-      .create(typeCar)
-      .then(() => {
-        toast.success("Tipo de carro creado!");
-        router.push("/home/typeCar");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    typeCarService.create(typeCar).then(() => {
+      toast.success("Tipo de carro creado!");
+      router.push("/home/typeCar");
+    });
   };
   return (
     <div className="container max-w-5xl mx-auto md:py-10">

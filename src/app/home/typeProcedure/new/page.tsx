@@ -16,17 +16,10 @@ export default function CreateTypeProcedure() {
     const typeProcedure = {
       type: values.type,
     } as ITypeProcedure;
-    typeProcedureService
-      .create(typeProcedure)
-      .then(() => {
-        toast.success("Tipo de procedimiento creado!");
-        router.push("/home/typeProcedure");
-      })
-      .catch(() => {
-        toast.error("Ho algo salio mal", {
-          description: "Hubo un problema con tu solicitud",
-        });
-      });
+    typeProcedureService.create(typeProcedure).then(() => {
+      toast.success("Tipo de procedimiento creado!");
+      router.push("/home/typeProcedure");
+    });
   };
   return (
     <div className="container max-w-5xl mx-auto md:py-10">
