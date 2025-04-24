@@ -12,7 +12,9 @@ class LoginFormDefinition {
       message:
         "Debes ingresar un correo valido y debe pertenecer a gmail.com, outlook.com o hotmail.com",
     }),
-    password: z.string().trim(),
+    password: z.string().min(5, {
+      message: "Debes ingresar tu contraseña, minimo 5 caracteres",
+    }),
   });
 
   readonly defaultLogin = {

@@ -14,7 +14,7 @@ class ProductFormDefinition {
       .max(30),
     cost: z
       .string()
-      .min(1, { message: "Debes ingresar un costo valido" }) // primero obligatorio
+      .min(1, { message: "Debes ingresar un costo valido" })
       .transform((val) => Number(val))
       .refine((val) => !isNaN(val) && val > 0, {
         message: "Debes ingresar un costo valido",

@@ -15,7 +15,6 @@ class Utils {
 
 export const utils = new Utils();
 
-//DELETE: eliminar funcion
 export function getApiUrl(): string {
   const url = process.env.NEXT_PUBLIC_API_URL;
   if (!url) {

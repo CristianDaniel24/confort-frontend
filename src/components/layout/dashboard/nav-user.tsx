@@ -84,7 +84,6 @@ export function NavUser() {
                 <AvatarFallback className="rounded-lg">
                   {getInitials()}
                 </AvatarFallback>
-                {/*Aqui va la letra del firstName y del lastName*/}
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">

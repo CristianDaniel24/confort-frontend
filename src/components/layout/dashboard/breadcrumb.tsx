@@ -1,6 +1,6 @@
 import * as React from "react";
-import { ChevronRight } from "lucide-react"; // Ícono de separación
-import { cn } from "@/lib/utils"; // Asegúrate de tener tu función 'cn' que combina clases
+import { ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const Breadcrumb = ({
   className,
