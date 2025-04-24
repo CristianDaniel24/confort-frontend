@@ -67,7 +67,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 space-y-6">
+    <div className="flex flex-col items-center justify-center min-h-screen space-y-6">
       <Link href="#" className="flex items-center  gap-2 mb-6 font-medium">
         <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
           <Car className="size-4" />

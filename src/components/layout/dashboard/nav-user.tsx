@@ -1,6 +1,13 @@
 "use client";
 
-import { BadgeHelp, ChevronsUpDown, LogOut, User } from "lucide-react";
+import {
+  BadgeHelp,
+  ChevronsUpDown,
+  LogOut,
+  User,
+  Moon,
+  Sun,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -19,22 +26,36 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+
 import { useEffect, useState } from "react";
 import { IAuthResponse } from "@/types/auth-response-interface";
 import { authService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+
+function getInitialTheme(theme: string) {
+  return theme === "dark" ? "light" : "dark";
+}
 
 export function NavUser() {
+  const theme = useTheme();
   const { isMobile } = useSidebar();
   const router = useRouter();
   const [person, setPerson] = useState<IAuthResponse>({} as IAuthResponse);
+  const [currTheme, setCurrTheme] = useState<string>(
+    getInitialTheme(theme.theme ?? "dark")
+  );
+
+  const handleTheme = () => {
+    setCurrTheme(() => (currTheme === "dark" ? "light" : "dark"));
+    theme.setTheme(currTheme);
+  };
 
   useEffect(() => {
     const cookie = cookieUtils.getCookieValue("session");
     const personCookie = cookie
       ? (JSON.parse(cookie) as IAuthResponse)
       : ({} as IAuthResponse);
-    console.log(person, cookie);
     setPerson(personCookie);
   }, [person.person?.id]);
 
@@ -44,8 +65,8 @@ export function NavUser() {
   };
 
   const getInitials = () => {
-    const firstNameInitial = person.person?.firstName.charAt(0) || "";
-    const lastNameInitial = person.person?.lastName.charAt(0) || "";
+    const firstNameInitial = person.person?.firstName.charAt(0) ?? "";
+    const lastNameInitial = person.person?.lastName.charAt(0) ?? "";
     return (firstNameInitial + lastNameInitial).toUpperCase();
   };
 
@@ -108,6 +129,17 @@ export function NavUser() {
               <DropdownMenuItem>
                 <BadgeHelp />
                 Accesibilidad
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleTheme}>
+                {currTheme === "dark" ? (
+                  <>
+                    <Moon /> Modo oscuro
+                  </>
+                ) : (
+                  <>
+                    <Sun /> Modo claro
+                  </>
+                )}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
