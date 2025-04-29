@@ -7,6 +7,7 @@ export interface IProduct {
   cost: number;
   code: string;
   stock: number;
+  imgUrl?: string;
   typeProduct: ITypeProduct;
   provider: IProvider;
 }

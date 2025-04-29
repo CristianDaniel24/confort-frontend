@@ -11,8 +11,11 @@ import {
 import { IProduct } from "@/types/product-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import DeleteProductDialog from "./_components/product-delete";
+import { useRef, useState } from "react";
+import { productService } from "@/services/product.service";
+import { toast } from "sonner";
 
 export const columns: ColumnDef<IProduct>[] = [
   {
@@ -64,6 +67,35 @@ export const columns: ColumnDef<IProduct>[] = [
       const router = useRouter();
       const currPath = usePathname();
       const element = row.original;
+      const fileInputRef = useRef<HTMLInputElement>(null);
+      const [loading, setLoading] = useState(false);
+
+      const handleImage = async (
+        product: IProduct,
+        e: React.ChangeEvent<HTMLInputElement>
+      ) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (data.url) {
+          product.imgUrl = data.url;
+          await productService.update(product.id, product);
+        }
+      };
+
+      const handleButtonClick = () => {
+        fileInputRef.current?.click();
+      };
 
       return (
         <DropdownMenu>
@@ -88,6 +120,23 @@ export const columns: ColumnDef<IProduct>[] = [
             <DropdownMenuItem onClick={(e) => e.preventDefault()}>
               <DeleteProductDialog id={element.id} />
             </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+                handleButtonClick();
+              }}
+            >
+              Agregar imagen
+            </DropdownMenuItem>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                handleImage(element, e);
+              }}
+              ref={fileInputRef}
+              className="hidden"
+            />
           </DropdownMenuContent>
         </DropdownMenu>
       );

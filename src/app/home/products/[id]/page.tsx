@@ -18,25 +18,29 @@ export default async function ProductDetails({ params }: Readonly<Props>) {
       <Card className="flex justify-center mx-5 px-5 md:mx-28 xl:mx-84">
         <div className="flex-1/2 justify-self-start">
           <div className="space-y-1 text-sm">
-            <h3 className="text-xl font-medium leading-none">
+            <h3 className="text-2xl font-medium leading-none">
               Nombre: {product.name}
             </h3>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Costo: {product.cost}
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Codigo: {product.code}
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Cantidad: {product.stock}
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Tipo de producto: {product.typeProduct?.type}
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Proveedor: {product.provider?.name} ({product.provider?.address})
               ({product.provider?.phone})
             </p>
+            <p className="text-lg text-muted-foreground">
+              Imagen del producto:
+            </p>
+            <img src={product.imgUrl} alt="Imagen del producto" width={300} />
           </div>
         </div>
       </Card>
