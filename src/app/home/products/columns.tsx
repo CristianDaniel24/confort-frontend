@@ -11,11 +11,12 @@ import {
 import { IProduct } from "@/types/product-interface";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import DeleteProductDialog from "./_components/product-delete";
 import { useRef, useState } from "react";
 import { productService } from "@/services/product.service";
 import { toast } from "sonner";
+import { Progress } from "@/components/ui/progress";
 
 export const columns: ColumnDef<IProduct>[] = [
   {
@@ -65,10 +66,11 @@ export const columns: ColumnDef<IProduct>[] = [
     id: "actions",
     cell: ({ row }) => {
       const router = useRouter();
-      const currPath = usePathname();
       const element = row.original;
+      const currPath = usePathname();
+      const [progress, setProgress] = useState(0);
+      const [isUploading, setIsUploading] = useState(false);
       const fileInputRef = useRef<HTMLInputElement>(null);
-      const [loading, setLoading] = useState(false);
 
       const handleImage = async (
         product: IProduct,
@@ -77,20 +79,50 @@ export const columns: ColumnDef<IProduct>[] = [
         const file = e.target.files?.[0];
         if (!file) return;
 
+        setIsUploading(true);
+        setProgress(0);
+
         const formData = new FormData();
         formData.append("file", file);
+        formData.append("upload_preset", "confortUpload");
+        formData.append("cloud_name", "ddgkelrey");
+        formData.append("folder", "confort_images");
 
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
+        const xhr = new XMLHttpRequest();
+        xhr.open(
+          "POST",
+          "https://api.cloudinary.com/v1_1/ddgkelrey/image/upload"
+        );
 
-        const data = await response.json();
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percent = Math.round((event.loaded / event.total) * 100);
+            setProgress(percent);
+          }
+        };
 
-        if (data.url) {
-          product.imgUrl = data.url;
-          await productService.update(product.id, product);
-        }
+        xhr.onload = async () => {
+          if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+
+            product.imgUrl = data.secure_url;
+            await productService.update(product.id, product);
+
+            toast.success("Imagen subida con exito");
+          } else {
+            toast.error("Error al subir la imagen");
+          }
+
+          setIsUploading(false);
+          setProgress(0);
+        };
+
+        xhr.onerror = () => {
+          toast.error("Error en la red");
+          setIsUploading(false);
+        };
+
+        xhr.send(formData);
       };
 
       const handleButtonClick = () => {
@@ -126,7 +158,15 @@ export const columns: ColumnDef<IProduct>[] = [
                 handleButtonClick();
               }}
             >
-              Agregar imagen
+              <div className="grid gap-y-2">
+                <div>Agregar imagen </div>
+                <div className="flex space-x-3 align-middle">
+                  <div className="flex-auto">
+                    <Progress value={progress} />
+                  </div>
+                  <div>{progress}</div>
+                </div>
+              </div>
             </DropdownMenuItem>
             <input
               type="file"
