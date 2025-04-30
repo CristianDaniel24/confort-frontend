@@ -159,15 +159,17 @@ export const columns: ColumnDef<IProduct>[] = [
               }}
             >
               <div className="grid gap-y-2">
-                <div>Agregar imagen </div>
-                <div className="flex space-x-3 align-middle">
-                  <div className="flex-auto">
-                    <Progress value={progress} />
+                <div>Agregar imagen</div>
+
+                {isUploading && (
+                  <div className="flex items-center space-x-3">
+                    <Progress value={progress} className="w-24" />
+                    <span className="text-sm font-medium">{progress}%</span>
                   </div>
-                  <div>{progress}</div>
-                </div>
+                )}
               </div>
             </DropdownMenuItem>
+
             <input
               type="file"
               accept="image/*"
