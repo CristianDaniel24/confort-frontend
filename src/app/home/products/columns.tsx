@@ -17,6 +17,7 @@ import { useRef, useState } from "react";
 import { productService } from "@/services/product.service";
 import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
+import { useImageUploadStore } from "./_components/imageUploadStore";
 
 export const columns: ColumnDef<IProduct>[] = [
   {
@@ -71,6 +72,9 @@ export const columns: ColumnDef<IProduct>[] = [
       const [progress, setProgress] = useState(0);
       const [isUploading, setIsUploading] = useState(false);
       const fileInputRef = useRef<HTMLInputElement>(null);
+      const setUploadingId = useImageUploadStore(
+        (state) => state.setUploadingId
+      );
 
       const handleImage = async (
         product: IProduct,
@@ -88,6 +92,7 @@ export const columns: ColumnDef<IProduct>[] = [
         formData.append("cloud_name", "ddgkelrey");
         formData.append("folder", "confort_images");
 
+        setUploadingId(product.id);
         const xhr = new XMLHttpRequest();
         xhr.open(
           "POST",
@@ -113,6 +118,7 @@ export const columns: ColumnDef<IProduct>[] = [
             toast.error("Error al subir la imagen");
           }
 
+          setUploadingId(null);
           setIsUploading(false);
           setProgress(0);
         };

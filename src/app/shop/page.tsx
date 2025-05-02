@@ -1,30 +1,27 @@
-// src/shop/page.tsx
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SimpleCarousel } from "./components/SimpleCarousel";
-
-const images = ["/carrusel_1.jpg", "/carrusel_2.jpg", "/carrusel_3.jpg"];
 
 export default function Page() {
   return (
     <main className="px-6 py-10 max-w-5xl mx-auto space-y-10">
       <section className="text-center">
         <h1 className="text-4xl font-bold mb-4">
-          Tapicería Automotriz Confort
+          Tapiceria Automotriz Confort
         </h1>
         <p className="text-lg text-gray-600">
-          Descubre cómo nuestra experiencia en tapiceria automotriz transforma
-          el interior de tu vehículo en una experiencia de confort y estilo.
+          Descubre como nuestra experiencia en tapiceria automotriz transforma
+          el interior de tu vehiculo en una experiencia de confort y estilo.
         </p>
       </section>
 
       <section className="grid md:grid-cols-3 gap-6">
         <Card>
           <CardContent className="p-6 text-center">
-            <h2 className="text-xl font-semibold mb-2">Materiales Premium</h2>
+            <h2 className="text-xl font-semibold mb-2">Materiales</h2>
             <p className="text-sm text-gray-500">
-              Utilizamos cuero, vinil, y telas de la más alta calidad para
-              asegurar durabilidad y elegancia.
+              Utilizamos cuero, vinil, y telas de alta calidad para asegurar
+              durabilidad y elegancia.
             </p>
           </CardContent>
         </Card>
@@ -32,7 +29,7 @@ export default function Page() {
           <CardContent className="p-6 text-center">
             <h2 className="text-xl font-semibold mb-2">Diseño Personalizado</h2>
             <p className="text-sm text-gray-500">
-              Personaliza colores, costuras y patrones para que tu vehículo
+              Personaliza colores, costuras y patrones para que tu vehiculo
               refleje tu estilo.
             </p>
           </CardContent>
@@ -40,11 +37,11 @@ export default function Page() {
         <Card>
           <CardContent className="p-6 text-center">
             <h2 className="text-xl font-semibold mb-2">
-              Instalación Profesional
+              Instalacion Profesional
             </h2>
             <p className="text-sm text-gray-500">
               Nuestro equipo experto asegura un acabado perfecto en cada
-              proyecto.
+              tapizado.
             </p>
           </CardContent>
         </Card>
@@ -54,15 +51,15 @@ export default function Page() {
         <p className="text-gray-700 mb-4">
           ¿Listo para renovar tu auto con elegancia y confort?
         </p>
-        <Button size="lg">Solicitar Cotización</Button>
+        <Button size="lg">Solicitar Cotizacion</Button>
       </section>
 
       {/* Carrusel */}
       <section>
         <h2 className="text-2xl font-semibold text-center mb-4">
-          Galería de proyectos
+          Galeria de proyectos
         </h2>
-        <SimpleCarousel images={images} />
+        <SimpleCarousel />
       </section>
     </main>
   );

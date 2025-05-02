@@ -1,17 +1,37 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { productService } from "@/services/product.service";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ImageOff } from "lucide-react";
+import { useImageUploadStore } from "../_components/imageUploadStore";
 
 interface Props {
   params: Promise<{ id: string }>;
 }
 
-export default async function ProductDetails({ params }: Readonly<Props>) {
-  const { id } = await params;
-  const product = await productService.findById(+id);
+export default function ProductDetails({ params }: Readonly<Props>) {
+  const [product, setProduct] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const uploadingId = useImageUploadStore((state) => state.uploadingId);
 
-  if (!product) {
+  useEffect(() => {
+    const load = async () => {
+      const { id } = await params;
+      const prod = await productService.findById(+id);
+      setProduct(prod);
+      setLoading(false);
+    };
+    load();
+  }, [params]);
+
+  if (loading || !product) {
     return null;
   }
+
+  const isUploading = uploadingId === product.id;
 
   return (
     <div className="grid gap-y-5">
@@ -40,7 +60,25 @@ export default async function ProductDetails({ params }: Readonly<Props>) {
             <p className="text-lg text-muted-foreground">
               Imagen del producto:
             </p>
-            <img src={product.imgUrl} alt="Imagen del producto" width={300} />
+
+            {isUploading ? ( //Aca va un if
+              <Skeleton className="w-[300px] h-[300px] rounded-md" />
+            ) : product.imgUrl ? (
+              <Image
+                src={product.imgUrl}
+                alt="Imagen del producto"
+                width={300}
+                height={300}
+                className="object-contain"
+                priority
+                unoptimized
+              />
+            ) : (
+              <div className="mt-2 w-[300px] h-[300px] flex flex-col items-center justify-center border rounded bg-muted text-muted-foreground gap-2">
+                <ImageOff className="w-10 h-10" />
+                <span>Sin imagen</span>
+              </div>
+            )}
           </div>
         </div>
       </Card>

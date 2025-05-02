@@ -19,6 +19,7 @@ export default function EditProduct() {
       cost: Number(values.cost),
       code: values.code,
       stock: Number(values.stock),
+      imgUrl: product?.imgUrl,
       typeProduct: { id: +values.typeProduct },
       provider: { id: +values.provider },
     } as IProduct;
