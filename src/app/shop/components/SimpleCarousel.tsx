@@ -14,7 +14,7 @@ interface Image {
   url: string;
 }
 
-export const SimpleCarousel = () => {
+export function SimpleCarousel() {
   const images: Image[] = [
     { id: 1, url: "/carrusel_1.jpg" },
     { id: 2, url: "/carrusel_2.jpg" },
@@ -44,4 +44,4 @@ export const SimpleCarousel = () => {
       </Carousel>
     </div>
   );
-};
+}

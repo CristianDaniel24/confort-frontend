@@ -1,11 +1,9 @@
-"use client";
-
 import Link from "next/link";
 import { CartSheet } from "../cart/CartSheet";
 
-export function Header() {
+export default function Header() {
   return (
-    <header className="bg-white border-b shadow-sm">
+    <header className="fixed top-0 left-0 w-full z-50 shadow-sm">
       <div className="container mx-auto flex justify-between items-center py-4 px-4">
         <Link href="/shop" className="text-2xl font-bold">
           Tienda Confort

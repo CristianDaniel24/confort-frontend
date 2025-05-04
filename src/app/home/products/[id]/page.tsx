@@ -60,25 +60,26 @@ export default function ProductDetails({ params }: Readonly<Props>) {
             <p className="text-lg text-muted-foreground">
               Imagen del producto:
             </p>
-
-            {isUploading ? ( //Aca va un if
-              <Skeleton className="w-[300px] h-[300px] rounded-md" />
-            ) : product.imgUrl ? (
-              <Image
-                src={product.imgUrl}
-                alt="Imagen del producto"
-                width={300}
-                height={300}
-                className="object-contain"
-                priority
-                unoptimized
-              />
-            ) : (
-              <div className="mt-2 w-[300px] h-[300px] flex flex-col items-center justify-center border rounded bg-muted text-muted-foreground gap-2">
-                <ImageOff className="w-10 h-10" />
-                <span>Sin imagen</span>
-              </div>
-            )}
+            {(() => {
+              if (isUploading) {
+                return <Skeleton className="w-[300px] h-[300px] rounded-md" />;
+              }
+              return product.imgUrl ? (
+                <Image
+                  src={product.imgUrl}
+                  alt="Imagen del producto"
+                  width={300}
+                  height={300}
+                  className="object-contain"
+                  priority
+                />
+              ) : (
+                <div className="mt-2 w-[300px] h-[300px] flex flex-col items-center justify-center border rounded bg-muted text-muted-foreground gap-2">
+                  <ImageOff className="w-10 h-10" />
+                  <span>Sin imagen</span>
+                </div>
+              );
+            })()}
           </div>
         </div>
       </Card>

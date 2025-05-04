@@ -4,7 +4,7 @@ import { SimpleCarousel } from "./components/SimpleCarousel";
 
 export default function Page() {
   return (
-    <main className="px-6 py-10 max-w-5xl mx-auto space-y-10">
+    <main className="px-6 py-10 max-w-5xl mx-auto space-y-10 mt-8">
       <section className="text-center">
         <h1 className="text-4xl font-bold mb-4">
           Tapiceria Automotriz Confort
@@ -54,7 +54,6 @@ export default function Page() {
         <Button size="lg">Solicitar Cotizacion</Button>
       </section>
 
-      {/* Carrusel */}
       <section>
         <h2 className="text-2xl font-semibold text-center mb-4">
           Galeria de proyectos

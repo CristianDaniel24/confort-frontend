@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { CaptionsOff, ImageOff, MilkOff } from "lucide-react";
+import { CaptionsOff, ImageOff } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -24,12 +24,14 @@ import { productService } from "@/services/product.service";
 import { IProduct } from "@/types/product-interface";
 import { ITypeProduct } from "@/types/typeProduct-interface";
 import { typeProductService } from "@/services/typeProduct.service";
+import { Badge } from "@/components/ui/badge";
 
 export default function ProductsEcommer() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [typeProducts, setTypeProducts] = useState<ITypeProduct[]>([]);
+  const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -51,14 +53,16 @@ export default function ProductsEcommer() {
     const matchesSearch = product.name
       .toLowerCase()
       .includes(search.toLowerCase());
-    const matchesCategory = category
-      ? product.typeProduct.type === category
-      : true;
+    const matchesCategory =
+      category === "" ||
+      category === "all" ||
+      product.typeProduct.type === category;
+
     return matchesSearch && matchesCategory;
   });
 
   return (
-    <div className="p-6">
+    <div className="p-6 mt-10">
       {/* Filtros */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
         <Input
@@ -72,6 +76,7 @@ export default function ProductsEcommer() {
             <SelectValue placeholder="Filtrar por categoría" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="all">Todas las categorias</SelectItem>
             {typeProducts.map((type) => (
               <SelectItem key={type.id} value={type.type}>
                 {type.type}
@@ -93,10 +98,16 @@ export default function ProductsEcommer() {
             <Card key={product.id} className="overflow-hidden">
               <CardHeader>
                 <CardTitle>{product.name}</CardTitle>
-                <CardDescription>${product.cost.toFixed(2)}</CardDescription>
+                <CardDescription>
+                  {new Intl.NumberFormat("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                    minimumFractionDigits: 0,
+                  }).format(product.cost)}
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {product.imgUrl ? (
+                {!imageError[product.id] && product.imgUrl ? (
                   <div className="relative w-full h-60 rounded overflow-hidden">
                     <Image
                       src={product.imgUrl}
@@ -105,6 +116,12 @@ export default function ProductsEcommer() {
                       className="object-contain bg-white"
                       priority
                       unoptimized
+                      onError={() =>
+                        setImageError((prev) => ({
+                          ...prev,
+                          [product.id]: true,
+                        }))
+                      }
                     />
                   </div>
                 ) : (
@@ -117,7 +134,7 @@ export default function ProductsEcommer() {
                   Cantidad disponible: {product.stock}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Tipo: {product.typeProduct.type}
+                  <Badge>{product.typeProduct.type}</Badge>
                 </p>
                 <Button className="w-full">Agregar al carrito</Button>
               </CardContent>
