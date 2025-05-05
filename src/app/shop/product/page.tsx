@@ -76,14 +76,11 @@ export default function ProductsEcommer() {
       return;
     }
 
-    //ARREGLAR
     try {
-      const shoppingCartId = await fetchShoppingCartId(person.id);
-
       const shoppingCart: IShoppingCartProduct = {
         id: {
           shoppingCart: {
-            id: shoppingCartId,
+            id: 1,
           },
           product: {
             id: productId,
