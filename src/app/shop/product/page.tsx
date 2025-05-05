@@ -25,6 +25,11 @@ import { IProduct } from "@/types/product-interface";
 import { ITypeProduct } from "@/types/typeProduct-interface";
 import { typeProductService } from "@/services/typeProduct.service";
 import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
+import { sessionUtils } from "@/app/utils/session.utils";
+import { toast } from "sonner";
+import { IShoppingCartProduct } from "@/types/shoppingCartProduct-interface";
+import { shoppingCartProductService } from "@/services/shoppingCartProduct.service";
 
 export default function ProductsEcommer() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -32,6 +37,7 @@ export default function ProductsEcommer() {
   const [category, setCategory] = useState("");
   const [typeProducts, setTypeProducts] = useState<ITypeProduct[]>([]);
   const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -60,6 +66,40 @@ export default function ProductsEcommer() {
 
     return matchesSearch && matchesCategory;
   });
+
+  const handleAddToCart = (productId: number) => {
+    const person = sessionUtils.getPersonFromSession();
+
+    if (!person?.id) {
+      router.push("/auth/signin");
+      toast.error("Debes ingresar sesion primero!");
+      return;
+    }
+
+    //ARREGLAR
+    try {
+      const shoppingCartId = await fetchShoppingCartId(person.id);
+
+      const shoppingCart: IShoppingCartProduct = {
+        id: {
+          shoppingCart: {
+            id: shoppingCartId,
+          },
+          product: {
+            id: productId,
+          },
+        },
+        amount: 1,
+      };
+
+      shoppingCartProductService.create(shoppingCart).then(() => {
+        toast.success("Producto agregado al carrito!");
+      });
+    } catch (error) {
+      console.error("Error al agregar producto:", error);
+      toast.error("Ocurrio un error al agregar el producto");
+    }
+  };
 
   return (
     <div className="p-6 mt-10">
@@ -136,7 +176,12 @@ export default function ProductsEcommer() {
                 <p className="text-sm text-muted-foreground">
                   <Badge>{product.typeProduct.type}</Badge>
                 </p>
-                <Button className="w-full">Agregar al carrito</Button>
+                <Button
+                  className="w-full cursor-pointer"
+                  onClick={() => handleAddToCart(product.id)}
+                >
+                  Agregar al carrito
+                </Button>
               </CardContent>
             </Card>
           ))}

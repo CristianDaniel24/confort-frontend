@@ -1,8 +1,8 @@
 import { cookieUtils } from "@/app/utils/cookies.utils";
 import iAxios from "@/lib/axios-instance.utils";
 import { LoginFormType } from "@/lib/definitions/auth/login-form-definition";
-import { IPerson } from "@/types/person-interface";
 import { utils } from "@/lib/utils";
+import { IAuthResponse } from "@/types/auth-response-interface";
 
 class AuthService {
   private readonly url: string;
@@ -12,7 +12,7 @@ class AuthService {
   }
 
   async logIn(values: LoginFormType) {
-    const res = await iAxios.post<IPerson>(`${this.url}/signin`, values);
+    const res = await iAxios.post<IAuthResponse>(`${this.url}/signin`, values);
 
     this.createSession(res.data);
   }
@@ -21,7 +21,7 @@ class AuthService {
     cookieUtils.deleteCookie("session");
   }
 
-  private createSession(person: IPerson) {
+  private createSession(person: IAuthResponse) {
     cookieUtils.setCookie({
       name: "session",
       value: JSON.stringify(person),
