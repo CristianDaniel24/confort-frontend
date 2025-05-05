@@ -1,3 +1,11 @@
 export interface IShoppingCartProduct {
-  productId: number;
+  id: {
+    shoppingCart: {
+      id: number;
+    };
+    product: {
+      id: number;
+    };
+  };
+  amount: number;
 }
