@@ -1,0 +1,67 @@
+{
+  "rol": [
+    {
+      "name": "Administrador",
+      "salary": 1000,
+      "id": "1"
+    },
+    {
+      "id": "8e89",
+      "name": "Tapicero general",
+      "salary": 800
+    }
+  ],
+  "provider": [
+    {
+      "name": "Tapitodo autos",
+      "address": "patitodoautos34@gmail.com",
+      "phone": "3103948539",
+      "id": "1"
+    },
+    {
+      "name": "RenovautosSoga",
+      "address": "renovautosjs56@gmail.com",
+      "phone": "3203989134",
+      "id": "2"
+    },
+    {
+      "id": "7486",
+      "name": "RinoTelas",
+      "address": "rinotelasoga21@gmail.com",
+      "phone": "3003468145"
+    },
+    {
+      "id": "f720",
+      "name": "Telas",
+      "address": "telas29034@gmail.com",
+      "phone": "3232432811"
+    }
+  ],
+  "typeCar": [
+    {
+      "model": "Clasico",
+      "year": 2019,
+      "id": "1"
+    },
+    {
+      "model": "Muy antiguo",
+      "year": 2000,
+      "id": "2"
+    },
+    {
+      "model": "Familiar",
+      "year": 2010,
+      "id": "2851"
+    },
+    {
+      "id": "f185",
+      "model": "Antiguo",
+      "year": 2016
+    },
+    {
+      "id": "37d9",
+      "model": "Familiar",
+      "year": 2009
+    }
+  ]
+}
