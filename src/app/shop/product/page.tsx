@@ -30,6 +30,7 @@ import { sessionUtils } from "@/app/utils/session.utils";
 import { toast } from "sonner";
 import { IShoppingCartProduct } from "@/types/shoppingCartProduct-interface";
 import { shoppingCartProductService } from "@/services/shoppingCartProduct.service";
+import { IShoppingCart } from "@/types/shoppingCart-interface";
 
 export default function ProductsEcommer() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -67,7 +68,7 @@ export default function ProductsEcommer() {
     return matchesSearch && matchesCategory;
   });
 
-  const handleAddToCart = (productId: number) => {
+  const handleAddToCart = async (productId: number) => {
     const person = sessionUtils.getPersonFromSession();
 
     if (!person?.id) {
@@ -76,25 +77,25 @@ export default function ProductsEcommer() {
       return;
     }
 
-    //ARREGLAR
     try {
-      const shoppingCartId = await fetchShoppingCartId(person.id);
-
-      const shoppingCart: IShoppingCartProduct = {
+      const shoppingCartProduct: IShoppingCartProduct = {
         id: {
           shoppingCart: {
-            id: shoppingCartId,
-          },
+            client: {
+              person: {
+                id: person.id,
+              },
+            },
+          } as IShoppingCart,
           product: {
             id: productId,
-          },
+          } as IProduct,
         },
         amount: 1,
       };
 
-      shoppingCartProductService.create(shoppingCart).then(() => {
-        toast.success("Producto agregado al carrito!");
-      });
+      await shoppingCartProductService.create(shoppingCartProduct);
+      toast.success("Producto agregado al carrito!");
     } catch (error) {
       console.error("Error al agregar producto:", error);
       toast.error("Ocurrio un error al agregar el producto");

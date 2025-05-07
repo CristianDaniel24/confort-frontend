@@ -1,5 +1,6 @@
 "use client";
 
+import { sessionUtils } from "@/app/utils/session.utils";
 import {
   Sheet,
   SheetTrigger,
@@ -8,11 +9,45 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingBag, ShoppingCart } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+interface CartProduct {
+  name: string;
+  quantity: number;
+  price: number;
+}
 
 export function CartSheet() {
+  const [products, setProducts] = useState<CartProduct[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const person = sessionUtils.getPersonFromSession();
+        if (!person?.id) {
+          toast.error("Ocurrio un error con tu peticion!");
+        } else {
+          const response = await fetch(
+            `/shoppingCart-product/client/${person.id}`
+          );
+          const data = await response.json();
+          setProducts(data);
+        }
+      } catch (error) {
+        console.error("Error al cargar el carrito: ", error);
+      }
+    };
+
+    if (isOpen) {
+      fetchCart();
+    }
+  }, [isOpen]);
+
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <button className="relative cursor-pointer">
           <ShoppingCart className="inline-block mr-1" />
@@ -28,11 +63,29 @@ export function CartSheet() {
         </SheetHeader>
 
         <div className="mt-4 space-y-4">
-          <div className="border rounded p-2">
-            <p className="font-medium">Martillo</p>
-            <p className="text-sm text-muted-foreground">Cantidad: 2</p>
-            <p className="text-sm text-muted-foreground">Precio: $25.00</p>
-          </div>
+          {products.length === 0 ? (
+            <div className="text-center text-muted-foreground mt-10">
+              <ShoppingBag className="mx-auto mb-2 w-10 h-10 opacity-50" />
+              <p className="text-base font-medium">
+                Tu carrito esta vacio por ahora.
+              </p>
+              <p className="text-sm">
+                ¡Explora nuestros productos y encuentra lo que necesitas!
+              </p>
+            </div>
+          ) : (
+            products.map((product) => (
+              <div key={product.name} className="border rounded p-2">
+                <p className="font-medium">{product.name}</p>
+                <p className="text-sm text-muted-foreground">
+                  Cantidad: {product.quantity}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Precio: ${product.price.toFixed(2)}
+                </p>
+              </div>
+            ))
+          )}
         </div>
       </SheetContent>
     </Sheet>
