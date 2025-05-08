@@ -3,6 +3,20 @@
 import Link from "next/link";
 import { CartSheet } from "../cart/CartSheet";
 import { useState, useEffect } from "react";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetTitle,
+} from "@/components/ui/sheet";
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -64,9 +78,23 @@ export default function Header() {
             Servicios
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
           </Link>
+
           <div className="ml-2">
             <CartSheet />
           </div>
+
+          {/* Dropdown de ShadCN */}
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button variant="outline" color="blue">
+                Opciones
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>Perfil</DropdownMenuItem>
+              <DropdownMenuItem>Configuraciones</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         {/* Botón de menú móvil */}
@@ -126,6 +154,19 @@ export default function Header() {
             <div className="py-2">
               <CartSheet />
             </div>
+
+            {/* Sheet de ShadCN */}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" color="blue">
+                  Abrir opciones
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetTitle>Opciones</SheetTitle>
+                <p>Contenido del menú móvil aquí</p>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
