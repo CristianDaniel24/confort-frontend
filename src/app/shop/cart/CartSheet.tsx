@@ -9,6 +9,8 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import iAxios from "@/lib/axios-instance.utils";
+import { utils } from "@/lib/utils";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -28,14 +30,20 @@ export function CartSheet() {
       try {
         const person = sessionUtils.getPersonFromSession();
         if (!person?.id) {
-          toast.error("Ocurrio un error con tu peticion!");
-        } else {
-          const response = await fetch(
-            `/shoppingCart-product/client/${person.id}`
-          );
-          const data = await response.json();
-          setProducts(data);
+          toast.error("Ocurrió un error con tu petición!");
+          return;
         }
+        const res = await iAxios.get(
+          `${utils.baseUrl}/shoppingCart-product/client/${person.id}`
+        );
+
+        const mappedProducts = res.data.map((item: any) => ({
+          name: item.id.product.name,
+          quantity: item.amount,
+          price: item.id.product.cost,
+        }));
+
+        setProducts(mappedProducts);
       } catch (error) {
         console.error("Error al cargar el carrito: ", error);
       }
@@ -74,14 +82,17 @@ export function CartSheet() {
               </p>
             </div>
           ) : (
-            products.map((product) => (
-              <div key={product.name} className="border rounded p-2">
+            products.map((product, index) => (
+              <div key={index} className="border rounded p-2">
                 <p className="font-medium">{product.name}</p>
                 <p className="text-sm text-muted-foreground">
                   Cantidad: {product.quantity}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Precio: ${product.price.toFixed(2)}
+                  Precio: $
+                  {typeof product.price === "number"
+                    ? product.price.toFixed(2)
+                    : "0.00"}
                 </p>
               </div>
             ))
