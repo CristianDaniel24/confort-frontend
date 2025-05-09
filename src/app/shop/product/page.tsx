@@ -103,7 +103,7 @@ export default function ProductsEcommer() {
   };
 
   return (
-    <div className="p-6 mt-10">
+    <div className="p-6 mt-20">
       {/* Filtros */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
         <Input

@@ -9,7 +9,7 @@ import {
   SheetContent,
   SheetTitle,
 } from "@/components/ui/sheet";
-
+import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
