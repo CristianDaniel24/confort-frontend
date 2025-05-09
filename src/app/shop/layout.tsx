@@ -10,7 +10,7 @@ export default function ShopLayout({ children }: { children: ReactNode }) {
   return (
     <div className={cn("min-h-screen flex flex-col", inter.className)}>
       <Header />
-      <main className="flex-1 w-full ">{children}</main>
+      <main className="flex-1 container mx-auto">{children}</main>
       <Footer />
     </div>
   );
