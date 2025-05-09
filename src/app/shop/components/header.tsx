@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import Image from 'next/image'; // Importa el componente Image de Next.js
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -43,8 +44,15 @@ export default function Header() {
       <div className="container mx-auto flex justify-between items-center px-4">
         <div className="flex items-center space-x-2">
           {/* Espacio para el logo */}
-          <div className="w-10 h-10 rounded-full bg-[#003366] flex items-center justify-center">
-            <span className="text-white font-bold text-xl">TC</span>
+          <div className="w-30 h-30 rounded-full  flex items-center justify-center">
+            {/* Usa el componente Image para mostrar el logo */}
+            <Image
+              src="/images/logo.jpg" // Ruta al logo (ajusta la ruta si es necesario)
+              alt="Logo de Tienda Confort"
+              width={400} // Especifica el ancho del logo
+              height={100} // Especifica la altura del logo
+              className="rounded-full"
+            />
           </div>
 
           <Link
