@@ -17,12 +17,27 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
+
+function getInitialTheme(theme: string) {
+  return theme === "dark" ? "light" : "dark";
+}
 
 export default function Header() {
+  const theme = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const [currTheme, setCurrTheme] = useState<string>(
+    getInitialTheme(theme.theme ?? "dark")
+  );
   // Efecto para detectar el scroll y cambiar la apariencia del header
+
+  const handleTheme = () => {
+    setCurrTheme(() => (currTheme === "dark" ? "light" : "dark"));
+    theme.setTheme(currTheme);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -85,13 +100,22 @@ export default function Header() {
 
           {/* Dropdown de ShadCN */}
           <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outline" color="blue">
-                Opciones
-              </Button>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">Opciones</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>Perfil</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleTheme}>
+                {currTheme === "dark" ? (
+                  <>
+                    <Moon className="mr-2 h-4 w-4" /> Modo oscuro
+                  </>
+                ) : (
+                  <>
+                    <Sun className="mr-2 h-4 w-4" /> Modo claro
+                  </>
+                )}
+              </DropdownMenuItem>
               <DropdownMenuItem>Configuraciones</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
