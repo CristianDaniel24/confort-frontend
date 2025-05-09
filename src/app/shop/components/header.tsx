@@ -1,102 +1,96 @@
 "use client";
 
 import Link from "next/link";
-import { CartSheet } from "../cart/CartSheet";
+import Image from "next/image";
 import { useState, useEffect } from "react";
+
+import { CartSheet } from "../cart/CartSheet";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetTrigger,
   SheetContent,
   SheetTitle,
 } from "@/components/ui/sheet";
-
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import Image from 'next/image'; // Importa el componente Image de Next.js
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Efecto para detectar el scroll y cambiar la apariencia del header
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 10);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "py-2 bg-white dark:bg-zinc-900 shadow-md"
-          : "py-4 bg-white/95 dark:bg-zinc-900/95"
+        isScrolled
+          ? "py-1.5 bg-white dark:bg-zinc-900 shadow-md"
+          : "py-2 bg-white/90 dark:bg-zinc-900/90"
       }`}
     >
       <div className="container mx-auto flex justify-between items-center px-4">
-        <div className="flex items-center space-x-2">
-          {/* Espacio para el logo */}
-          <div className="w-30 h-30 rounded-full  flex items-center justify-center">
-            {/* Usa el componente Image para mostrar el logo */}
-            <Image
-              src="/images/logo.jpg" // Ruta al logo (ajusta la ruta si es necesario)
-              alt="Logo de Tienda Confort"
-              width={400} // Especifica el ancho del logo
-              height={100} // Especifica la altura del logo
-              className="rounded-full"
-            />
-          </div>
-
+        <div className="flex items-center space-x-3">
+          {/* Logo Destacado */}
+          <Link href="/" className="transition-transform duration-300 transform hover:scale-110">
+            <div className="w-20 h-20 relative rounded-full shadow-lg overflow-hidden border-2 border-blue-500">
+              <Image
+                src="/images/logo.jpg"
+                alt="Logo de Tienda Confort"
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+          </Link>
           <Link
             href="/shop"
-            className="text-2xl font-bold text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors"
+            className="text-xl font-semibold text-gray-800 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
           >
             Tienda Confort
           </Link>
         </div>
 
-        {/* Navegación para pantalla desktop */}
-        <nav className="hidden md:flex items-center space-x-8">
+        {/* Navegación Desktop con Bordes de Color */}
+        <nav className="hidden md:flex items-center space-x-6">
           <Link
             href="/shop"
-            className="font-medium text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors relative group"
+            className="nav-link-gradient"
           >
             Inicio
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
           </Link>
           <Link
             href="/shop/product"
-            className="font-medium text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors relative group"
+            className="nav-link-gradient"
           >
             Productos
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
           </Link>
           <Link
             href="/shop/servicesConfort"
-            className="font-medium text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors relative group"
+            className="nav-link-gradient"
           >
             Servicios
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
           </Link>
-
-          <div className="ml-2">
+          <div className="ml-3">
             <CartSheet />
           </div>
-
-          {/* Dropdown de ShadCN */}
           <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="outline" color="blue">
-                Opciones
-              </Button>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">Opciones</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>Perfil</DropdownMenuItem>
@@ -105,70 +99,67 @@ export default function Header() {
           </DropdownMenu>
         </nav>
 
-        {/* Botón de menú móvil */}
+        {/* Botón Menú Móvil */}
         <button
           className="md:hidden flex flex-col justify-center items-center w-8 h-8"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          onClick={toggleMobileMenu}
+          aria-label="Abrir menú móvil"
         >
           <span
-            className={`block w-6 h-0.5 bg-[#003366] dark:bg-[#FFFFFF] transition-all duration-300 mb-1.5 ${
-              mobileMenuOpen ? "transform rotate-45 translate-y-2" : ""
+            className={`block w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 mb-1.5 ${
+              isMobileMenuOpen ? "transform rotate-45 translate-y-2" : ""
             }`}
           ></span>
           <span
-            className={`block w-6 h-0.5 bg-[#003366] dark:bg-[#FFFFFF] transition-all duration-300 ${
-              mobileMenuOpen ? "opacity-0" : "opacity-100"
+            className={`block w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${
+              isMobileMenuOpen ? "opacity-0" : "opacity-100"
             }`}
           ></span>
           <span
-            className={`block w-6 h-0.5 bg-[#003366] dark:bg-[#FFFFFF] transition-all duration-300 mt-1.5 ${
-              mobileMenuOpen ? "transform -rotate-45 -translate-y-2" : ""
+            className={`block w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 mt-1.5 ${
+              isMobileMenuOpen ? "transform -rotate-45 -translate-y-2" : ""
             }`}
           ></span>
         </button>
       </div>
 
-      {/* Menú móvil */}
+      {/* Menú Móvil */}
       <div
-        className={`md:hidden fixed inset-x-0 top-16 shadow-lg bg-white dark:bg-zinc-800 transition-all duration-300 z-40 ${
-          mobileMenuOpen
-            ? "max-h-64 opacity-100"
-            : "max-h-0 opacity-0 pointer-events-none"
+        className={`md:hidden fixed inset-x-0 top-16 shadow-lg bg-white/90 dark:bg-zinc-800/90 transition-all duration-300 z-40 transform ${
+          isMobileMenuOpen
+            ? "max-h-64 opacity-100 translate-y-0"
+            : "max-h-0 opacity-0 -translate-y-2 pointer-events-none"
         } overflow-hidden`}
       >
-        <div className="container mx-auto px-4 py-2">
-          <div className="flex flex-col space-y-4 pb-4">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex flex-col space-y-4">
             <Link
               href="/shop"
-              className="font-medium py-2 text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 border-b border-gray-100 dark:border-gray-700"
-              onClick={() => setMobileMenuOpen(false)}
+              className="mobile-nav-link"
+              onClick={toggleMobileMenu}
             >
               Inicio
             </Link>
             <Link
               href="/shop/product"
-              className="font-medium py-2 text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 border-b border-gray-100 dark:border-gray-700"
-              onClick={() => setMobileMenuOpen(false)}
+              className="mobile-nav-link"
+              onClick={toggleMobileMenu}
             >
               Productos
             </Link>
             <Link
               href="/shop/servicesConfort"
-              className="font-medium py-2 text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 border-b border-gray-100 dark:border-gray-700"
-              onClick={() => setMobileMenuOpen(false)}
+              className="mobile-nav-link"
+              onClick={toggleMobileMenu}
             >
               Servicios
             </Link>
             <div className="py-2">
               <CartSheet />
             </div>
-
-            {/* Sheet de ShadCN */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" color="blue">
-                  Abrir opciones
-                </Button>
+                <Button variant="outline">Opciones</Button>
               </SheetTrigger>
               <SheetContent>
                 <SheetTitle>Opciones</SheetTitle>
