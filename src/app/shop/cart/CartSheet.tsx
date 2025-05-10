@@ -172,7 +172,6 @@ export function CartSheet() {
           )}
         </div>
 
-        {/* Confirmar pedido */}
         {products.length > 0 && (
           <div className="mt-4">
             <AlertDialog>
@@ -204,7 +203,7 @@ export function CartSheet() {
                   <AlertDialogAction
                     onClick={() => {
                       toast.success("Pedido confirmado");
-                      // Aqui se puede redirigir o llamar a un endpoint
+                      // Aqui se llamaria el service para poder enviar el endpoint
                     }}
                   >
                     Confirmar
