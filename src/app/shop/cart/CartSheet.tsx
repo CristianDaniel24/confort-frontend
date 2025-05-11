@@ -49,7 +49,7 @@ export function CartSheet() {
         return;
       }
       const res = await iAxios.get(
-        `${utils.baseUrl}/shoppingCart-product/client/${person.id}` //??
+        `${utils.baseUrl}/shoppingCart-product/client/${person.id}`
       );
 
       const mappedProducts = res.data.map((item: any) => ({
@@ -120,9 +120,9 @@ export function CartSheet() {
               </p>
             </div>
           ) : (
-            products.map((product, index) => (
+            products.map((product) => (
               <div
-                key={index}
+                key={product.id}
                 className="border rounded p-2 flex items-center gap-4"
               >
                 <div className="relative w-20 h-20 flex-shrink-0">
@@ -204,7 +204,7 @@ export function CartSheet() {
                   <AlertDialogAction
                     onClick={() => {
                       toast.success("Pedido confirmado");
-                      // Aqui se puede redirigir o llamar a un endpoint
+                      // Aqui se llamaria el service para poder enviar el endpoint
                     }}
                   >
                     Confirmar
