@@ -10,8 +10,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-import Image from "next/image";
-
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -20,7 +18,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+import { CircleUserRound, Cog, LogOut, Moon, Sun } from "lucide-react";
+import { authService } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 function getInitialTheme(theme: string) {
   return theme === "dark" ? "light" : "dark";
@@ -30,10 +30,12 @@ export default function Header() {
   const theme = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currTheme, setCurrTheme] = useState<string>(
     getInitialTheme(theme.theme ?? "dark")
   );
-  // Efecto para detectar el scroll y cambiar la apariencia del header
+
+  const router = useRouter();
 
   const handleTheme = () => {
     setCurrTheme(() => (currTheme === "dark" ? "light" : "dark"));
@@ -48,6 +50,16 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const hasSession = document.cookie.includes("session=");
+    setIsLoggedIn(hasSession);
+  });
+
+  const handleLogout = () => {
+    authService.logOut();
+    router.refresh();
+  };
 
   return (
     <header
@@ -73,7 +85,18 @@ export default function Header() {
         </div>
 
         {/* Navegación para pantalla desktop */}
+
         <nav className="hidden md:flex items-center space-x-8">
+          {!isLoggedIn && (
+            <Link href="/auth/signin">
+              <Button
+                variant="default"
+                className="bg-gray-950 text-white hover:bg-gray-800 cursor-pointer"
+              >
+                Iniciar sesión
+              </Button>
+            </Link>
+          )}
           <Link
             href="/shop"
             className="font-medium text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors relative group"
@@ -103,11 +126,21 @@ export default function Header() {
           {/* Dropdown de ShadCN */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">Opciones</Button>
+              <Button variant="outline" className="cursor-pointer">
+                Opciones
+              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Perfil</DropdownMenuItem>
-              <DropdownMenuItem onClick={handleTheme}>
+              {isLoggedIn && (
+                <DropdownMenuItem className="cursor-pointer">
+                  <CircleUserRound className="mr-2 h-4 w-4" />
+                  Perfil
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem
+                onClick={handleTheme}
+                className="cursor-pointer"
+              >
                 {currTheme === "dark" ? (
                   <>
                     <Moon className="mr-2 h-4 w-4" /> Modo oscuro
@@ -118,8 +151,20 @@ export default function Header() {
                   </>
                 )}
               </DropdownMenuItem>
-
-              <DropdownMenuItem>Configuraciones</DropdownMenuItem>
+              =======
+              <DropdownMenuItem className="cursor-pointer">
+                <Cog />
+                Configuraciones
+              </DropdownMenuItem>
+              {isLoggedIn && (
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="cursor-pointer"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Cerrar sesión
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </nav>
@@ -182,7 +227,6 @@ export default function Header() {
               <CartSheet />
             </div>
 
-            {/* Sheet de ShadCN */}
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" color="blue">

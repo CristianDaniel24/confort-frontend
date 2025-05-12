@@ -6,6 +6,21 @@ export function middleware(request: NextRequest) {
   if (!session) {
     return NextResponse.redirect(new URL("/auth/signin", request.url));
   }
+
+  try {
+    const parsedSession = JSON.parse(session.value);
+
+    if (request.nextUrl.pathname.startsWith("/home")) {
+      const isEmpleado = parsedSession.rol === "employee";
+      if (!isEmpleado) {
+        return NextResponse.redirect(new URL("/shop", request.url));
+      }
+    }
+  } catch (e) {
+    console.error("Error al parsear session", e);
+    return NextResponse.redirect(new URL("/auth/signin", request.url));
+  }
+
   return NextResponse.next();
 }
 
