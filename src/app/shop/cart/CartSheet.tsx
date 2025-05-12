@@ -101,33 +101,34 @@ export function CartSheet() {
       </SheetTrigger>
 
       <SheetContent side="right" className="w-[350px] sm:w-[400px]">
-        <SheetHeader>
-          <SheetTitle>Carrito de Compras</SheetTitle>
-          <SheetDescription>
-            Estos son los productos que has agregado:
-          </SheetDescription>
-        </SheetHeader>
+        <div className="flex flex-col h-full">
+          <SheetHeader>
+            <SheetTitle>Carrito de Compras</SheetTitle>
+            <SheetDescription>
+              Estos son los productos que has agregado:
+            </SheetDescription>
+          </SheetHeader>
 
-        <div className="mt-4 space-y-4">
-          {products.length === 0 ? (
-            <div className="text-center text-muted-foreground mt-10">
-              <ShoppingBag className="mx-auto mb-2 w-10 h-10 opacity-50" />
-              <p className="text-base font-medium">
-                Tu carrito está vacío por ahora.
-              </p>
-              <p className="text-sm">
-                ¡Explora nuestros productos y encuentra lo que necesitas!
-              </p>
-            </div>
-          ) : (
-            products.map((product) => (
-              <div
-                key={product.id}
-                className="border rounded p-2 flex items-center gap-4"
-              >
-                <div className="relative w-20 h-20 flex-shrink-0">
-                  {!imageError[product.id] && product.imgUrl ? (
-                    <div className="relative w-20 h-20 flex-shrink-0">
+          <div className="mt-4 space-y-4 flex-1 overflow-y-auto">
+            {products.length === 0 ? (
+              <div className="text-center text-muted-foreground mt-10">
+                <ShoppingBag className="mx-auto mb-2 w-10 h-10 opacity-50" />
+                <p className="text-base font-medium">
+                  Tu carrito está vacío por ahora.
+                </p>
+                <p className="text-sm">
+                  ¡Explora nuestros productos y encuentra lo que necesitas!
+                </p>
+              </div>
+            ) : (
+              products.map((product) => (
+                <div
+                  key={product.id}
+                  className="border rounded p-2 flex items-center gap-4"
+                >
+                  {/* Imagen */}
+                  <div className="relative w-20 h-20 flex-shrink-0">
+                    {!imageError[product.id] && product.imgUrl ? (
                       <Image
                         src={product.imgUrl}
                         alt={product.name}
@@ -141,79 +142,83 @@ export function CartSheet() {
                           }))
                         }
                       />
-                    </div>
-                  ) : (
-                    <div className="w-20 h-20 flex-shrink-0 flex items-center justify-center border rounded bg-muted text-muted-foreground">
-                      <ImageOff className="w-6 h-6" />
-                    </div>
-                  )}
+                    ) : (
+                      <div className="w-20 h-20 flex items-center justify-center border rounded bg-muted text-muted-foreground">
+                        <ImageOff className="w-6 h-6" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info producto */}
+                  <div className="flex-1">
+                    <p className="font-medium">{product.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      Cantidad: {product.quantity}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Precio: $
+                      {typeof product.price === "number"
+                        ? product.price.toFixed(2)
+                        : "0.00"}
+                    </p>
+                  </div>
+
+                  {/* Botón eliminar */}
+                  <button
+                    onClick={() => handleDeleteProduct(product.id)}
+                    className="text-red-500 hover:text-red-700"
+                    title="Eliminar producto"
+                  >
+                    <Trash2 className="w-5 h-5 cursor-pointer" />
+                  </button>
                 </div>
-                <div className="flex-1">
-                  <p className="font-medium">{product.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    Cantidad: {product.quantity}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Precio: $
-                    {typeof product.price === "number"
-                      ? product.price.toFixed(2)
-                      : "0.00"}
-                  </p>
-                </div>
-                <button
-                  onClick={() => handleDeleteProduct(product.id)}
-                  className="text-red-500 hover:text-red-700"
-                  title="Eliminar producto"
-                >
-                  <Trash2 className="w-5 h-5 cursor-pointer" />
-                </button>
-              </div>
-            ))
+              ))
+            )}
+          </div>
+
+          {/* Botón al fondo */}
+          {products.length > 0 && (
+            <div className="pt-4 border-t">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button className="w-full rounded-none cursor-pointer">
+                    Confirmar pedido
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Resumen del pedido</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      {products.map((product) => (
+                        <div
+                          key={product.id}
+                          className="flex justify-between items-center py-1 border-b last:border-b-0"
+                        >
+                          <span className="text-sm">{product.name}</span>
+                          <span className="text-sm text-muted-foreground">
+                            x{product.quantity} - $
+                            {(product.price * product.quantity).toFixed(2)}
+                          </span>
+                        </div>
+                      ))}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => {
+                        toast.success("Pedido confirmado");
+                        // Aquí se llamaría al endpoint para confirmar el pedido
+                      }}
+                    >
+                      Confirmar
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           )}
         </div>
-
-        {/* Confirmar pedido */}
-        {products.length > 0 && (
-          <div className="mt-4">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button className="w-full cursor-pointer">
-                  Confirmar pedido
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Resumen del pedido</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    {products.map((product) => (
-                      <div
-                        key={product.id}
-                        className="flex justify-between items-center py-1 border-b last:border-b-0"
-                      >
-                        <span className="text-sm">{product.name}</span>
-                        <span className="text-sm text-muted-foreground">
-                          x{product.quantity} - $
-                          {(product.price * product.quantity).toFixed(2)}
-                        </span>
-                      </div>
-                    ))}
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={() => {
-                      toast.success("Pedido confirmado");
-                      // Aqui se llamaria el service para poder enviar el endpoint
-                    }}
-                  >
-                    Confirmar
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          </div>
-        )}
       </SheetContent>
     </Sheet>
   );
