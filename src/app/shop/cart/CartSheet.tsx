@@ -66,6 +66,25 @@ export function CartSheet() {
     }
   };
 
+  const fetchShoppingCart = async () => {
+    try {
+      const person = sessionUtils.getPersonFromSession();
+      if (!person) {
+        console.error("No se encontro el person");
+        toast.error("Hubo un error con tu peticion");
+        return;
+      }
+
+      await iAxios.post(`${utils.baseUrl}/shoppingCart/confirm/${person.id}`);
+      setIsOpen(false);
+      setProducts([]);
+      toast.success("Pedido confirmado exitosamente");
+    } catch (error) {
+      console.error("Error al confirmar el pedido:", error);
+      toast.error("Ocurrió un error al confirmar tu pedido.");
+    }
+  };
+
   useEffect(() => {
     if (isOpen) {
       fetchCart();
@@ -186,30 +205,31 @@ export function CartSheet() {
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Resumen del pedido</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      {products.map((product) => (
-                        <div
-                          key={product.id}
-                          className="flex justify-between items-center py-1 border-b last:border-b-0"
-                        >
-                          <span className="text-sm">{product.name}</span>
-                          <span className="text-sm text-muted-foreground">
-                            x{product.quantity} - $
-                            {(product.price * product.quantity).toFixed(2)}
-                          </span>
-                        </div>
-                      ))}
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
+                  <AlertDialogTitle>Resumen del pedido</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Estos son los productos que has seleccionado:
+                  </AlertDialogDescription>
+                  <ul className="space-y-1 mt-2">
+                    {products.map((product) => (
+                      <li
+                        key={product.id}
+                        className="flex justify-between items-center py-1 border-b last:border-b-0"
+                      >
+                        <span className="text-sm">{product.name}</span>
+                        <span className="text-sm text-muted-foreground">
+                          x{product.quantity} - $
+                          {(product.price * product.quantity).toFixed(2)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogCancel className="cursor-pointer">
+                      Cancelar
+                    </AlertDialogCancel>
                     <AlertDialogAction
-                      onClick={() => {
-                        toast.success("Pedido confirmado");
-                        // Aquí se llamaría al endpoint para confirmar el pedido
-                      }}
+                      className="cursor-pointer"
+                      onClick={fetchShoppingCart}
                     >
                       Confirmar
                     </AlertDialogAction>
