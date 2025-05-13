@@ -30,6 +30,7 @@ import { sessionUtils } from "@/app/utils/session.utils";
 import { toast } from "sonner";
 import { IShoppingCartProduct } from "@/types/shoppingCartProduct-interface";
 import { shoppingCartProductService } from "@/services/shoppingCartProduct.service";
+import { IShoppingCart } from "@/types/shoppingCart-interface";
 
 export default function ProductsEcommer() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -67,7 +68,7 @@ export default function ProductsEcommer() {
     return matchesSearch && matchesCategory;
   });
 
-  const handleAddToCart = (productId: number) => {
+  const handleAddToCart = async (productId: number) => {
     const person = sessionUtils.getPersonFromSession();
 
     if (!person?.id) {
@@ -76,23 +77,25 @@ export default function ProductsEcommer() {
       return;
     }
 
-    //ARREGLAR
     try {
-      const shoppingCart: IShoppingCartProduct = {
+      const shoppingCartProduct: IShoppingCartProduct = {
         id: {
           shoppingCart: {
-            id: 1,
-          },
+            client: {
+              person: {
+                id: person.id,
+              },
+            },
+          } as IShoppingCart,
           product: {
             id: productId,
-          },
+          } as IProduct,
         },
         amount: 1,
       };
 
-      shoppingCartProductService.create(shoppingCart).then(() => {
-        toast.success("Producto agregado al carrito!");
-      });
+      await shoppingCartProductService.create(shoppingCartProduct);
+      toast.success("Producto agregado al carrito!");
     } catch (error) {
       console.error("Error al agregar producto:", error);
       toast.error("Ocurrio un error al agregar el producto");
@@ -100,7 +103,7 @@ export default function ProductsEcommer() {
   };
 
   return (
-    <div className="p-6 mt-10">
+    <div className="p-6 mt-20">
       {/* Filtros */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
         <Input

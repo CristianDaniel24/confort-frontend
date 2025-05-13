@@ -15,6 +15,8 @@ class AuthService {
     const res = await iAxios.post<IAuthResponse>(`${this.url}/signin`, values);
 
     this.createSession(res.data);
+
+    return res.data;
   }
 
   logOut() {

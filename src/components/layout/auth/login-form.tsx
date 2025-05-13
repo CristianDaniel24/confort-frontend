@@ -34,15 +34,21 @@ export default function LoginForm() {
     loginFormDefinition.asignDefaultValues(loginFormDefinition.defaultLogin)
   );
   const router = useRouter();
-  const handleSubmit = (values: LoginFormType) => {
+
+  const handleSubmit = async (values: LoginFormType) => {
     const login = {
       email: values.email,
       password: values.password,
     } as ILogin;
-    authService.logIn(login).then(() => {
-      toast.success("Bienvenido!");
+
+    const authResponse = await authService.logIn(login);
+
+    if (authResponse.rol === "employee") {
       router.push("/home");
-    });
+    } else {
+      router.push("/shop");
+    }
+    toast.success("Bienvenido!");
   };
 
   return (
