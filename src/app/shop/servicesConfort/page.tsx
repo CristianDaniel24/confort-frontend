@@ -10,14 +10,17 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-
+import Image from "next/image";
 import { IService } from "@/types/service-interface";
 import { serviceService } from "@/services/service.service";
-import { CaptionsOff } from "lucide-react";
+import { CaptionsOff, ImageOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function ServicesEcommer() {
   const [services, setServices] = useState<IService[]>([]);
   const [search, setSearch] = useState("");
+  const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -36,7 +39,7 @@ export default function ServicesEcommer() {
       <div className="mb-6">
         <Input
           placeholder="Buscar servicio por nombre..."
-          className="w-full md:w-1/2"
+          className="w-full md:w-1/3"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -53,10 +56,11 @@ export default function ServicesEcommer() {
             <Card key={service.id} className="overflow-hidden">
               <CardHeader>
                 <CardTitle>{service.name}</CardTitle>
-                <CardDescription>{service.description}</CardDescription>
+                <CardDescription>
+                  Descripcion: {service.description}
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {/* 
                 {!imageError[service.id] && service.imgUrl ? (
                   <div className="relative w-full h-60 rounded overflow-hidden">
                     <Image
@@ -80,10 +84,8 @@ export default function ServicesEcommer() {
                     <span>Sin imagen</span>
                   </div>
                 )}
-                <Badge>{service.category}</Badge>
-                {/* Si quieres permitir agendar o contratar el servicio:
+                <Badge>Disponible</Badge>
                 <Button className="w-full cursor-pointer">Solicitar</Button>
-                  */}
               </CardContent>
             </Card>
           ))}

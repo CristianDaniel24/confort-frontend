@@ -22,7 +22,6 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -111,6 +110,11 @@ export function CartSheet() {
     }
   };
 
+  const totalPrice = products.reduce(
+    (total, product) => total + product.price * product.quantity,
+    0
+  );
+
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
@@ -175,10 +179,12 @@ export function CartSheet() {
                       Cantidad: {product.quantity}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      Precio: $
-                      {typeof product.price === "number"
-                        ? product.price.toFixed(2)
-                        : "0.00"}
+                      Precio:{" "}
+                      {new Intl.NumberFormat("es-CO", {
+                        style: "currency",
+                        currency: "COP",
+                        minimumFractionDigits: 0,
+                      }).format(product.price)}
                     </p>
                   </div>
 
@@ -197,10 +203,10 @@ export function CartSheet() {
 
           {/* Botón al fondo */}
           {products.length > 0 && (
-            <div className="pt-4 border-t">
+            <div className="pt-4">
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button className="w-full rounded-none cursor-pointer">
+                  <Button className="w-full h-13 text-lg font-semibold rounded-none cursor-pointer">
                     Confirmar pedido
                   </Button>
                 </AlertDialogTrigger>
@@ -217,12 +223,25 @@ export function CartSheet() {
                       >
                         <span className="text-sm">{product.name}</span>
                         <span className="text-sm text-muted-foreground">
-                          x{product.quantity} - $
-                          {(product.price * product.quantity).toFixed(2)}
+                          x{product.quantity} –-{" "}
+                          {new Intl.NumberFormat("es-CO", {
+                            style: "currency",
+                            currency: "COP",
+                            minimumFractionDigits: 0,
+                          }).format(product.price * product.quantity)}
                         </span>
                       </li>
                     ))}
                   </ul>
+                  <div className="mt-4 text-right font-medium">
+                    Total:{" "}
+                    {new Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                      minimumFractionDigits: 0,
+                    }).format(totalPrice)}
+                  </div>
+
                   <AlertDialogFooter>
                     <AlertDialogCancel className="cursor-pointer">
                       Cancelar

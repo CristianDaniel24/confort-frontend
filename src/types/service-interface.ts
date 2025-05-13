@@ -3,6 +3,7 @@ export interface IService {
   name: string;
   price: number;
   status: string;
+  imgUrl?: string;
   description: string;
   dueTo: number;
   completedAt: number;

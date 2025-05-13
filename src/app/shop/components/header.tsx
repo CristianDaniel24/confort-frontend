@@ -119,6 +119,13 @@ export default function Header() {
             Servicios
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
           </Link>
+          <Link
+            href="/shop/pedidos"
+            className="font-medium text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors relative group"
+          >
+            Pedidos
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
+          </Link>
 
           <div className="ml-2">
             <CartSheet />
