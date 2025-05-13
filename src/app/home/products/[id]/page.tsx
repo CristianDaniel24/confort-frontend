@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { productService } from "@/services/product.service";
-import { Skeleton } from "@/components/ui/skeleton";
 import { ImageOff } from "lucide-react";
-import { useImageUploadStore } from "../_components/imageUploadStore";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -15,7 +13,7 @@ interface Props {
 export default function ProductDetails({ params }: Readonly<Props>) {
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const uploadingId = useImageUploadStore((state) => state.uploadingId);
+  const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     const load = async () => {
@@ -30,8 +28,6 @@ export default function ProductDetails({ params }: Readonly<Props>) {
   if (loading || !product) {
     return null;
   }
-
-  const isUploading = uploadingId === product.id;
 
   return (
     <div className="grid gap-y-5">
@@ -60,26 +56,29 @@ export default function ProductDetails({ params }: Readonly<Props>) {
             <p className="text-lg text-muted-foreground">
               Imagen del producto:
             </p>
-            {(() => {
-              if (isUploading) {
-                return <Skeleton className="w-[300px] h-[300px] rounded-md" />;
-              }
-              return product.imgUrl ? (
+            {!imageError[product.id] && product.imgUrl ? (
+              <div className="relative w-full h-60 rounded overflow-hidden">
                 <Image
                   src={product.imgUrl}
-                  alt="Imagen del producto"
-                  width={300}
-                  height={300}
-                  className="object-contain"
+                  alt={product.name}
+                  fill
+                  className="object-contain bg-white"
                   priority
+                  unoptimized
+                  onError={() =>
+                    setImageError((prev) => ({
+                      ...prev,
+                      [product.id]: true,
+                    }))
+                  }
                 />
-              ) : (
-                <div className="mt-2 w-[300px] h-[300px] flex flex-col items-center justify-center border rounded bg-muted text-muted-foreground gap-2">
-                  <ImageOff className="w-10 h-10" />
-                  <span>Sin imagen</span>
-                </div>
-              );
-            })()}
+              </div>
+            ) : (
+              <div className="w-full h-60 flex flex-col items-center justify-center border rounded bg-muted text-muted-foreground gap-2">
+                <ImageOff className="w-10 h-10" />
+                <span>Sin imagen</span>
+              </div>
+            )}
           </div>
         </div>
       </Card>

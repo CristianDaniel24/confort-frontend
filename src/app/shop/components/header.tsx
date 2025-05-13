@@ -21,6 +21,7 @@ import { useTheme } from "next-themes";
 import { CircleUserRound, Cog, LogOut, Moon, Sun } from "lucide-react";
 import { authService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 function getInitialTheme(theme: string) {
   return theme === "dark" ? "light" : "dark";
@@ -59,6 +60,7 @@ export default function Header() {
   const handleLogout = () => {
     authService.logOut();
     router.refresh();
+    toast.success("Cerraste sesion correctamente!");
   };
 
   return (
@@ -116,6 +118,13 @@ export default function Header() {
             className="font-medium text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors relative group"
           >
             Servicios
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
+          </Link>
+          <Link
+            href="/shop/pedidos"
+            className="font-medium text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors relative group"
+          >
+            Pedidos
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
           </Link>
 
