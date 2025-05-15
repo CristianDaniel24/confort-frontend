@@ -52,75 +52,89 @@
 
 :root {
   --radius: 1rem;
-  --background: oklch(1 0 0); /* Blanco puro */
-  --foreground: oklch(0.3 0.15 255); /* Azul oscuro */
+  /* Modo Claro - Modificado */
+  --background: oklch(0.98 0 0); /* Blanco ligeramente suavizado */
+  --foreground: oklch(0.25 0.18 255); /* Azul oscuro más intenso */
   --card: oklch(1 0 0); /* Blanco puro */
-  --card-foreground: oklch(0.3 0.15 255); /* Azul oscuro */
+  --card-foreground: oklch(0.25 0.18 255); /* Azul oscuro más intenso */
   --popover: oklch(1 0 0); /* Blanco puro */
-  --popover-foreground: oklch(0.3 0.15 255); /* Azul oscuro */
-  --primary: oklch(0.55 0.2 260); /* Azul medio */
-  --primary-foreground: oklch(0.97 0 0); /* Blanco casi puro */
-  --secondary: oklch(0.95 0.03 260); /* Azul muy claro */
-  --secondary-foreground: oklch(0.25 0.15 255); /* Azul oscuro */
-  --muted: oklch(0.95 0.03 260); /* Azul muy claro */
-  --muted-foreground: oklch(0.55 0.1 255); /* Azul medio claro */
-  --accent: oklch(0.95 0.03 260); /* Azul muy claro */
-  --accent-foreground: oklch(0.25 0.15 255); /* Azul oscuro */
+  --popover-foreground: oklch(0.25 0.18 255); /* Azul oscuro más intenso */
+  --primary: oklch(0.5 0.25 260); /* Azul medio más saturado */
+  --primary-foreground: oklch(0.98 0 0); /* Blanco ligeramente suavizado */
+  --secondary: oklch(0.92 0.05 260); /* Azul muy claro con más saturación */
+  --secondary-foreground: oklch(0.2 0.2 255); /* Azul más oscuro */
+  --muted: oklch(0.92 0.05 260); /* Azul muy claro con más saturación */
+  --muted-foreground: oklch(0.5 0.15 255); /* Azul medio */
+  --accent: oklch(0.92 0.05 260); /* Azul muy claro con más saturación */
+  --accent-foreground: oklch(0.2 0.2 255); /* Azul más oscuro */
   --destructive: oklch(
-    0.65 0.3 10
-  ); /* Rojo para errores - mantenido por funcionalidad */
-  --border: oklch(0.9 0.03 260); /* Azul muy claro para bordes */
-  --input: oklch(0.9 0.03 260); /* Azul muy claro para inputs */
-  --ring: oklch(0.55 0.2 260); /* Azul medio */
-  --chart-1: oklch(0.6 0.2 260); /* Azul */
-  --chart-2: oklch(0.5 0.15 250); /* Azul más oscuro */
-  --chart-3: oklch(0.7 0.15 270); /* Azul violáceo */
-  --chart-4: oklch(0.8 0.1 260); /* Azul claro */
-  --chart-5: oklch(0.4 0.15 240); /* Azul muy oscuro */
-  --sidebar: oklch(0.98 0 0); /* Blanco casi puro */
-  --sidebar-foreground: oklch(0.3 0.15 255); /* Azul oscuro */
-  --sidebar-primary: oklch(0.55 0.2 260); /* Azul medio */
-  --sidebar-primary-foreground: oklch(0.97 0 0); /* Blanco casi puro */
-  --sidebar-accent: oklch(0.95 0.03 260); /* Azul muy claro */
-  --sidebar-accent-foreground: oklch(0.25 0.15 255); /* Azul oscuro */
-  --sidebar-border: oklch(0.9 0.03 260); /* Azul muy claro para bordes */
-  --sidebar-ring: oklch(0.55 0.2 260); /* Azul medio */
+    0.65 0.35 15
+  ); /* Rojo para errores - ligeramente más saturado */
+  --border: oklch(0.85 0.05 260); /* Azul claro para bordes - más visible */
+  --input: oklch(0.85 0.05 260); /* Azul claro para inputs - más visible */
+  --ring: oklch(0.5 0.25 260); /* Azul medio más saturado */
+  --chart-1: oklch(0.55 0.25 260); /* Azul más saturado */
+  --chart-2: oklch(0.45 0.2 250); /* Azul más oscuro */
+  --chart-3: oklch(0.65 0.18 270); /* Azul violáceo */
+  --chart-4: oklch(0.75 0.15 260); /* Azul claro */
+  --chart-5: oklch(0.35 0.2 240); /* Azul muy oscuro */
+  --sidebar: oklch(0.96 0 0); /* Blanco ligeramente tintado */
+  --sidebar-foreground: oklch(0.25 0.18 255); /* Azul oscuro más intenso */
+  --sidebar-primary: oklch(0.5 0.25 260); /* Azul medio más saturado */
+  --sidebar-primary-foreground: oklch(
+    0.98 0 0
+  ); /* Blanco ligeramente suavizado */
+  --sidebar-accent: oklch(
+    0.92 0.05 260
+  ); /* Azul muy claro con más saturación */
+  --sidebar-accent-foreground: oklch(0.2 0.2 255); /* Azul más oscuro */
+  --sidebar-border: oklch(
+    0.85 0.05 260
+  ); /* Azul claro para bordes - más visible */
+  --sidebar-ring: oklch(0.5 0.25 260); /* Azul medio más saturado */
 }
 
 .dark {
-  --background: oklch(0.2 0.1 250); /* Azul muy oscuro */
-  --foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --card: oklch(0.25 0.08 255); /* Azul oscuro */
-  --card-foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --popover: oklch(0.25 0.08 255); /* Azul oscuro */
-  --popover-foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --primary: oklch(0.6 0.15 260); /* Azul medio brillante */
-  --primary-foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --secondary: oklch(0.35 0.05 255); /* Azul oscuro medio */
-  --secondary-foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --muted: oklch(0.35 0.05 255); /* Azul oscuro medio */
-  --muted-foreground: oklch(0.8 0.05 260); /* Azul claro */
-  --accent: oklch(0.35 0.05 255); /* Azul oscuro medio */
-  --accent-foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --destructive: oklch(
-    0.7 0.2 20
-  ); /* Rojo para errores - mantenido por funcionalidad */
-  --border: oklch(1 0 0 / 15%); /* Blanco transparente */
-  --input: oklch(1 0 0 / 20%); /* Blanco transparente */
-  --ring: oklch(0.6 0.15 260); /* Azul medio brillante */
-  --chart-1: oklch(0.6 0.15 260); /* Azul medio brillante */
-  --chart-2: oklch(0.7 0.1 255); /* Azul claro */
-  --chart-3: oklch(0.8 0.1 260); /* Azul más claro */
-  --chart-4: oklch(0.5 0.15 265); /* Azul violáceo */
-  --chart-5: oklch(0.4 0.2 255); /* Azul oscuro saturado */
-  --sidebar: oklch(0.25 0.08 255); /* Azul oscuro */
-  --sidebar-foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --sidebar-primary: oklch(0.6 0.15 260); /* Azul medio brillante */
-  --sidebar-primary-foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --sidebar-accent: oklch(0.35 0.05 255); /* Azul oscuro medio */
-  --sidebar-accent-foreground: oklch(0.98 0 0); /* Blanco casi puro */
-  --sidebar-border: oklch(1 0 0 / 15%); /* Blanco transparente */
-  --sidebar-ring: oklch(0.6 0.15 260); /* Azul medio brillante */
+  /* Modo Oscuro - Modificado */
+  --background: oklch(0.15 0.12 250); /* Azul muy oscuro más profundo */
+  --foreground: oklch(0.98 0.02 260); /* Blanco con un toque azulado */
+  --card: oklch(0.22 0.1 255); /* Azul oscuro mejorado */
+  --card-foreground: oklch(0.98 0.02 260); /* Blanco con un toque azulado */
+  --popover: oklch(0.22 0.1 255); /* Azul oscuro mejorado */
+  --popover-foreground: oklch(0.98 0.02 260); /* Blanco con un toque azulado */
+  --primary: oklch(0.65 0.2 260); /* Azul medio más brillante */
+  --primary-foreground: oklch(0.98 0 0); /* Blanco puro */
+  --secondary: oklch(0.3 0.08 255); /* Azul oscuro medio con más presencia */
+  --secondary-foreground: oklch(
+    0.98 0.02 260
+  ); /* Blanco con un toque azulado */
+  --muted: oklch(0.3 0.08 255); /* Azul oscuro medio con más presencia */
+  --muted-foreground: oklch(0.85 0.1 260); /* Azul claro más luminoso */
+  --accent: oklch(0.3 0.08 255); /* Azul oscuro medio con más presencia */
+  --accent-foreground: oklch(0.98 0.02 260); /* Blanco con un toque azulado */
+  --destructive: oklch(0.7 0.25 20); /* Rojo para errores más visible */
+  --border: oklch(1 0.05 260 / 20%); /* Blanco azulado transparente */
+  --input: oklch(
+    1 0.05 260 / 25%
+  ); /* Blanco azulado transparente más visible */
+  --ring: oklch(0.65 0.2 260); /* Azul medio más brillante */
+  --chart-1: oklch(0.65 0.2 260); /* Azul medio brillante */
+  --chart-2: oklch(0.75 0.15 255); /* Azul claro */
+  --chart-3: oklch(0.85 0.1 260); /* Azul más claro */
+  --chart-4: oklch(0.55 0.22 265); /* Azul violáceo más intenso */
+  --chart-5: oklch(0.4 0.25 255); /* Azul oscuro más saturado */
+  --sidebar: oklch(0.18 0.1 255); /* Azul oscuro más profundo para sidebar */
+  --sidebar-foreground: oklch(0.98 0.02 260); /* Blanco con un toque azulado */
+  --sidebar-primary: oklch(0.65 0.2 260); /* Azul medio más brillante */
+  --sidebar-primary-foreground: oklch(0.98 0 0); /* Blanco puro */
+  --sidebar-accent: oklch(
+    0.3 0.08 255
+  ); /* Azul oscuro medio con más presencia */
+  --sidebar-accent-foreground: oklch(
+    0.98 0.02 260
+  ); /* Blanco con un toque azulado */
+  --sidebar-border: oklch(1 0.05 260 / 20%); /* Blanco azulado transparente */
+  --sidebar-ring: oklch(0.65 0.2 260); /* Azul medio más brillante */
 }
 
 @layer base {
