@@ -57,8 +57,13 @@ export default function ServicesEcommer() {
               <CardHeader>
                 <CardTitle>{service.name}</CardTitle>
                 <CardDescription>
-                  Descripcion: {service.description}
+                  {new Intl.NumberFormat("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                    minimumFractionDigits: 0,
+                  }).format(service.price)}
                 </CardDescription>
+                <CardDescription>{service.description}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {!imageError[service.id] && service.imgUrl ? (
@@ -84,7 +89,6 @@ export default function ServicesEcommer() {
                     <span>Sin imagen</span>
                   </div>
                 )}
-                <Badge>Disponible</Badge>
                 <Button className="w-full cursor-pointer">Solicitar</Button>
               </CardContent>
             </Card>

@@ -52,11 +52,11 @@ export function CartSheet() {
       );
 
       const mappedProducts = res.data.map((item: any) => ({
-        id: item.id.product.id,
-        name: item.id.product.name,
-        quantity: item.amount,
-        price: item.id.product.cost,
-        imgUrl: item.id.product.imgUrl,
+        id: item.product.id,
+        name: item.product.name,
+        quantity: Number(item.amount) || 0,
+        price: Number(item.product.cost) || 0,
+        imgUrl: item.product.imgUrl,
       }));
 
       setProducts(mappedProducts);
@@ -75,6 +75,7 @@ export function CartSheet() {
       }
 
       await iAxios.post(`${utils.baseUrl}/shoppingCart/confirm/${person.id}`);
+      await fetchCart();
       setIsOpen(false);
       setProducts([]);
       toast.success("Pedido confirmado exitosamente");

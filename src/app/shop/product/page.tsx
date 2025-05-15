@@ -79,18 +79,16 @@ export default function ProductsEcommer() {
 
     try {
       const shoppingCartProduct: IShoppingCartProduct = {
-        id: {
-          shoppingCart: {
-            client: {
-              person: {
-                id: person.id,
-              },
+        shoppingCart: {
+          client: {
+            person: {
+              id: person.id,
             },
-          } as IShoppingCart,
-          product: {
-            id: productId,
-          } as IProduct,
-        },
+          },
+        } as IShoppingCart,
+        product: {
+          id: productId,
+        } as IProduct,
         amount: 1,
       };
 
