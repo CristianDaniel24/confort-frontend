@@ -15,6 +15,17 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+export const images = [
+  "/carrusel_1.jpg",
+  "/carrusel_2.jpg",
+  "/carrusel_3.jpg",
+  "/colores_imagen.jpg",
+  "/colores2_imagen.jpg",
+  "/Logo-Confort.png",
+  "/señor_imagen.jpg",
+  "/silla_imagen.jpg",
+];
 
 export default function AboutUsPage() {
   // Estado para controlar si estamos en la parte superior de la página
@@ -134,14 +145,17 @@ export default function AboutUsPage() {
     {
       title: "Cuero Genuino",
       desc: "Trabajamos con las mejores pieles, ofreciendo durabilidad, elegancia y el prestigio que solo el cuero genuino puede brindar.",
+      image: "/silla_imagen.jpg", // ✅ existe en public/
     },
     {
       title: "Alcántara",
       desc: "Material premium con aspecto de gamuza que aporta un toque deportivo y lujoso, ideal para volantes, palancas y detalles.",
+      image: "/colores2_imagen.jpg", // ✅ existe en public/
     },
     {
       title: "Vinilo de Alta Resistencia",
       desc: "Alternativa práctica y duradera, resistente al agua, rayos UV y desgaste, disponible en diversos colores y texturas.",
+      image: "/colores_imagen.jpg", // ✅ existe en public/
     },
   ];
 
@@ -273,7 +287,6 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* Materials Section - Ajustado a página completa */}
       <section
         id="materials"
         className="h-screen flex flex-col justify-center px-4 md:px-8 bg-white text-black py-8 overflow-y-auto"
@@ -292,11 +305,11 @@ export default function AboutUsPage() {
                 <CardContent className="p-0">
                   <div className="h-48 bg-gray-100 overflow-hidden relative">
                     <img
-                      src="/api/placeholder/400/320"
+                      src={item.image}
                       alt={item.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="p-6 text-center bg-white border-t-2 border-[#00AEEF]">
                     <h3 className="text-xl font-semibold mb-3 text-black group-hover:text-[#00AEEF] transition-colors">
@@ -344,7 +357,7 @@ export default function AboutUsPage() {
             </div>
             <div className="bg-gray-900 overflow-hidden h-96 shadow-xl rounded-lg border-2 border-[#00AEEF]">
               <img
-                src="/api/placeholder/600/500"
+                src="/historia_imagen.png"
                 alt="Nuestro taller"
                 className="h-full w-full object-cover hover:scale-105 transition-transform duration-700"
               />
@@ -457,9 +470,16 @@ export default function AboutUsPage() {
             Ponte en contacto con nosotros hoy mismo y descubre cómo podemos
             ayudarte a crear un interior único y personalizado.
           </p>
-          <Button className="bg-[#00AEEF] hover:bg-[#0099d4] text-white px-8 py-3 rounded-full text-lg font-medium">
-            Contáctanos ahora
-          </Button>
+
+          <a
+            href="https://wa.me/573174109274"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button className="bg-[#00AEEF] hover:bg-[#0099d4] text-white px-8 py-3 rounded-full text-lg font-medium cursor-pointer">
+              Contáctanos ahora
+            </Button>
+          </a>
         </div>
       </section>
 
