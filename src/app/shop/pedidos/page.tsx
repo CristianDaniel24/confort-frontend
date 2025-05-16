@@ -40,6 +40,8 @@ export default function Pedidos() {
           setOrders([]);
           return;
         }
+
+        setOrders(res);
       } catch (error) {
         console.error("Error al obtener los pedidos:", error);
         toast.error("Ocurrió un error al obtener los pedidos.");
@@ -71,28 +73,40 @@ export default function Pedidos() {
 
   return (
     <div className="p-6 mt-20">
-      <h2 className="text-2xl font-bold mb-6">Mis pedidos</h2>
+      <h2 className="text-3xl font-bold mb-8 text-primary">Mis pedidos</h2>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {orders.map((order) => (
-          <Card key={order.id}>
+          <Card
+            key={order.id}
+            className="rounded-2xl border border-muted shadow-md hover:shadow-lg transition"
+          >
             <CardHeader>
-              <CardTitle>Pedido #{order.id}</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-lg text-black">
+                Pedido #{order.id}
+              </CardTitle>
+              <CardDescription className="text-sm text-muted-foreground">
                 Fecha: {new Date(order.date).toLocaleDateString()}
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
+
+            <CardContent className="space-y-3">
               <p className="text-sm text-muted-foreground">
-                Total:{" "}
+                <span className="font-medium text-foreground">Total:</span>{" "}
                 {new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
                   minimumFractionDigits: 0,
                 }).format(order.costTotal)}
               </p>
-              <p className="text-sm">
-                Estado: <Badge>{order.shoppingCart.status}</Badge>
+
+              <p className="text-sm text-foreground">
+                Estado:{" "}
+                <Badge variant="default" className="bg-blue-600 text-white">
+                  {order.shoppingCart.status}
+                </Badge>
               </p>
+
               <ul className="text-sm list-disc list-inside text-muted-foreground">
                 {order.shoppingCart.shoppingCartProduct?.map((prod) => (
                   <li key={`${prod.product.id}-${prod.amount}`}>
