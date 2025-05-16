@@ -16,8 +16,6 @@ import { toast } from "sonner";
 import { sessionUtils } from "@/app/utils/session.utils";
 import { billService } from "@/services/bill.service";
 import { IBill } from "@/types/bill-interface";
-import iAxios from "@/lib/axios-instance.utils";
-import { utils } from "@/lib/utils";
 
 export default function Pedidos() {
   const [orders, setOrders] = useState<IBill[]>([]);
@@ -35,43 +33,13 @@ export default function Pedidos() {
       }
 
       try {
-        // Obtener TODAS las facturas
-        const allBills = await billService.getAll();
+        // Se obtienen las facturas del cliente
+        const res = await billService.getBillByClientId(person.id);
 
-        // Filtrar facturas del cliente
-        /* */
-        const clientBills = allBills.filter(
-          (bill: IBill) => bill.shoppingCart?.client?.person_id === person.id
-        );
-
-        if (clientBills.length === 0) {
+        if (res.length === 0) {
           setOrders([]);
           return;
         }
-
-        // Obtener los productos con nombre
-        const res = await iAxios.get(
-          `${utils.baseUrl}/shoppingCart-product/client/${person.id}`
-        );
-
-        const productMap = res.data.reduce((acc: any, item: any) => {
-          acc[item.id] = item.product.name;
-          return acc;
-        }, {});
-
-        // Enriquecer productos en cada factura
-        const enrichedOrders = clientBills.map((bill) => ({
-          ...bill,
-          shoppingCart: {
-            ...bill.shoppingCart,
-            products: bill.shoppingCart.shoppingCartProduct.map((p: any) => ({
-              ...p,
-              name: productMap[p.id] || "Producto desconocido",
-            })),
-          },
-        }));
-
-        setOrders(enrichedOrders);
       } catch (error) {
         console.error("Error al obtener los pedidos:", error);
         toast.error("Ocurrió un error al obtener los pedidos.");
