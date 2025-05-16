@@ -13,6 +13,7 @@ import {
   ChevronUp,
   Menu,
   X,
+  Link,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -227,7 +228,7 @@ export default function AboutUsPage() {
         className="h-screen flex flex-col justify-center items-center text-center w-full relative px-4 md:px-8"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black -z-10"></div>
-        <div className="absolute inset-0 opacity-10 bg-[url('/api/placeholder/1920/1080')] bg-cover bg-center -z-10"></div>
+        <div className="absolute inset-0 opacity-10 bg-cover bg-center -z-10"></div>
 
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white relative">
           <span className="relative inline-block">
@@ -257,7 +258,11 @@ export default function AboutUsPage() {
           <span className="text-lg font-medium">Explora</span>
           <ChevronDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
         </Button>
-
+        <img
+          src="/Logo-Confort.png"
+          alt="Nuestro taller"
+          className="h-50 w-50 mt-15 rounded-full object-cover hover:scale-105 transition-transform duration-700"
+        />
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse">
           <MousePointer className="w-5 h-5 text-[#00AEEF]" />
           <p className="text-gray-400 text-sm mt-1">

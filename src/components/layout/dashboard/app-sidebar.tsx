@@ -6,6 +6,7 @@ import {
   Car,
   Hammer,
   KeySquare,
+  Package,
   PackageSearch,
   PersonStanding,
   Pickaxe,
@@ -82,6 +83,11 @@ const data = {
       name: "Servicios",
       url: "/home/service",
       icon: Route,
+    },
+    {
+      name: "Pedidos",
+      url: "/home/orders",
+      icon: Package,
     },
   ],
 };

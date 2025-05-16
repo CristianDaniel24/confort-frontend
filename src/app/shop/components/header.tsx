@@ -21,6 +21,7 @@ import { CircleUserRound, Cog, LogOut, Moon, Sun } from "lucide-react";
 import { authService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import Image from "next/image";
 
 function getInitialTheme(theme: string) {
   return theme === "dark" ? "light" : "dark";
@@ -73,9 +74,15 @@ export default function Header() {
       <div className="container mx-auto flex justify-between items-center px-4">
         <div className="flex items-center space-x-2">
           {/* Espacio para el logo */}
-          <div className="w-10 h-10 rounded-full bg-[#003366] flex items-center justify-center">
-            <span className="text-white font-bold text-xl">TC</span>
-          </div>
+          <Link href="/shop">
+            <Image
+              src="/Logo-Confort.png"
+              alt="Logo Tienda Confort"
+              width={40}
+              height={40}
+              className="rounded-full object-cover"
+            />
+          </Link>
 
           <Link
             href="/shop"
