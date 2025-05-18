@@ -63,35 +63,13 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center justify-between space-x-5 py-4">
         <Input
-          placeholder="Filtrar por nombre de los productos..."
-          value={
-            (table
-              .getColumn("shoppingCart.shoppingCartProduct.product.name")
-              ?.getFilterValue() as string) ?? ""
-          }
+          placeholder="Filtrar por nombre o email del cliente..."
+          value={(table.getColumn("client")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table
-              .getColumn("shoppingCart.shoppingCartProduct.product.name")
-              ?.setFilterValue(event.target.value)
+            table.getColumn("client")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
-        <TooltipProvider delayDuration={0}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="icon"
-                variant="outline"
-                className="ml-auto rounded-full cursor-pointer"
-                onClick={() => router.push(`${currentPath}/new`)}
-              >
-                <Plus />
-                <span className="sr-only">Rol nuevo</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent sideOffset={10}>Rol nuevo</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
       </div>
       <div className="rounded-md border">
         <Table>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Receipt, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 import {
   Card,
@@ -20,38 +21,53 @@ import { IBill } from "@/types/bill-interface";
 export default function Pedidos() {
   const [orders, setOrders] = useState<IBill[]>([]);
   const [loading, setLoading] = useState(true);
+  const [cancellingId, setCancellingId] = useState<number | null>(null); // para mostrar loader en botón
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      const person = sessionUtils.getPersonFromSession();
+  // ✅ Mover fetchOrders fuera del useEffect para reutilizarlo
+  const fetchOrders = async () => {
+    const person = sessionUtils.getPersonFromSession();
 
-      if (!person?.id) {
-        router.push("/auth/signin");
-        toast.error("Debes iniciar sesión para ver tus pedidos.");
+    if (!person?.id) {
+      router.push("/auth/signin");
+      toast.error("Debes iniciar sesión para ver tus pedidos.");
+      return;
+    }
+
+    try {
+      const res = await billService.getBillByClientId(person.id);
+
+      if (res.length === 0) {
+        setOrders([]);
         return;
       }
 
-      try {
-        // Se obtienen las facturas del cliente
-        const res = await billService.getBillByClientId(person.id);
+      setOrders(res);
+    } catch (error) {
+      console.error("Error al obtener los pedidos:", error);
+      toast.error("Ocurrió un error al obtener los pedidos.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        if (res.length === 0) {
-          setOrders([]);
-          return;
-        }
-
-        setOrders(res);
-      } catch (error) {
-        console.error("Error al obtener los pedidos:", error);
-        toast.error("Ocurrió un error al obtener los pedidos.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchOrders();
-  }, [router]);
+  }, []);
+
+  const handleCancelOrder = async (orderId: number) => {
+    try {
+      setCancellingId(orderId); // para mostrar loader solo en este botón
+      await billService.cancelOrder(orderId);
+      toast.success("Pedido cancelado con éxito!");
+      await fetchOrders(); // ✅ volver a cargar la lista de pedidos
+    } catch {
+      console.log("Hubo un error al cancelar el pedido");
+      toast.error("Ocurrió un error con tu petición");
+    } finally {
+      setCancellingId(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -73,7 +89,7 @@ export default function Pedidos() {
 
   return (
     <div className="p-6 mt-20">
-      <h2 className="text-3xl font-bold mb-8 text-primary">Mis pedidos</h2>
+      <h2 className="text-3xl font-bold mb-8 text-gray-900">Mis pedidos</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {orders.map((order) => (
@@ -114,6 +130,17 @@ export default function Pedidos() {
                   </li>
                 ))}
               </ul>
+
+              {order.shoppingCart.status === "CONFIRMADO" && (
+                <Button
+                  variant={"outline"}
+                  className="mt-2 cursor-pointer"
+                  disabled={cancellingId === order.id}
+                  onClick={() => handleCancelOrder(order.id)}
+                >
+                  Cancelar pedido
+                </Button>
+              )}
             </CardContent>
           </Card>
         ))}

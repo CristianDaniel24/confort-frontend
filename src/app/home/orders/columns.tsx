@@ -8,37 +8,109 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IBill } from "@/types/bill-interface";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import DeleteBillDialog from "./_components/bill-delete";
+import { IOrders } from "@/types/orders-interface";
+import { toast } from "sonner";
+import { billService } from "@/services/bill.service";
 
-export const columns: ColumnDef<IBill>[] = [
+export const columns: ColumnDef<IOrders>[] = [
   {
-    accessorKey: "shoppingCart.shoppingCartProduct.amount",
-    header: ({ column }) => {
+    id: "client",
+    header: "Cliente",
+    accessorFn: (row) => {
+      const person = row.shoppingCart.client.person;
+      return `${person?.firstName ?? ""} ${person?.lastName ?? ""} ${
+        person?.email ?? ""
+      }`;
+    },
+    cell: ({ row }) => {
+      const person = row.original.shoppingCart.client.person;
+      if (!person)
+        return <span className="text-muted-foreground">Sin cliente</span>;
+
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nombre
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <div>
+          {person.firstName} {person.lastName}
+          <div className="text-sm text-muted-foreground">{person.email}</div>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "shoppingCart.status",
+    header: "Estado",
+  },
+  {
+    accessorKey: "date",
+    header: "Fecha del pedido",
+    cell: ({ getValue }) => {
+      const rawDate = getValue() as string;
+      const date = new Date(rawDate);
+
+      const formattedDate = date.toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+
+      const formattedTime = date.toLocaleTimeString("es-ES", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      return (
+        <div>
+          <div>{formattedDate}</div>
+          <div className="text-sm text-muted-foreground">{formattedTime}</div>
+        </div>
       );
     },
   },
   {
     accessorKey: "costTotal",
     header: "Costo total",
+    cell: ({ getValue }) => {
+      const value = getValue() as number;
+      const formatted = new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: 0,
+      }).format(value);
+
+      return <span>{formatted}</span>;
+    },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const router = useRouter();
-      const currPath = usePathname();
       const element = row.original;
+      const currPath = usePathname();
+      const router = useRouter();
+
+      const handleConfirmOrder = async (orderId: number) => {
+        try {
+          await billService.confirmOrder(orderId);
+          router.refresh();
+          toast.success("Pedido confirmado con exito!");
+        } catch {
+          console.log("Hubo un error al confirmar el pedido");
+          toast.error("Ocurrio un error con tu peticion");
+        }
+      };
+
+      const handleCancelOrder = async (orderId: number) => {
+        try {
+          await billService.cancelOrder(orderId);
+          router.refresh();
+          toast.success("Pedido cancelado con exito!");
+        } catch {
+          console.log("Hubo un error al cancelar el pedido");
+          toast.error("Ocurrio un error con tu peticion");
+        }
+      };
 
       return (
         <DropdownMenu>
@@ -50,8 +122,16 @@ export const columns: ColumnDef<IBill>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={(e) => e.preventDefault()}>
-              <DeleteBillDialog id={element.id} />
+            <DropdownMenuItem
+              onClick={() => router.push(`${currPath}/${element.id}`)}
+            >
+              Ver
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleCancelOrder(element.id)}>
+              Cancelar pedido 🚫
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleConfirmOrder(element.id)}>
+              Confirmar Pedido ✅
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

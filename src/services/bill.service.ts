@@ -14,5 +14,19 @@ class BillService extends GenericService<IBill> {
     );
     return response.data;
   }
+
+  async confirmOrder(orderId: number) {
+    const response = await iAxios.get(
+      `${utils.baseUrl}/bill/confirmOrder/${orderId}`
+    );
+    return response.data;
+  }
+
+  async cancelOrder(orderId: number) {
+    const response = await iAxios.get(
+      `${utils.baseUrl}/bill/cancelOrder/${orderId}`
+    );
+    return response.data;
+  }
 }
 export const billService = new BillService();
