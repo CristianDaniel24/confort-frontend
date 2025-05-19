@@ -6,6 +6,7 @@ import {
   Car,
   Hammer,
   KeySquare,
+  Package,
   PackageSearch,
   PersonStanding,
   Pickaxe,
@@ -13,6 +14,7 @@ import {
   Settings2,
   ShoppingBasket,
   Truck,
+  User,
   UserPen,
 } from "lucide-react";
 
@@ -49,6 +51,11 @@ const data = {
       icon: UserPen,
     },
     {
+      name: "Clientes",
+      url: "/home/client",
+      icon: User,
+    },
+    {
       name: "Tipos de carros",
       url: "/home/typeCar",
       icon: KeySquare,
@@ -82,6 +89,11 @@ const data = {
       name: "Servicios",
       url: "/home/service",
       icon: Route,
+    },
+    {
+      name: "Pedidos",
+      url: "/home/orders",
+      icon: Package,
     },
   ],
 };

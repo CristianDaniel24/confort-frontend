@@ -46,12 +46,13 @@
 @media (prefers-color-scheme: light) {
   :root {
     --background: #ffffff;
-    --foreground: #0a2472;
+    --foreground: #0f172a; /* Cambiado a slate-900 */
   }
 }
 
 :root {
   --radius: 1rem;
+<<<<<<< HEAD
   /* Modo Claro - Modificado */
   --background: oklch(0.98 0 0); /* Blanco ligeramente suavizado */
   --foreground: oklch(0.25 0.18 255); /* Azul oscuro más intenso */
@@ -135,6 +136,81 @@
   ); /* Blanco con un toque azulado */
   --sidebar-border: oklch(1 0.05 260 / 20%); /* Blanco azulado transparente */
   --sidebar-ring: oklch(0.65 0.2 260); /* Azul medio más brillante */
+=======
+  --background: oklch(1 0 0); /* Blanco puro */
+  --foreground: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --card: oklch(1 0 0); /* Blanco puro */
+  --card-foreground: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --popover: oklch(1 0 0); /* Blanco puro */
+  --popover-foreground: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --primary: oklch(0.2 0.04 240); /* slate-900 en OKLCH - color principal */
+  --primary-foreground: oklch(0.97 0 0); /* Blanco casi puro */
+  --secondary: oklch(0.95 0.02 240); /* Versión muy clara de slate */
+  --secondary-foreground: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --muted: oklch(0.95 0.02 240); /* Versión muy clara de slate */
+  --muted-foreground: oklch(0.4 0.03 240); /* slate-600 aproximado */
+  --accent: oklch(0.95 0.02 240); /* Versión muy clara de slate */
+  --accent-foreground: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --destructive: oklch(
+    0.65 0.3 10
+  ); /* Rojo para errores - mantenido por funcionalidad */
+  --border: oklch(0.9 0.02 240); /* Versión clara de slate para bordes */
+  --input: oklch(0.9 0.02 240); /* Versión clara de slate para inputs */
+  --ring: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --chart-1: oklch(0.2 0.04 240); /* slate-900 */
+  --chart-2: oklch(0.3 0.03 240); /* slate-800 aproximado */
+  --chart-3: oklch(0.4 0.03 240); /* slate-700 aproximado */
+  --chart-4: oklch(0.5 0.03 240); /* slate-600 aproximado */
+  --chart-5: oklch(0.6 0.03 240); /* slate-500 aproximado */
+  --sidebar: oklch(0.98 0 0); /* Blanco casi puro */
+  --sidebar-foreground: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --sidebar-primary: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --sidebar-primary-foreground: oklch(0.97 0 0); /* Blanco casi puro */
+  --sidebar-accent: oklch(0.95 0.02 240); /* Versión muy clara de slate */
+  --sidebar-accent-foreground: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --sidebar-border: oklch(
+    0.9 0.02 240
+  ); /* Versión clara de slate para bordes */
+  --sidebar-ring: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+}
+
+.dark {
+  --background: oklch(0.15 0.03 240); /* Versión más oscura de slate-900 */
+  --foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --card: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --card-foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --popover: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --popover-foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --primary: oklch(
+    0.3 0.03 240
+  ); /* slate-800 aproximado - más visible en modo oscuro */
+  --primary-foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --secondary: oklch(0.25 0.03 240); /* Versión oscura de slate */
+  --secondary-foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --muted: oklch(0.25 0.03 240); /* Versión oscura de slate */
+  --muted-foreground: oklch(0.7 0.02 240); /* Versión clara de slate */
+  --accent: oklch(0.25 0.03 240); /* Versión oscura de slate */
+  --accent-foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --destructive: oklch(
+    0.7 0.2 20
+  ); /* Rojo para errores - mantenido por funcionalidad */
+  --border: oklch(1 0 0 / 15%); /* Blanco transparente */
+  --input: oklch(1 0 0 / 20%); /* Blanco transparente */
+  --ring: oklch(0.3 0.03 240); /* slate-800 aproximado */
+  --chart-1: oklch(0.3 0.03 240); /* slate-800 aproximado */
+  --chart-2: oklch(0.4 0.03 240); /* slate-700 aproximado */
+  --chart-3: oklch(0.5 0.03 240); /* slate-600 aproximado */
+  --chart-4: oklch(0.6 0.03 240); /* slate-500 aproximado */
+  --chart-5: oklch(0.7 0.02 240); /* slate-400 aproximado */
+  --sidebar: oklch(0.2 0.04 240); /* slate-900 en OKLCH */
+  --sidebar-foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --sidebar-primary: oklch(0.3 0.03 240); /* slate-800 aproximado */
+  --sidebar-primary-foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --sidebar-accent: oklch(0.25 0.03 240); /* Versión oscura de slate */
+  --sidebar-accent-foreground: oklch(0.98 0 0); /* Blanco casi puro */
+  --sidebar-border: oklch(1 0 0 / 15%); /* Blanco transparente */
+  --sidebar-ring: oklch(0.3 0.03 240); /* slate-800 aproximado */
+>>>>>>> develop
 }
 
 @layer base {
@@ -144,4 +220,107 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Animaciones adicionales - ajustadas para ser más lentas y naturales */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite; /* Aumentado de 6s a 8s */
+}
+
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85; /* Menos contraste: de 0.8 a 0.85 */
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 4s ease-in-out infinite; /* Aumentado de 3s a 4s */
+}
+
+/* Mejoras para transiciones - más lentas */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms; /* Aumentado de 300ms a 500ms */
+}
+
+/* Duración personalizada para transiciones */
+.duration-700 {
+  transition-duration: 700ms;
+}
+
+.duration-1000 {
+  transition-duration: 1000ms;
+}
+
+.duration-2000 {
+  transition-duration: 2000ms;
+}
+
+.duration-10000 {
+  transition-duration: 10000ms; /* 10 segundos para el zoom muy lento de imágenes */
+}
+
+/* Efectos de hover mejorados - más suaves */
+.hover-lift {
+  transition: transform 0.5s ease; /* Aumentado de 0.3s a 0.5s */
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px); /* Reducido de -5px a -4px */
+}
+
+/* Curva de aceleración más suave para todas las animaciones */
+.ease-out {
+  transition-timing-function: cubic-bezier(
+    0.16,
+    1,
+    0.3,
+    1
+  ); /* Curva más suave */
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(
+    0.65,
+    0,
+    0.35,
+    1
+  ); /* Curva más suave */
+}
+
+/* Gradientes y efectos de fondo */
+.bg-gradient-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0),
+    rgba(15, 23, 42, 0.8)
+  );
+}
+
+/* Mejoras para scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mejoras para focus */
+:focus-visible {
+  outline: 2px solid oklch(0.2 0.04 240);
+  outline-offset: 2px;
 }
