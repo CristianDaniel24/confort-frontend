@@ -10,13 +10,8 @@ import {
   Award,
   MousePointer,
   ChevronDown,
-  ChevronUp,
-  Menu,
-  X,
-  Link,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 export const images = [
   "/carrusel_1.jpg",
   "/carrusel_2.jpg",
@@ -31,45 +26,8 @@ export const images = [
 export default function AboutUsPage() {
   // Estado para controlar si estamos en la parte superior de la página
   const [isAtTop, setIsAtTop] = useState(true);
-  // Estado para controlar si estamos en la parte inferior de la página
-  const [isAtBottom, setIsAtBottom] = useState(false);
   // Estado para controlar si el menú de navegación está abierto
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
-
-  // Efecto para detectar la posición del scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      // Determinar si estamos en la parte superior (menos de 100px de scroll)
-      if (window.scrollY < 100) {
-        setIsAtTop(true);
-        setIsAtBottom(false);
-      }
-      // Determinar si estamos en la parte inferior (cerca del final del documento)
-      else if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 100
-      ) {
-        setIsAtTop(false);
-        setIsAtBottom(true);
-      }
-      // En algún punto intermedio
-      else {
-        setIsAtTop(false);
-        setIsAtBottom(false);
-      }
-    };
-
-    // Inicializar el estado basado en la posición inicial
-    handleScroll();
-
-    // Agregar el event listener
-    window.addEventListener("scroll", handleScroll);
-
-    // Limpiar el event listener cuando el componente se desmonte
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   // Toggle para abrir/cerrar el menú de navegación
   const toggleNavMenu = () => {
@@ -93,23 +51,6 @@ export default function AboutUsPage() {
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
       setIsNavMenuOpen(false); // Cerrar el menú después de seleccionar
-    }
-  };
-
-  // Función para desplazarse hacia arriba o abajo según la posición actual
-  const handleScrollToggle = () => {
-    if (isAtTop) {
-      // Si estamos en la parte superior, vamos completamente hacia abajo
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-    } else {
-      // Si estamos en cualquier otra posición, vamos completamente hacia arriba
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
     }
   };
 
@@ -146,17 +87,17 @@ export default function AboutUsPage() {
     {
       title: "Cuero Genuino",
       desc: "Trabajamos con las mejores pieles, ofreciendo durabilidad, elegancia y el prestigio que solo el cuero genuino puede brindar.",
-      image: "/silla_imagen.jpg", // ✅ existe en public/
+      image: "/silla_imagen.jpg",
     },
     {
       title: "Alcántara",
       desc: "Material premium con aspecto de gamuza que aporta un toque deportivo y lujoso, ideal para volantes, palancas y detalles.",
-      image: "/colores2_imagen.jpg", // ✅ existe en public/
+      image: "/colores2_imagen.jpg",
     },
     {
       title: "Vinilo de Alta Resistencia",
       desc: "Alternativa práctica y duradera, resistente al agua, rayos UV y desgaste, disponible en diversos colores y texturas.",
-      image: "/colores_imagen.jpg", // ✅ existe en public/
+      image: "/colores_imagen.jpg",
     },
   ];
 
@@ -204,7 +145,7 @@ export default function AboutUsPage() {
   ];
 
   return (
-    <main className="w-full max-w-full bg-black">
+    <main className="w-full max-w-full bg-white">
       {/* Estilos para animación fadeIn */}
       <style jsx global>{`
         @keyframes fadeIn {
@@ -230,7 +171,7 @@ export default function AboutUsPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black -z-10"></div>
         <div className="absolute inset-0 opacity-10 bg-cover bg-center -z-10"></div>
 
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white relative">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-black relative">
           <span className="relative inline-block">
             TAPICERIA
             <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-[#00AEEF]"></span>
@@ -241,7 +182,7 @@ export default function AboutUsPage() {
           </span>
         </h1>
 
-        <p className="text-lg md:text-xl text-gray-300 mx-auto leading-relaxed max-w-4xl font-light mb-8">
+        <p className="text-lg md:text-xl text-black mx-auto leading-relaxed max-w-4xl font-light mb-8">
           En Tapicería Automotriz Confort combinamos artesanía tradicional con
           diseños contemporáneos para brindarte máximo confort y estilo, creando
           espacios únicos que reflejan tu personalidad.
@@ -265,7 +206,7 @@ export default function AboutUsPage() {
         />
         <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse">
           <MousePointer className="w-5 h-5 text-[#00AEEF]" />
-          <p className="text-gray-400 text-sm mt-1">
+          <p className="text-white-400 text-sm mt-1">
             Desplázate para descubrir más
           </p>
         </div>
@@ -487,27 +428,6 @@ export default function AboutUsPage() {
           </a>
         </div>
       </section>
-
-      {/* Botón flotante único para scroll */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <button
-          onClick={handleScrollToggle}
-          className="bg-[#00AEEF] hover:bg-[#0099d4] text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 border-4 border-white flex flex-col items-center justify-center w-16 h-16"
-          aria-label={isAtTop ? "Ir hacia abajo" : "Ir hacia arriba"}
-        >
-          {isAtTop ? (
-            <>
-              <ChevronDown className="w-6 h-6" />
-              <span className="text-xs font-bold">Abajo</span>
-            </>
-          ) : (
-            <>
-              <ChevronUp className="w-6 h-6" />
-              <span className="text-xs font-bold">Arriba</span>
-            </>
-          )}
-        </button>
-      </div>
     </main>
   );
 }

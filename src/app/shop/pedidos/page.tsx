@@ -21,10 +21,9 @@ import { IBill } from "@/types/bill-interface";
 export default function Pedidos() {
   const [orders, setOrders] = useState<IBill[]>([]);
   const [loading, setLoading] = useState(true);
-  const [cancellingId, setCancellingId] = useState<number | null>(null); // para mostrar loader en botón
+  const [cancellingId, setCancellingId] = useState<number | null>(null);
   const router = useRouter();
 
-  // ✅ Mover fetchOrders fuera del useEffect para reutilizarlo
   const fetchOrders = async () => {
     const person = sessionUtils.getPersonFromSession();
 
@@ -57,10 +56,10 @@ export default function Pedidos() {
 
   const handleCancelOrder = async (orderId: number) => {
     try {
-      setCancellingId(orderId); // para mostrar loader solo en este botón
+      setCancellingId(orderId);
       await billService.cancelOrder(orderId);
       toast.success("Pedido cancelado con éxito!");
-      await fetchOrders(); // ✅ volver a cargar la lista de pedidos
+      await fetchOrders();
     } catch {
       console.log("Hubo un error al cancelar el pedido");
       toast.error("Ocurrió un error con tu petición");

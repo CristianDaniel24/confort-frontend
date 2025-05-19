@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Footer from "./components/Footer";
 import Header from "./components/header";
+import FloatingWhatsappButton from "./components/FloatingWhatsappButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,6 +13,7 @@ export default function ShopLayout({ children }: { children: ReactNode }) {
       <Header />
       <main className="flex-1 container mx-auto">{children}</main>
       <Footer />
+      <FloatingWhatsappButton />
     </div>
   );
 }

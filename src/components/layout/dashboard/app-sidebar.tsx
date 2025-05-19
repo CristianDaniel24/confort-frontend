@@ -14,6 +14,7 @@ import {
   Settings2,
   ShoppingBasket,
   Truck,
+  User,
   UserPen,
 } from "lucide-react";
 
@@ -48,6 +49,11 @@ const data = {
       name: "Empleados",
       url: "/home/employee",
       icon: UserPen,
+    },
+    {
+      name: "Clientes",
+      url: "/home/client",
+      icon: User,
     },
     {
       name: "Tipos de carros",

@@ -54,6 +54,31 @@ export default function OrderDetails({ params }: Readonly<Props>) {
     )}`;
   };
 
+  function SafeImage({ src, alt }: { src?: string; alt: string }) {
+    const [error, setError] = useState(false);
+
+    if (!src || error) {
+      return (
+        <div className="flex items-center justify-center w-14 h-14 rounded border bg-white">
+          <ImageOff className="w-5 h-5 text-muted-foreground" />
+        </div>
+      );
+    }
+
+    return (
+      <div className="relative w-14 h-14 rounded border overflow-hidden bg-white">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-contain"
+          onError={() => setError(true)}
+          unoptimized
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto p-8">
       <Card>
@@ -101,19 +126,10 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                 ) => (
                   <TableRow key={`${item.id}-${item.product.id}`}>
                     <TableCell className="flex items-center gap-3">
-                      {item.product.imgUrl ? (
-                        <div className="relative w-14 h-14 rounded border overflow-hidden bg-white">
-                          <Image
-                            src={item.product.imgUrl}
-                            alt={item.product.name}
-                            fill
-                            className="object-contain"
-                            unoptimized
-                          />
-                        </div>
-                      ) : (
-                        <ImageOff className="w-5 h-5 text-muted-foreground" />
-                      )}
+                      <SafeImage
+                        src={item.product.imgUrl}
+                        alt={item.product.name}
+                      />
                       <span className="text-base">{item.product.name}</span>
                     </TableCell>
                     <TableCell>{item.amount}</TableCell>

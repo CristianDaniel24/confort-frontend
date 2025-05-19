@@ -22,6 +22,11 @@ import { authService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 function getInitialTheme(theme: string) {
   return theme === "dark" ? "light" : "dark";
@@ -60,6 +65,7 @@ export default function Header() {
   const handleLogout = () => {
     authService.logOut();
     router.refresh();
+    router.push("/shop");
     toast.success("Cerraste sesion correctamente!");
   };
 
@@ -134,53 +140,63 @@ export default function Header() {
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] transition-all duration-300 group-hover:w-full"></span>
           </Link>
 
-          <div className="ml-2">
-            <CartSheet />
-          </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="ml-2">
+                <CartSheet />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Ver carrito</TooltipContent>
+          </Tooltip>
 
           {/* Dropdown de ShadCN */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="cursor-pointer">
-                Opciones
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {isLoggedIn && (
-                <DropdownMenuItem className="cursor-pointer">
-                  <CircleUserRound className="mr-2 h-4 w-4" />
-                  Perfil
-                </DropdownMenuItem>
-              )}
-              <DropdownMenuItem
-                onClick={handleTheme}
-                className="cursor-pointer"
-              >
-                {currTheme === "dark" ? (
-                  <>
-                    <Moon className="mr-2 h-4 w-4" /> Modo oscuro
-                  </>
-                ) : (
-                  <>
-                    <Sun className="mr-2 h-4 w-4" /> Modo claro
-                  </>
-                )}
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Cog />
-                Configuraciones
-              </DropdownMenuItem>
-              {isLoggedIn && (
-                <DropdownMenuItem
-                  onClick={handleLogout}
-                  className="cursor-pointer"
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Cerrar sesión
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="cursor-pointer">
+                    Opciones
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {isLoggedIn && (
+                    <DropdownMenuItem className="cursor-pointer">
+                      <CircleUserRound className="mr-2 h-4 w-4" />
+                      Perfil
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem
+                    onClick={handleTheme}
+                    className="cursor-pointer"
+                  >
+                    {currTheme === "dark" ? (
+                      <>
+                        <Moon className="mr-2 h-4 w-4" /> Modo oscuro
+                      </>
+                    ) : (
+                      <>
+                        <Sun className="mr-2 h-4 w-4" /> Modo claro
+                      </>
+                    )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    <Cog />
+                    Configuraciones
+                  </DropdownMenuItem>
+                  {isLoggedIn && (
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="cursor-pointer"
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Cerrar sesión
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Menú de usuario</TooltipContent>
+          </Tooltip>
         </nav>
 
         {/* Botón de menú móvil */}

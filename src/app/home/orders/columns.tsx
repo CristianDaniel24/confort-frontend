@@ -21,9 +21,7 @@ export const columns: ColumnDef<IOrders>[] = [
     header: "Cliente",
     accessorFn: (row) => {
       const person = row.shoppingCart.client.person;
-      return `${person?.firstName ?? ""} ${person?.lastName ?? ""} ${
-        person?.email ?? ""
-      }`;
+      return `${person?.firstName ?? ""} ${person?.lastName ?? ""}`;
     },
     cell: ({ row }) => {
       const person = row.original.shoppingCart.client.person;
@@ -33,7 +31,6 @@ export const columns: ColumnDef<IOrders>[] = [
       return (
         <div>
           {person.firstName} {person.lastName}
-          <div className="text-sm text-muted-foreground">{person.email}</div>
         </div>
       );
     },
@@ -112,6 +109,10 @@ export const columns: ColumnDef<IOrders>[] = [
         }
       };
 
+      const showOptions =
+        element.shoppingCart.status === "CONFIRMADO" ||
+        element.shoppingCart.status === "ACTIVO";
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -127,12 +128,18 @@ export const columns: ColumnDef<IOrders>[] = [
             >
               Ver
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleCancelOrder(element.id)}>
-              Cancelar pedido 🚫
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleConfirmOrder(element.id)}>
-              Confirmar Pedido ✅
-            </DropdownMenuItem>
+            {showOptions && (
+              <>
+                <DropdownMenuItem
+                  onClick={() => handleConfirmOrder(element.id)}
+                >
+                  Pagar pedido
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleCancelOrder(element.id)}>
+                  Cancelar pedido
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       );
