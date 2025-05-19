@@ -52,7 +52,7 @@ export default function TypeCarForm({ typeCar, onSubmit }: Readonly<Props>) {
             <FormItem>
               <FormLabel>Modelo</FormLabel>
               <FormControl>
-                <Input placeholder="Model" {...field} />
+                <Input placeholder="Modelo" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

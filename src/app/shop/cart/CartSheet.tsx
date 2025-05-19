@@ -26,11 +26,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { shoppingCartService } from "@/services/shoppingCart.service";
+import { IShoppingCartProduct } from "@/types/shoppingCartProduct-interface";
 
 interface CartProduct {
   id: number;
   name: string;
-  quantity: number;
+  amount: number;
   price: number;
   imgUrl: string;
 }
@@ -47,17 +49,25 @@ export function CartSheet() {
         toast.error("Ocurrio un error con tu peticion!");
         return;
       }
-      const res = await iAxios.get(
-        `${utils.baseUrl}/shoppingCart-product/client/${person.id}`
+      const res = await shoppingCartService.getShoppingCartByClientId(
+        person.id
       );
 
-      const mappedProducts = res.data.map((item: any) => ({
-        id: item.id.product.id,
-        name: item.id.product.name,
-        quantity: item.amount,
-        price: item.id.product.cost,
-        imgUrl: item.id.product.imgUrl,
-      }));
+      const productsArray = res.shoppingCartProduct;
+
+      if (!productsArray) {
+        return;
+      }
+
+      const mappedProducts = productsArray.map(
+        (item: IShoppingCartProduct) => ({
+          id: item.product.id,
+          name: item.product.name,
+          amount: Number(item.amount) || 0,
+          price: Number(item.product.cost) || 0,
+          imgUrl: item.product.imgUrl,
+        })
+      );
 
       setProducts(mappedProducts);
     } catch (error) {
@@ -75,6 +85,7 @@ export function CartSheet() {
       }
 
       await iAxios.post(`${utils.baseUrl}/shoppingCart/confirm/${person.id}`);
+      await fetchCart();
       setIsOpen(false);
       setProducts([]);
       toast.success("Pedido confirmado exitosamente");
@@ -111,7 +122,7 @@ export function CartSheet() {
   };
 
   const totalPrice = products.reduce(
-    (total, product) => total + product.price * product.quantity,
+    (total, product) => total + product.price * product.amount,
     0
   );
 
@@ -176,7 +187,7 @@ export function CartSheet() {
                   <div className="flex-1">
                     <p className="font-medium">{product.name}</p>
                     <p className="text-sm text-muted-foreground">
-                      Cantidad: {product.quantity}
+                      Cantidad: {product.amount}
                     </p>
                     <p className="text-sm text-muted-foreground">
                       Precio:{" "}
@@ -223,12 +234,12 @@ export function CartSheet() {
                       >
                         <span className="text-sm">{product.name}</span>
                         <span className="text-sm text-muted-foreground">
-                          x{product.quantity} –-{" "}
+                          x{product.amount} –-{" "}
                           {new Intl.NumberFormat("es-CO", {
                             style: "currency",
                             currency: "COP",
                             minimumFractionDigits: 0,
-                          }).format(product.price * product.quantity)}
+                          }).format(product.price * product.amount)}
                         </span>
                       </li>
                     ))}

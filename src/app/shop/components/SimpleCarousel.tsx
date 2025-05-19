@@ -16,9 +16,9 @@ interface Image {
 
 export function SimpleCarousel() {
   const images: Image[] = [
-    { id: 1, url: "/carrusel_1.jpg" },
-    { id: 2, url: "/carrusel_2.jpg" },
-    { id: 3, url: "/carrusel_3.jpg" },
+    { id: 1, url: "/carrusel_1.png" },
+    { id: 2, url: "/carrusel_2.png" },
+    { id: 3, url: "/carrusel_3.png" },
   ];
 
   return (

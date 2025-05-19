@@ -1,11 +1,5 @@
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
+import { Instagram, MessageCircle, Mail, Phone, MapPin } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -28,14 +22,35 @@ export default function Footer() {
               con elegancia y confort desde 2008.
             </p>
             <div className="flex space-x-6 mt-2">
-              <Facebook
-                className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
-                size={22}
-              />
-              <Instagram
-                className="text-gray-500 hover:text-pink-600 dark:text-gray-400 dark:hover:text-pink-400"
-                size={22}
-              />
+              <a
+                href="https://www.instagram.com/confort_industri?igsh=czZ1eGN2OHNrZXM5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center space-y-1"
+              >
+                <span className="text-sm text-gray-600 dark:text-gray-300">
+                  Instagram
+                </span>
+                <Instagram
+                  className="text-gray-500 hover:text-pink-600 dark:text-gray-400 dark:hover:text-pink-400"
+                  size={22}
+                />
+              </a>
+
+              <a
+                href="https://wa.me/573174109274"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center space-y-1"
+              >
+                <span className="text-sm text-gray-600 dark:text-gray-300">
+                  WhatsApp
+                </span>
+                <FaWhatsapp
+                  className="text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400"
+                  size={22}
+                />
+              </a>
             </div>
           </div>
 
@@ -46,19 +61,25 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li className="text-gray-600 dark:text-gray-300">
-                Retapizado de Muebles
+                Tapiceria personalizada
               </li>
               <li className="text-gray-600 dark:text-gray-300">
-                Diseño Personalizado
+                Modificacion de sillas
               </li>
               <li className="text-gray-600 dark:text-gray-300">
-                Restauración de Antigüedades
+                Tapiforros de lujo
               </li>
               <li className="text-gray-600 dark:text-gray-300">
-                Fabricación a Medida
+                Restauracion de interiores
               </li>
               <li className="text-gray-600 dark:text-gray-300">
-                Asesoría en Decoración
+                Tapetes, pisos, techos, baules y volantes
+              </li>
+              <li className="text-gray-600 dark:text-gray-300">
+                Trabajos en madera
+              </li>
+              <li className="text-gray-600 dark:text-gray-300">
+                Detailing y mas..
               </li>
             </ul>
           </div>
@@ -75,7 +96,7 @@ export default function Footer() {
                   size={18}
                 />
                 <span className="text-gray-600 dark:text-gray-300">
-                  Magdalena Calle 4 # 24 - 21, Sogamoso, Colombia.
+                  CRA 20a# 26-20📌 Barrio san antonio, Sogamoso - Colombia.
                 </span>
               </div>
               <div className="flex items-center space-x-3 justify-center md:justify-start">
@@ -84,7 +105,7 @@ export default function Footer() {
                   size={18}
                 />
                 <span className="text-gray-600 dark:text-gray-300">
-                  +57 322 470 5153
+                  +57 317 410 9274
                 </span>
               </div>
               <div className="flex items-center space-x-3 justify-center md:justify-start">
