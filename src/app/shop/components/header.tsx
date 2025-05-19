@@ -5,16 +5,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Components
 import { CartSheet } from "../cart/CartSheet";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetTitle,
-  SheetHeader,
-} from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -37,7 +31,6 @@ import {
   LogOut,
   Moon,
   Sun,
-  ShoppingCart,
   Menu,
   Home,
   Package,
@@ -128,7 +121,10 @@ export default function Header() {
 
   return (
     <TooltipProvider>
-      <header
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           scrolled
             ? "py-2 bg-white dark:bg-zinc-900 shadow-md"
@@ -136,24 +132,21 @@ export default function Header() {
         }`}
       >
         <div className="container mx-auto flex justify-between items-center px-4">
-          {/* Logo & Brand */}
+          {/* Logo & Brand - POSICIÓN ORIGINAL */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="flex items-center space-x-2">
-                <div className="w-10 h-10 rounded-full bg-[#003366] flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">TC</span>
-                </div>
-
-                <Link
-                  href="/shop"
-                  className="text-2xl font-bold text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors"
+              <Link href="/shop">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex justify-center items-center cursor-pointer text-white font-semibold bg-gradient-to-r from-[#002244] to-[#003366] px-7 py-3 rounded-full border border-[#004488] hover:text-blue-200 hover:border-blue-400 hover:from-[#003366] hover:to-[#00264d]"
                 >
-                  Tienda Confort
-                </Link>
-              </div>
+                  Tapicería Confort
+                </motion.button>
+              </Link>
             </TooltipTrigger>
             <TooltipContent side="bottom">
-              <p className="text-sm">Tienda Confort</p>
+              <p className="text-sm">Tapicería Confort</p>
             </TooltipContent>
           </Tooltip>
 
@@ -167,8 +160,19 @@ export default function Header() {
                     href={link.href}
                     className="font-medium text-[#003366] dark:text-[#FFFFFF] hover:text-blue-700 dark:hover:text-blue-200 transition-colors relative group"
                   >
-                    {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#003366] dark:bg-white transition-all duration-300 group-hover:w-full"></span>
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {link.label}
+                    </motion.span>
+                    <motion.span
+                      className="absolute -bottom-1 left-0 h-0.5 bg-[#003366] dark:bg-white"
+                      initial={{ width: 0 }}
+                      whileHover={{ width: "100%" }}
+                      transition={{ duration: 0.3 }}
+                    ></motion.span>
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">
@@ -191,17 +195,22 @@ export default function Header() {
                 </TooltipContent>
               </Tooltip>
 
-              {/* Authentication */}
+              {/* Authentication - MANTIENE POSICIÓN ORIGINAL PERO CON MISMO DISEÑO QUE EL LOGO */}
               {!isLoggedIn ? (
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Link href="/auth/signin">
-                      <Button
-                        variant="default"
-                        className="bg-[#003366] text-white hover:bg-[#00264d]"
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                       >
-                        Iniciar sesión
-                      </Button>
+                        <Button
+                          variant="default"
+                          className="bg-gradient-to-r from-[#002244] to-[#003366] text-white border border-[#004488] hover:text-blue-200 hover:border-blue-400 hover:from-[#003366] hover:to-[#00264d]"
+                        >
+                          Iniciar sesión
+                        </Button>
+                      </motion.div>
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent side="bottom">
@@ -224,49 +233,55 @@ export default function Header() {
                           <Cog className="h-5 w-5" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-56">
-                        {isLoggedIn && (
-                          <>
-                            <DropdownMenuItem className="cursor-pointer">
-                              <CircleUserRound className="mr-2 h-4 w-4" />
-                              Mi perfil
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                          </>
-                        )}
-
-                        <DropdownMenuItem
-                          onClick={toggleTheme}
-                          className="cursor-pointer"
+                      <DropdownMenuContent align="end" className="w-56" asChild>
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2 }}
                         >
-                          {currentTheme === "dark" ? (
+                          {isLoggedIn && (
                             <>
-                              <Sun className="mr-2 h-4 w-4" /> Modo claro
-                            </>
-                          ) : (
-                            <>
-                              <Moon className="mr-2 h-4 w-4" /> Modo oscuro
+                              <DropdownMenuItem className="cursor-pointer">
+                                <CircleUserRound className="mr-2 h-4 w-4" />
+                                Mi perfil
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
                             </>
                           )}
-                        </DropdownMenuItem>
 
-                        <DropdownMenuItem className="cursor-pointer">
-                          <Cog className="mr-2 h-4 w-4" />
-                          Configuraciones
-                        </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={toggleTheme}
+                            className="cursor-pointer"
+                          >
+                            {currentTheme === "dark" ? (
+                              <>
+                                <Sun className="mr-2 h-4 w-4" /> Modo claro
+                              </>
+                            ) : (
+                              <>
+                                <Moon className="mr-2 h-4 w-4" /> Modo oscuro
+                              </>
+                            )}
+                          </DropdownMenuItem>
 
-                        {isLoggedIn && (
-                          <>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                              onClick={handleLogout}
-                              className="cursor-pointer text-red-500 focus:text-red-500"
-                            >
-                              <LogOut className="mr-2 h-4 w-4" />
-                              Cerrar sesión
-                            </DropdownMenuItem>
-                          </>
-                        )}
+                          <DropdownMenuItem className="cursor-pointer">
+                            <Cog className="mr-2 h-4 w-4" />
+                            Configuraciones
+                          </DropdownMenuItem>
+
+                          {isLoggedIn && (
+                            <>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                onClick={handleLogout}
+                                className="cursor-pointer text-red-500 focus:text-red-500"
+                              >
+                                <LogOut className="mr-2 h-4 w-4" />
+                                Cerrar sesión
+                              </DropdownMenuItem>
+                            </>
+                          )}
+                        </motion.div>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
@@ -293,29 +308,44 @@ export default function Header() {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
                   className="flex flex-col justify-center items-center w-10 h-10 rounded-md border border-gray-200 dark:border-gray-700"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                   aria-label="Toggle menu"
                 >
-                  <Menu
-                    className={`w-5 h-5 text-[#003366] dark:text-white transition-all ${
-                      mobileMenuOpen ? "hidden" : "block"
-                    }`}
-                  />
-                  <span
-                    className={`block w-5 h-0.5 bg-[#003366] dark:bg-white transition-all duration-300 mb-1 ${
-                      mobileMenuOpen
-                        ? "transform rotate-45 translate-y-1.5"
-                        : "hidden"
-                    }`}
-                  ></span>
-                  <span
-                    className={`block w-5 h-0.5 bg-[#003366] dark:bg-white transition-all duration-300 ${
-                      mobileMenuOpen ? "transform -rotate-45" : "hidden"
-                    }`}
-                  ></span>
-                </button>
+                  <AnimatePresence mode="wait">
+                    {!mobileMenuOpen ? (
+                      <motion.div
+                        key="menu"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Menu className="w-5 h-5 text-[#003366] dark:text-white" />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="close"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="relative w-5 h-5"
+                      >
+                        <motion.span
+                          className="absolute top-2.5 left-0 block w-5 h-0.5 bg-[#003366] dark:bg-white"
+                          animate={{ rotate: 45 }}
+                        ></motion.span>
+                        <motion.span
+                          className="absolute top-2.5 left-0 block w-5 h-0.5 bg-[#003366] dark:bg-white"
+                          animate={{ rotate: -45 }}
+                        ></motion.span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
               </TooltipTrigger>
               <TooltipContent side="bottom">
                 <p className="text-sm">Menú</p>
@@ -325,128 +355,156 @@ export default function Header() {
         </div>
 
         {/* Mobile Menu */}
-        <div
-          className={`md:hidden fixed inset-x-0 top-16 shadow-lg bg-white dark:bg-zinc-800 transition-all duration-300 z-40 ${
-            mobileMenuOpen
-              ? "max-h-screen opacity-100"
-              : "max-h-0 opacity-0 pointer-events-none"
-          } overflow-hidden`}
-        >
-          <div className="container mx-auto px-4 py-2">
-            <div className="flex flex-col space-y-3 py-2">
-              {/* Mobile Navigation Links */}
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="flex items-center font-medium py-2 px-3 rounded-md text-[#003366] dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.icon}
-                  <div className="flex flex-col">
-                    <span>{link.label}</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      {link.description}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-
-              {/* Authentication for mobile */}
-              {!isLoggedIn ? (
-                <Link
-                  href="/auth/signin"
-                  className="w-full"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Button
-                    variant="default"
-                    className="w-full bg-[#003366] text-white hover:bg-[#00264d]"
-                  >
-                    Iniciar sesión
-                  </Button>
-                </Link>
-              ) : (
-                <Link
-                  href="/shop/profile"
-                  className="flex items-center font-medium py-2 px-3 rounded-md text-[#003366] dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <CircleUserRound className="h-4 w-4 mr-2" />
-                  <div className="flex flex-col">
-                    <span>Mi perfil</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      Gestionar cuenta
-                    </span>
-                  </div>
-                </Link>
-              )}
-
-              {/* Theme Toggle */}
-              <button
-                onClick={() => {
-                  toggleTheme();
-                }}
-                className="flex items-center font-medium py-2 px-3 rounded-md text-[#003366] dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700 w-full text-left"
-              >
-                {currentTheme === "dark" ? (
-                  <>
-                    <Sun className="h-4 w-4 mr-2" />
-                    <div className="flex flex-col">
-                      <span>Modo claro</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        Cambiar tema
-                      </span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <Moon className="h-4 w-4 mr-2" />
-                    <div className="flex flex-col">
-                      <span>Modo oscuro</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        Cambiar tema
-                      </span>
-                    </div>
-                  </>
-                )}
-              </button>
-
-              {/* Settings */}
-              <Link
-                href="/shop/settings"
-                className="flex items-center font-medium py-2 px-3 rounded-md text-[#003366] dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Cog className="h-4 w-4 mr-2" />
-                <div className="flex flex-col">
-                  <span>Configuraciones</span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    Preferencias
-                  </span>
-                </div>
-              </Link>
-
-              {/* Logout for mobile */}
-              {isLoggedIn && (
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setMobileMenuOpen(false);
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="md:hidden fixed inset-x-0 top-16 shadow-lg bg-white dark:bg-zinc-800 z-40 overflow-hidden"
+            >
+              <div className="container mx-auto px-4 py-2">
+                <motion.div
+                  className="flex flex-col space-y-3 py-2"
+                  initial="closed"
+                  animate="open"
+                  variants={{
+                    open: {
+                      transition: {
+                        staggerChildren: 0.07,
+                      },
+                    },
+                    closed: {
+                      transition: {
+                        staggerChildren: 0.05,
+                        staggerDirection: -1,
+                      },
+                    },
                   }}
-                  className="flex items-center font-medium py-2 px-3 rounded-md text-red-500 hover:bg-gray-100 dark:hover:bg-zinc-700 w-full text-left"
                 >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  <div className="flex flex-col">
-                    <span>Cerrar sesión</span>
-                    <span className="text-xs text-gray-400">Salir</span>
-                  </div>
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+                  {/* Mobile Navigation Links */}
+                  {navLinks.map((link) => (
+                    <motion.div
+                      key={link.href}
+                      variants={{
+                        open: { y: 0, opacity: 1 },
+                        closed: { y: 20, opacity: 0 },
+                      }}
+                    >
+                      <Link
+                        href={link.href}
+                        className="flex items-center font-medium py-2 px-3 rounded-md text-[#003366] dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {link.icon}
+                        <div className="flex flex-col">
+                          <span>{link.label}</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            {link.description}
+                          </span>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+
+                  {/* Authentication for mobile - MISMO ESTILO */}
+                  {!isLoggedIn ? (
+                    <Link
+                      href="/auth/signin"
+                      className="w-full"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Button
+                        variant="default"
+                        className="w-full bg-gradient-to-r from-[#002244] to-[#003366] text-white border border-[#004488] hover:scale-105 duration-200 hover:text-blue-200 hover:border-blue-400 hover:from-[#003366] hover:to-[#00264d]"
+                      >
+                        Iniciar sesión
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/shop/profile"
+                      className="flex items-center font-medium py-2 px-3 rounded-md text-[#003366] dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <CircleUserRound className="h-4 w-4 mr-2" />
+                      <div className="flex flex-col">
+                        <span>Mi perfil</span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          Gestionar cuenta
+                        </span>
+                      </div>
+                    </Link>
+                  )}
+
+                  {/* Theme Toggle */}
+                  <button
+                    onClick={() => {
+                      toggleTheme();
+                    }}
+                    className="flex items-center font-medium py-2 px-3 rounded-md text-[#003366] dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700 w-full text-left"
+                  >
+                    {currentTheme === "dark" ? (
+                      <>
+                        <Sun className="h-4 w-4 mr-2" />
+                        <div className="flex flex-col">
+                          <span>Modo claro</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            Cambiar tema
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Moon className="h-4 w-4 mr-2" />
+                        <div className="flex flex-col">
+                          <span>Modo oscuro</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            Cambiar tema
+                          </span>
+                        </div>
+                      </>
+                    )}
+                  </button>
+
+                  {/* Settings */}
+                  <Link
+                    href="/shop/settings"
+                    className="flex items-center font-medium py-2 px-3 rounded-md text-[#003366] dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Cog className="h-4 w-4 mr-2" />
+                    <div className="flex flex-col">
+                      <span>Configuraciones</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Preferencias
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Logout for mobile */}
+                  {isLoggedIn && (
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="flex items-center font-medium py-2 px-3 rounded-md text-red-500 hover:bg-gray-100 dark:hover:bg-zinc-700 w-full text-left"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      <div className="flex flex-col">
+                        <span>Cerrar sesión</span>
+                        <span className="text-xs text-gray-400">Salir</span>
+                      </div>
+                    </button>
+                  )}
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.header>
     </TooltipProvider>
   );
 }

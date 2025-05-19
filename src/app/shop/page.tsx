@@ -13,8 +13,10 @@ import {
   ChevronUp,
   Menu,
   X,
+  Package,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function AboutUsPage() {
   // Estado para controlar si estamos en la parte superior de la página
@@ -68,6 +70,7 @@ export default function AboutUsPage() {
   const navLinks = [
     { id: "hero", label: "Inicio" },
     { id: "projects", label: "Proyectos" },
+    { id: "products", label: "Productos" },
     { id: "materials", label: "Materiales" },
     { id: "history", label: "Historia" },
     { id: "services", label: "Servicios" },
@@ -273,6 +276,100 @@ export default function AboutUsPage() {
         </div>
       </section>
 
+      {/* Products Section - Ajustado a página completa */}
+      <section
+        id="products"
+        className="h-screen flex flex-col justify-center px-4 md:px-8 bg-gray-950 py-8 overflow-y-auto"
+      >
+        <div className="max-w-6xl mx-auto w-full">
+          <h2 className="text-3xl font-bold text-center mb-4 text-white relative w-fit mx-auto">
+            Nuestros Productos
+            <span className="absolute -bottom-2 left-0 w-full h-1.5 bg-[#00AEEF]"></span>
+          </h2>
+          <p className="text-center text-gray-400 mb-8 mx-auto max-w-3xl">
+            Descubre nuestra selección de productos especializados para
+            tapicería automotriz, desde materiales premium hasta kits y
+            accesorios para personalizar tu vehículo.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Tarjeta de producto 1 */}
+            <div className="bg-black rounded-lg overflow-hidden border border-gray-800 group hover:border-[#00AEEF] transition-all duration-500">
+              <div className="h-48 overflow-hidden">
+                <img
+                  src="/api/placeholder/400/320"
+                  alt="Kit de cuero premium"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-white">
+                  Kit de Cuero Premium
+                </h3>
+                <p className="text-gray-400 mb-4">
+                  Kit completo de cuero genuino para tapizar asientos, incluye
+                  material e hilos.
+                </p>
+                <div className="flex justify-between items-center">
+                  <button className="bg-[#00AEEF] hover:bg-[#0099d4] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                    Ver detalles
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Tarjeta de producto 2 */}
+            <div className="bg-black rounded-lg overflow-hidden border border-gray-800 group hover:border-[#00AEEF] transition-all duration-500">
+              <div className="h-48 overflow-hidden">
+                <img
+                  src="/api/placeholder/400/320"
+                  alt="Alcántara premium"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-white">
+                  Alcántara Premium
+                </h3>
+                <p className="text-gray-400 mb-4">
+                  Material de alta calidad para volantes, palancas y detalles
+                  deportivos.
+                </p>
+                <div className="flex justify-between items-center">
+                  <button className="bg-[#00AEEF] hover:bg-[#0099d4] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                    Ver detalles
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Tarjeta de producto 3 */}
+            <div className="bg-black rounded-lg overflow-hidden border border-gray-800 group hover:border-[#00AEEF] transition-all duration-500">
+              <div className="h-48 overflow-hidden">
+                <img
+                  src="/api/placeholder/400/320"
+                  alt="Kit de herramientas"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-white">
+                  Kit de Herramientas
+                </h3>
+                <p className="text-gray-400 mb-4">
+                  Set completo de herramientas especializadas para trabajos de
+                  tapicería.
+                </p>
+                <div className="flex justify-between items-center">
+                  <button className="bg-[#00AEEF] hover:bg-[#0099d4] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                    Ver detalles
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Materials Section - Ajustado a página completa */}
       <section
         id="materials"
@@ -457,9 +554,17 @@ export default function AboutUsPage() {
             Ponte en contacto con nosotros hoy mismo y descubre cómo podemos
             ayudarte a crear un interior único y personalizado.
           </p>
-          <Button className="bg-[#00AEEF] hover:bg-[#0099d4] text-white px-8 py-3 rounded-full text-lg font-medium">
-            Contáctanos ahora
-          </Button>
+          <Link href="/shop/product">
+            <button className="overflow-hidden relative w-48 p-2 h-14 bg-black text-white border-2 border-[#00AEEF] rounded-md text-xl font-bold cursor-pointer z-10 group">
+              Ir a la tienda
+              <span className="absolute w-56 h-32 -top-8 -left-2 bg-[#00AEEF]/30 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-bottom"></span>
+              <span className="absolute w-56 h-32 -top-8 -left-2 bg-[#00AEEF]/60 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-bottom"></span>
+              <span className="absolute w-56 h-32 -top-8 -left-2 bg-[#00AEEF] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-1000 duration-500 origin-bottom"></span>
+              <span className="group-hover:opacity-100 group-hover:duration-1000 duration-100 opacity-0 absolute top-3.5 left-9 z-10">
+                Ir a la tienda
+              </span>
+            </button>
+          </Link>
         </div>
       </section>
 
