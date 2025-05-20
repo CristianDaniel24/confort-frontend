@@ -13,7 +13,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Car,
   Scissors,
@@ -22,6 +21,8 @@ import {
   PenToolIcon as Tools,
   Users,
   ChevronRight,
+  Clock,
+  Award,
 } from "lucide-react";
 
 // Modificar el componente FadeIn para que las animaciones sean más lentas y naturales
@@ -212,9 +213,9 @@ export default function Home() {
                     size="lg"
                     variant="outline"
                     className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
-                    onClick={() => scrollToSection("productos")}
+                    onClick={() => scrollToSection("historia")}
                   >
-                    Catálogo de Productos
+                    Nuestra Historia
                   </Button>
                 </div>
               </div>
@@ -331,9 +332,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Productos Section - Adaptado para modo oscuro */}
+      {/* Historia de la Tapicería - Nueva sección que reemplaza a Productos Destacados */}
       <section
-        id="productos"
+        id="historia"
         className="w-full py-12 md:py-24 lg:py-32 bg-background relative"
       >
         {/* Elementos decorativos */}
@@ -347,166 +348,138 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-foreground inline-block relative">
-                  Productos Destacados
+                  Nuestra Historia
                   <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary rounded-full"></span>
                 </h2>
                 <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mt-4">
-                  Materiales de alta calidad para renovar tu vehículo
+                  Tradición y excelencia en tapicería automotriz desde 1985
                 </p>
               </div>
             </div>
           </FadeIn>
 
-          <FadeIn delay={200}>
-            <Tabs
-              defaultValue="cuero"
-              className="mt-12 w-full max-w-5xl mx-auto"
-            >
-              <TabsList className="grid w-full grid-cols-3 bg-muted p-1 rounded-lg">
-                <TabsTrigger
-                  value="cuero"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
-                >
-                  Cuero
-                </TabsTrigger>
-                <TabsTrigger
-                  value="tela"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
-                >
-                  Tela
-                </TabsTrigger>
-                <TabsTrigger
-                  value="accesorios"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
-                >
-                  Accesorios
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="cuero" className="mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[1, 2, 3].map((item) => (
-                    <FadeIn key={item} delay={item * 100}>
-                      <AnimatedCard>
-                        <Card className="overflow-hidden border-2 border-border h-full">
-                          <div className="relative h-48 w-full overflow-hidden">
-                            <Image
-                              src={`/placeholder.svg?height=200&width=300`}
-                              alt={`Cuero premium tipo ${item}`}
-                              fill
-                              className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </div>
-                          <CardHeader>
-                            <CardTitle className="text-card-foreground">
-                              Cuero Premium Tipo {item}
-                            </CardTitle>
-                            <CardDescription>
-                              Material resistente y elegante
-                            </CardDescription>
-                          </CardHeader>
-                          <CardFooter className="flex justify-between">
-                            <p className="font-semibold text-card-foreground">
-                              $299.99
-                            </p>
-                            <Button
-                              size="sm"
-                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
-                            >
-                              Ver Detalles
-                            </Button>
-                          </CardFooter>
-                        </Card>
-                      </AnimatedCard>
-                    </FadeIn>
-                  ))}
+          <div className="mx-auto max-w-5xl mt-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <FadeIn delay={100} direction="right">
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                      <Clock className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">
+                      Más de tres décadas de experiencia
+                    </h3>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Nuestra historia comenzó en un pequeño taller familiar en
+                    1985, cuando Don Roberto Méndez, maestro tapicero con más de
+                    15 años de experiencia, decidió especializarse en la
+                    tapicería automotriz de alta gama.
+                  </p>
+                  <div className="flex items-center space-x-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                      <Award className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">
+                      Evolución y reconocimiento
+                    </h3>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Con el paso de los años, nuestro taller ha evolucionado
+                    incorporando las técnicas más modernas y materiales de
+                    vanguardia, sin perder la esencia del trabajo artesanal que
+                    nos caracteriza. Hemos sido reconocidos por las principales
+                    marcas de automóviles como taller de confianza para
+                    restauraciones y personalizaciones.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Hoy, la segunda generación de la familia Méndez continúa el
+                    legado, combinando la tradición con la innovación para
+                    ofrecer soluciones de tapicería que superan las expectativas
+                    de nuestros clientes más exigentes.
+                  </p>
+                  <div className="pt-4">
+                    <Button
+                      className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 group"
+                      onClick={() => scrollToSection("testimonios")}
+                    >
+                      Conoce a nuestro equipo
+                      <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
+                    </Button>
+                  </div>
                 </div>
-              </TabsContent>
+              </FadeIn>
 
-              <TabsContent value="tela" className="mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[1, 2, 3].map((item) => (
-                    <FadeIn key={item} delay={item * 100}>
-                      <AnimatedCard>
-                        <Card className="overflow-hidden border-2 border-border h-full">
-                          <div className="relative h-48 w-full overflow-hidden">
-                            <Image
-                              src={`/placeholder.svg?height=200&width=300`}
-                              alt={`Tela automotriz modelo ${item}`}
-                              fill
-                              className="object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </div>
-                          <CardHeader>
-                            <CardTitle className="text-card-foreground">
-                              Tela Automotriz Modelo {item}
-                            </CardTitle>
-                            <CardDescription>
-                              Durable y fácil de limpiar
-                            </CardDescription>
-                          </CardHeader>
-                          <CardFooter className="flex justify-between">
-                            <p className="font-semibold text-card-foreground">
-                              $199.99
-                            </p>
-                            <Button
-                              size="sm"
-                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
-                            >
-                              Ver Detalles
-                            </Button>
-                          </CardFooter>
-                        </Card>
-                      </AnimatedCard>
-                    </FadeIn>
-                  ))}
+              <FadeIn delay={300} direction="left">
+                <div className="relative h-[400px] lg:h-[500px] overflow-hidden rounded-xl shadow-xl">
+                  <Image
+                    src="/historia_imagen.png"
+                    alt="Taller de tapicería en los años 80"
+                    fill
+                    className="object-cover transition-transform duration-1000 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <div className="bg-background/80 backdrop-blur-sm p-4 rounded-lg">
+                      <p className="text-foreground font-medium">
+                        Don Roberto Méndez en su taller original, 1985
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </TabsContent>
+              </FadeIn>
+            </div>
 
-              <TabsContent value="accesorios" className="mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[1, 2, 3].map((item) => (
-                    <FadeIn key={item} delay={item * 100}>
-                      <AnimatedCard>
-                        <Card className="overflow-hidden border-2 border-border h-full">
-                          <div className="relative h-48 w-full overflow-hidden">
-                            <Image
-                              src={`/placeholder.svg?height=200&width=300`}
-                              alt={`Accesorio para tapicería ${item}`}
-                              fill
-                              className="object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </div>
-                          <CardHeader>
-                            <CardTitle className="text-card-foreground">
-                              Accesorio Premium {item}
-                            </CardTitle>
-                            <CardDescription>
-                              Complementos para tu tapicería
-                            </CardDescription>
-                          </CardHeader>
-                          <CardFooter className="flex justify-between">
-                            <p className="font-semibold text-card-foreground">
-                              $99.99
-                            </p>
-                            <Button
-                              size="sm"
-                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
-                            >
-                              Ver Detalles
-                            </Button>
-                          </CardFooter>
-                        </Card>
-                      </AnimatedCard>
-                    </FadeIn>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
-          </FadeIn>
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <FadeIn delay={100}>
+                <Card className="border-2 border-primary/10 bg-card">
+                  <CardHeader>
+                    <CardTitle className="text-card-foreground text-center">
+                      1985
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-card-foreground/80 text-center">
+                      Fundación del taller familiar especializado en tapicería
+                      automotriz clásica, innovando en la tapiceria automotriz
+                      del sector
+                    </p>
+                  </CardContent>
+                </Card>
+              </FadeIn>
+              <FadeIn delay={200}>
+                <Card className="border-2 border-primary/10 bg-card">
+                  <CardHeader>
+                    <CardTitle className="text-card-foreground text-center">
+                      2005
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-card-foreground/80 text-center">
+                      Expansión del negocio e incorporación de nuevos servicios,
+                      materiales y nuevos productos a la venta
+                    </p>
+                  </CardContent>
+                </Card>
+              </FadeIn>
+              <FadeIn delay={300}>
+                <Card className="border-2 border-primary/10 bg-card">
+                  <CardHeader>
+                    <CardTitle className="text-card-foreground text-center">
+                      Hoy
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-card-foreground/80 text-center">
+                      Reconocidos en la ciudad de Sogamoso por sus servicios y
+                      su buen trabajo de tapizado, restauracion y
+                      personalizacion
+                    </p>
+                  </CardContent>
+                </Card>
+              </FadeIn>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -698,19 +671,17 @@ export default function Home() {
             <div className="flex flex-col gap-4 min-[400px]:flex-row justify-center mt-8">
               <Button
                 size="lg"
-                variant="outline"
-                className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
-                onClick={() => scrollToSection("productos")}
+                className="bg-background text-primary hover:bg-background/90 transition-all duration-500 hover:shadow-lg hover:shadow-background/20 group cursor-pointer"
               >
                 Solicitar Cotización
+                <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
               </Button>
               <Button
                 size="lg"
-                className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 group"
-                onClick={() => scrollToSection("servicios")}
+                variant="outline"
+                className="border-background text-primary-foreground hover:bg-primary-foreground/10 transition-all duration-300 hover:shadow-lg hover:shadow-background/10 cursor-pointer"
               >
                 Ver Galería de Trabajos
-                <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
               </Button>
             </div>
           </FadeIn>
