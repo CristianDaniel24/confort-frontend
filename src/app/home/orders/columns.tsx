@@ -14,6 +14,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { IOrders } from "@/types/orders-interface";
 import { toast } from "sonner";
 import { billService } from "@/services/bill.service";
+import { ConfirmOrderDialog } from "./_components/ConfirmOrderDialog";
+import { useState } from "react";
+import { IPayment } from "@/types/payment-interface";
 
 export const columns: ColumnDef<IOrders>[] = [
   {
@@ -87,14 +90,31 @@ export const columns: ColumnDef<IOrders>[] = [
       const currPath = usePathname();
       const router = useRouter();
 
-      const handleConfirmOrder = async (orderId: number) => {
+      const [dialogOpen, setDialogOpen] = useState(false);
+      const [selectedOrderId, setSelectedOrderId] = useState<number | null>(
+        null
+      );
+
+      const openPaymentDialog = (orderId: number) => {
+        setSelectedOrderId(orderId);
+        setDialogOpen(true);
+      };
+
+      const handleDialogConfirm = async (paymentMethod: string) => {
+        if (!selectedOrderId) return;
         try {
-          await billService.confirmOrder(orderId);
-          router.refresh();
-          toast.success("Pedido confirmado con exito!");
-        } catch {
-          console.log("Hubo un error al confirmar el pedido");
-          toast.error("Ocurrio un error con tu peticion");
+          console.log("Metodo de pago:", paymentMethod);
+          const payment: IPayment = {
+            method: paymentMethod,
+          };
+
+          await billService.confirmOrder(selectedOrderId, payment);
+          toast.success("Pedido confirmado con éxito");
+          window.location.reload();
+        } catch (error) {
+          toast.error("Error al confirmar el pedido");
+        } finally {
+          setDialogOpen(false);
         }
       };
 
@@ -102,10 +122,10 @@ export const columns: ColumnDef<IOrders>[] = [
         try {
           await billService.cancelOrder(orderId);
           router.refresh();
-          toast.success("Pedido cancelado con exito!");
+          toast.success("Pedido cancelado con éxito");
+          router.push("/home/orders");
         } catch {
-          console.log("Hubo un error al cancelar el pedido");
-          toast.error("Ocurrio un error con tu peticion");
+          toast.error("Error al cancelar el pedido");
         }
       };
 
@@ -114,34 +134,46 @@ export const columns: ColumnDef<IOrders>[] = [
         element.shoppingCart.status === "ACTIVO";
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => router.push(`${currPath}/${element.id}`)}
-            >
-              Ver
-            </DropdownMenuItem>
-            {showOptions && (
-              <>
-                <DropdownMenuItem
-                  onClick={() => handleConfirmOrder(element.id)}
-                >
-                  Pagar pedido
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleCancelOrder(element.id)}>
-                  Cancelar pedido
-                </DropdownMenuItem>
-              </>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => router.push(`${currPath}/${element.id}`)}
+                className="cursor-pointer"
+              >
+                Ver
+              </DropdownMenuItem>
+              {showOptions && (
+                <>
+                  <DropdownMenuItem
+                    onClick={() => openPaymentDialog(element.id)}
+                    className="cursor-pointer"
+                  >
+                    Pagar pedido
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleCancelOrder(element.id)}
+                    className="cursor-pointer"
+                  >
+                    Cancelar pedido
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <ConfirmOrderDialog
+            open={dialogOpen}
+            onClose={() => setDialogOpen(false)}
+            onConfirm={handleDialogConfirm}
+          />
+        </>
       );
     },
   },

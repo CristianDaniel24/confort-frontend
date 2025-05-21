@@ -13,6 +13,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import DeleteBookDialog from "./_components/procedure-delete";
+import { useRef, useState } from "react";
+import { useImageUploadStore } from "../products/_components/imageUploadStore";
+import { procedureService } from "@/services/procedure.service";
+import { toast } from "sonner";
+import { Progress } from "@/components/ui/progress";
 
 export const columns: ColumnDef<IProcedure>[] = [
   {
@@ -45,7 +50,70 @@ export const columns: ColumnDef<IProcedure>[] = [
       const router = useRouter();
       const currPath = usePathname();
       const element = row.original;
+      const fileInputRef = useRef<HTMLInputElement>(null);
+      const [progress, setProgress] = useState(0);
+      const [isUploading, setIsUploading] = useState(false);
+      const setUploadingId = useImageUploadStore(
+        (state) => state.setUploadingId
+      );
 
+      const handleImage = async (
+        procedure: IProcedure,
+        e: React.ChangeEvent<HTMLInputElement>
+      ) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploading(true);
+        setProgress(0);
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "confortUpload");
+        formData.append("cloud_name", "ddgkelrey");
+        formData.append("folder", "confort_images");
+
+        setUploadingId(procedure.id);
+        const xhr = new XMLHttpRequest();
+        xhr.open(
+          "POST",
+          "https://api.cloudinary.com/v1_1/ddgkelrey/image/upload"
+        );
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percent = Math.round((event.loaded / event.total) * 100);
+            setProgress(percent);
+          }
+        };
+
+        xhr.onload = async () => {
+          if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+
+            procedure.imgUrl = data.secure_url;
+            await procedureService.update(procedure.id, procedure);
+
+            toast.success("Imagen subida con exito");
+          } else {
+            toast.error("Error al subir la imagen");
+          }
+
+          setUploadingId(null);
+          setIsUploading(false);
+          setProgress(0);
+        };
+
+        xhr.onerror = () => {
+          toast.error("Error en la red");
+          setIsUploading(false);
+        };
+
+        xhr.send(formData);
+      };
+      const handleButtonClick = () => {
+        fileInputRef.current?.click();
+      };
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -65,6 +133,32 @@ export const columns: ColumnDef<IProcedure>[] = [
               onClick={() => router.push(`${currPath}/edit/${element.id}`)}
             >
               Editar
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+                handleButtonClick();
+              }}
+            >
+              <div className="grid gap-y-2">
+                <div>Agregar imagen</div>
+
+                {isUploading && (
+                  <div className="flex items-center space-x-3">
+                    <Progress value={progress} className="w-24" />
+                    <span className="text-sm font-medium">{progress}%</span>
+                  </div>
+                )}
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  handleImage(element, e);
+                }}
+                ref={fileInputRef}
+                className="hidden"
+              />
             </DropdownMenuItem>
             <DropdownMenuItem onClick={(e) => e.preventDefault()}>
               <DeleteBookDialog id={element.id} />

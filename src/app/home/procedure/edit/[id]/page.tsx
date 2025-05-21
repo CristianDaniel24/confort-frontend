@@ -15,6 +15,8 @@ export default function EditProcedure() {
 
   const handleSubmit = (values: ProcedureFormType) => {
     const procedureUpdate = {
+      name: values.name,
+      price: +values.price,
       description: values.description,
       date: values.date,
       status: values.status,

@@ -51,32 +51,6 @@ export default function ServiceForm({ service, onSubmit }: Readonly<Props>) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-y-5">
         <FormField
           control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nombre</FormLabel>
-              <FormControl>
-                <Input placeholder="Nombre" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Precio</FormLabel>
-              <FormControl>
-                <Input placeholder="Precio" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="status"
           render={({ field }) => (
             <FormItem>
@@ -88,8 +62,9 @@ export default function ServiceForm({ service, onSubmit }: Readonly<Props>) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="ACTIVO">Activo</SelectItem>
-                  <SelectItem value="INACTIVO">Inactivo</SelectItem>
+                  <SelectItem value="CREADO">Creado</SelectItem>
+                  <SelectItem value="APROBADO">Aprobado</SelectItem>
+                  <SelectItem value="RECHAZADO">Rechazado</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

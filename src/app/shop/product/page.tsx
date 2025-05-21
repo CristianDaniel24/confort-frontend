@@ -38,6 +38,9 @@ export default function ProductsEcommer() {
   const [category, setCategory] = useState("");
   const [typeProducts, setTypeProducts] = useState<ITypeProduct[]>([]);
   const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
+  const [loadingProducts, setLoadingProducts] = useState<{
+    [key: number]: boolean;
+  }>({});
   const router = useRouter();
 
   useEffect(() => {
@@ -77,6 +80,8 @@ export default function ProductsEcommer() {
       return;
     }
 
+    setLoadingProducts((prev) => ({ ...prev, [productId]: true }));
+
     try {
       const shoppingCartProduct: IShoppingCartProduct = {
         shoppingCart: {
@@ -97,6 +102,8 @@ export default function ProductsEcommer() {
     } catch (error) {
       console.error("Error al agregar producto:", error);
       toast.error("Ocurrio un error al agregar el producto");
+    } finally {
+      setLoadingProducts((prev) => ({ ...prev, [productId]: false }));
     }
   };
 
@@ -178,8 +185,11 @@ export default function ProductsEcommer() {
                 <Button
                   className="w-full cursor-pointer"
                   onClick={() => handleAddToCart(product.id)}
+                  disabled={loadingProducts[product.id]}
                 >
-                  Agregar al carrito
+                  {loadingProducts[product.id]
+                    ? "Agregando.."
+                    : "Agregar al carrito"}
                 </Button>
               </CardContent>
             </Card>

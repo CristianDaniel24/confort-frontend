@@ -102,7 +102,7 @@ export default function LoginForm() {
                     ¿Olvidaste tu contraseña?
                   </a>
 
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full cursor-pointer">
                     Iniciar
                   </Button>
                 </div>

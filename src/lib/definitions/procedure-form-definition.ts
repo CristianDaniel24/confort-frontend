@@ -8,6 +8,8 @@ export type ProcedureFormType = z.infer<
 
 class ProcedureFormDefinition {
   readonly procedureFormSchema = z.object({
+    name: z.string().min(3, { message: "El nombre es requerido" }),
+    price: z.string().min(3, { message: "El precio es requerido" }),
     description: z.string().min(3, { message: "La descripcion es requerida" }),
     date: z.date({
       invalid_type_error: "Must be a valid date",
@@ -19,6 +21,8 @@ class ProcedureFormDefinition {
   });
 
   readonly defaultProcedure = {
+    name: "",
+    price: 0,
     description: "",
     date: new Date(),
     status: "",
@@ -31,6 +35,8 @@ class ProcedureFormDefinition {
     const procedureFormDefaultValues = {
       resolver: zodResolver(this.procedureFormSchema),
       defaultValues: {
+        name: procedure.name,
+        price: procedure.price.toString(),
         description: procedure.description,
         date: new Date(procedure.date),
         status: procedure.status,

@@ -15,8 +15,6 @@ export default function EditService() {
 
   const handleSubmit = (values: ServiceFormType) => {
     const serviceUpdate = {
-      name: values.name,
-      price: Number(values.price),
       status: values.status,
       description: values.description,
       dueTo: Number(values.dueTo),
