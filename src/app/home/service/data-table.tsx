@@ -11,12 +11,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
   ColumnDef,
   ColumnFiltersState,
   flexRender,
@@ -27,8 +21,6 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Plus } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -61,10 +53,10 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center justify-between space-x-5 py-4">
         <Input
-          placeholder="Filtrar por nombre..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Filtrar por estado..."
+          value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("status")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

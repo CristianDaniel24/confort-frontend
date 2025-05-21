@@ -64,12 +64,38 @@ export default function ProcedureForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-y-5">
         <FormField
           control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nombre</FormLabel>
+              <FormControl>
+                <Input placeholder="Nombre.." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Precio</FormLabel>
+              <FormControl>
+                <Input placeholder="Precio.." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Descripcion</FormLabel>
               <FormControl>
-                <Input placeholder="Descripcion" {...field} />
+                <Input placeholder="Descripcion.." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -14,6 +14,8 @@ export default function CreateProcedure() {
   const router = useRouter();
   const handleSubmit = (values: ProcedureFormType) => {
     const procedure = {
+      name: values.name,
+      price: +values.price,
       description: values.description,
       date: values.date,
       status: values.status,

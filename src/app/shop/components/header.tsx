@@ -22,6 +22,7 @@ import {
   Settings,
   Package,
   ShoppingBasket,
+  Route,
 } from "lucide-react";
 import { authService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
@@ -125,7 +126,7 @@ export default function Header() {
               href="/shop/servicesConfort"
               className="flex items-center gap-1.5 font-medium text-foreground hover:text-primary transition-all duration-300 relative group overflow-hidden"
             >
-              <Settings className="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-45" />
+              <Route className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               <span>Servicios</span>
               <span className="absolute -bottom-0 left-0 w-full h-0.5 bg-primary transform translate-y-1 scale-x-0 transition-transform duration-300 group-hover:scale-x-100 group-hover:translate-y-0"></span>
             </Link>

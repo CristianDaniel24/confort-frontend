@@ -10,8 +10,6 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import Image from "next/image";
-import { IService } from "@/types/service-interface";
-import { serviceService } from "@/services/service.service";
 import { CaptionsOff, ImageOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { sessionUtils } from "@/app/utils/session.utils";
@@ -25,28 +23,34 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { carService } from "@/services/car.service";
+import { IProcedure } from "@/types/procedure-interface";
+import { procedureService } from "@/services/procedure.service";
+import { serviceService } from "@/services/service.service";
+import { IService } from "@/types/service-interface";
 
 export default function ServicesEcommer() {
-  const [services, setServices] = useState<IService[]>([]);
+  const [procedures, setProcedures] = useState<IProcedure[]>([]);
   const [search, setSearch] = useState("");
   const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
   const person = sessionUtils.getPersonFromSession();
   const [userCars, setUserCars] = useState<ICar[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedService, setSelectedService] = useState<IService | null>(null);
+  const [selectedProcedure, setSelectedProcedure] = useState<IProcedure | null>(
+    null
+  );
   const [selectedCarId, setSelectedCarId] = useState<number | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchServices = async () => {
-      const data = await serviceService.getAll();
-      setServices(data);
+      const data = await procedureService.getAll();
+      setProcedures(data);
     };
     fetchServices();
   }, []);
 
-  const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(search.toLowerCase())
+  const filteredProcedure = procedures.filter((procedure) =>
+    procedure.name.toLowerCase().includes(search.toLowerCase())
   );
 
   const fetchUserCars = async (): Promise<ICar[]> => {
@@ -59,8 +63,8 @@ export default function ServicesEcommer() {
     }
   };
 
-  const handleRequestClick = async (service: IService) => {
-    setSelectedService(service);
+  const handleRequestClick = async (procedure: IProcedure) => {
+    setSelectedProcedure(procedure);
     if (!person?.id) {
       router.push("/auth/signin");
       toast.error("Debes ingresar sesión primero!");
@@ -78,18 +82,22 @@ export default function ServicesEcommer() {
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setSelectedCarId(null);
-    setSelectedService(null);
+    setSelectedProcedure(null);
   };
 
   const handleConfirmRequest = async () => {
-    if (!selectedCarId || !selectedService) return;
+    if (!selectedCarId || !selectedProcedure) return;
 
     try {
-      // Reemplaza esta lógica con tu llamada real al backend
-      toast.success(
-        `Servicio "${selectedService.name}" asignado al carro con ID ${selectedCarId}`
-      );
+      // Aqui se enviaria la peticion con la logica nueva
+      const payload: IService = {
+        car: { id: selectedCarId } as ICar,
+        procedure: { id: selectedProcedure.id } as IProcedure,
+      };
+      console.log("Peticion de la seleccion:", payload);
+      await serviceService.create(payload);
       handleCloseDialog();
+      toast.success("Se solicito tu servicio con exito!!");
     } catch (error) {
       console.error("Error al asignar servicio:", error);
       toast.error("No se pudo asignar el servicio.");
@@ -107,32 +115,32 @@ export default function ServicesEcommer() {
         />
       </div>
 
-      {filteredServices.length === 0 ? (
+      {filteredProcedure.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-muted-foreground h-96">
           <CaptionsOff className="w-12 h-12 mb-2" />
           <p>No hay servicios disponibles.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {filteredServices.map((service) => (
-            <Card key={service.id} className="overflow-hidden">
+          {filteredProcedure.map((procedure) => (
+            <Card key={procedure.id} className="overflow-hidden">
               <CardHeader>
-                <CardTitle>{service.name}</CardTitle>
+                <CardTitle>{procedure.name}</CardTitle>
                 <CardDescription>
                   {new Intl.NumberFormat("es-CO", {
                     style: "currency",
                     currency: "COP",
                     minimumFractionDigits: 0,
-                  }).format(service.price)}
+                  }).format(procedure.price)}
                 </CardDescription>
-                <CardDescription>{service.description}</CardDescription>
+                <CardDescription>{procedure.description}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {!imageError[service.id] && service.imgUrl ? (
+                {!imageError[procedure.id] && procedure.imgUrl ? (
                   <div className="relative w-full h-60 rounded overflow-hidden">
                     <Image
-                      src={service.imgUrl}
-                      alt={service.name}
+                      src={procedure.imgUrl}
+                      alt={procedure.name}
                       fill
                       className="object-contain bg-white"
                       priority
@@ -140,7 +148,7 @@ export default function ServicesEcommer() {
                       onError={() =>
                         setImageError((prev) => ({
                           ...prev,
-                          [service.id]: true,
+                          [procedure.id]: true,
                         }))
                       }
                     />
@@ -153,7 +161,7 @@ export default function ServicesEcommer() {
                 )}
                 <Button
                   className="w-full cursor-pointer"
-                  onClick={() => handleRequestClick(service)}
+                  onClick={() => handleRequestClick(procedure)}
                 >
                   Solicitar
                 </Button>

@@ -13,38 +13,55 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import DeleteServiceDialog from "./_components/service-delete";
 import { IService } from "@/types/service-interface";
-import { useRef, useState } from "react";
-import { Progress } from "@/components/ui/progress";
-import { useImageUploadStore } from "../products/_components/imageUploadStore";
-import { serviceService } from "@/services/service.service";
-import { toast } from "sonner";
 
 export const columns: ColumnDef<IService>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "status",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Nombre
+          Estado
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "price",
-    header: "Precio",
-  },
-  {
-    accessorKey: "status",
-    header: "Estado",
-  },
-  {
     accessorKey: "description",
     header: "Descripcion",
+  },
+  {
+    accessorKey: "dueTo",
+    header: "Listo para",
+    cell: ({ row }) => {
+      const dueTo = row.getValue<number>("dueTo");
+      if (!dueTo) return "No asignado";
+
+      const formattedDate = new Date(dueTo).toLocaleDateString("es-CO", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      return <span>{formattedDate}</span>;
+    },
+  },
+  {
+    accessorKey: "completedAt",
+    header: "Completado el",
+    cell: ({ row }) => {
+      const dueTo = row.getValue<number>("completedAt");
+      if (!dueTo) return "No asignado";
+
+      const formattedDate = new Date(dueTo).toLocaleDateString("es-CO", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      return <span>{formattedDate}</span>;
+    },
   },
   {
     id: "actions",
@@ -52,71 +69,7 @@ export const columns: ColumnDef<IService>[] = [
       const router = useRouter();
       const currPath = usePathname();
       const element = row.original;
-      const fileInputRef = useRef<HTMLInputElement>(null);
-      const [progress, setProgress] = useState(0);
-      const [isUploading, setIsUploading] = useState(false);
-      const setUploadingId = useImageUploadStore(
-        (state) => state.setUploadingId
-      );
 
-      const handleImage = async (
-        service: IService,
-        e: React.ChangeEvent<HTMLInputElement>
-      ) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        setIsUploading(true);
-        setProgress(0);
-
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", "confortUpload");
-        formData.append("cloud_name", "ddgkelrey");
-        formData.append("folder", "confort_images");
-
-        setUploadingId(service.id);
-        const xhr = new XMLHttpRequest();
-        xhr.open(
-          "POST",
-          "https://api.cloudinary.com/v1_1/ddgkelrey/image/upload"
-        );
-
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const percent = Math.round((event.loaded / event.total) * 100);
-            setProgress(percent);
-          }
-        };
-
-        xhr.onload = async () => {
-          if (xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText);
-
-            service.imgUrl = data.secure_url;
-            await serviceService.update(service.id, service);
-
-            toast.success("Imagen subida con exito");
-          } else {
-            toast.error("Error al subir la imagen");
-          }
-
-          setUploadingId(null);
-          setIsUploading(false);
-          setProgress(0);
-        };
-
-        xhr.onerror = () => {
-          toast.error("Error en la red");
-          setIsUploading(false);
-        };
-
-        xhr.send(formData);
-      };
-
-      const handleButtonClick = () => {
-        fileInputRef.current?.click();
-      };
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -138,35 +91,10 @@ export const columns: ColumnDef<IService>[] = [
               Editar
             </DropdownMenuItem>
             <DropdownMenuItem onClick={(e) => e.preventDefault()}>
-              <DeleteServiceDialog id={element.id} />
+              {element.id !== undefined && (
+                <DeleteServiceDialog id={element.id} />
+              )}
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault();
-                handleButtonClick();
-              }}
-            >
-              <div className="grid gap-y-2">
-                <div>Agregar imagen</div>
-
-                {isUploading && (
-                  <div className="flex items-center space-x-3">
-                    <Progress value={progress} className="w-24" />
-                    <span className="text-sm font-medium">{progress}%</span>
-                  </div>
-                )}
-              </div>
-            </DropdownMenuItem>
-
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                handleImage(element, e);
-              }}
-              ref={fileInputRef}
-              className="hidden"
-            />
           </DropdownMenuContent>
         </DropdownMenu>
       );
