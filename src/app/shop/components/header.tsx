@@ -144,7 +144,7 @@ export default function Header() {
                   <Button
                     variant="default"
                     size="sm"
-                    className="transition-all duration-300 hover:shadow-md hover:scale-105"
+                    className="transition-all duration-300 hover:shadow-md hover:scale-105 cursor-pointer"
                   >
                     Iniciar sesión
                   </Button>
@@ -200,10 +200,6 @@ export default function Header() {
                             <Sun className="mr-2 h-4 w-4" /> Modo claro
                           </>
                         )}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer transition-colors duration-200 hover:text-primary focus:text-primary">
-                        <Cog className="mr-2 h-4 w-4" />
-                        Configuraciones
                       </DropdownMenuItem>
                       {isLoggedIn && (
                         <DropdownMenuItem

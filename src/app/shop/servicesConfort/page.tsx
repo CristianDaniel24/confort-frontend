@@ -168,7 +168,15 @@ export default function ServicesEcommer() {
           <DialogHeader>
             <DialogTitle>Seleccione un carro</DialogTitle>
           </DialogHeader>
-
+          <div className="flex justify-end mb-4">
+            <Button
+              onClick={handleAddCar}
+              variant="link"
+              className="cursor-pointer"
+            >
+              Agregar otro carro
+            </Button>
+          </div>
           {userCars.length === 0 ? (
             <div className="space-y-4 text-center">
               <p className="text-muted-foreground">
@@ -211,13 +219,6 @@ export default function ServicesEcommer() {
 
               <div className="flex flex-col md:flex-row justify-between items-center gap-3 mt-4">
                 <Button
-                  onClick={handleAddCar}
-                  variant="outline"
-                  className="cursor-pointer"
-                >
-                  Agregar otro carro
-                </Button>
-                <Button
                   onClick={handleConfirmRequest}
                   disabled={!selectedCarId}
                   className="cursor-pointer"
@@ -227,16 +228,6 @@ export default function ServicesEcommer() {
               </div>
             </div>
           )}
-
-          <div className="mt-4 flex justify-end">
-            <Button
-              variant="outline"
-              onClick={handleCloseDialog}
-              className="cursor-pointer"
-            >
-              Cerrar
-            </Button>
-          </div>
         </DialogContent>
       </Dialog>
     </div>

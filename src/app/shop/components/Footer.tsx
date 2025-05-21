@@ -114,7 +114,7 @@ export default function Footer() {
                   size={18}
                 />
                 <span className="text-gray-600 dark:text-gray-300">
-                  confortapiceria@gmail.com.co
+                  tapiceria.confort24@gmail.com
                 </span>
               </div>
             </div>

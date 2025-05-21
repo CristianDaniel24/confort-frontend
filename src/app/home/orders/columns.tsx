@@ -110,8 +110,7 @@ export const columns: ColumnDef<IOrders>[] = [
 
           await billService.confirmOrder(selectedOrderId, payment);
           toast.success("Pedido confirmado con éxito");
-          router.refresh();
-          router.push("/home/orders");
+          window.location.reload();
         } catch (error) {
           toast.error("Error al confirmar el pedido");
         } finally {

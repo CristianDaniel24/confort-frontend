@@ -33,6 +33,7 @@ export const ConfirmOrderDialog = ({
   const handleConfirm = () => {
     if (!paymentMethod) return;
     onConfirm(paymentMethod);
+    onClose();
   };
 
   return (

@@ -24,6 +24,7 @@ import {
   Clock,
   Award,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // Modificar el componente FadeIn para que las animaciones sean más lentas y naturales
 const FadeIn = ({
@@ -156,12 +157,17 @@ const AnimatedCard = ({
 };
 
 export default function Home() {
+  const router = useRouter();
+
   // Imágenes para el carrusel (reemplaza con tus propias imágenes)
   const carouselImages = [
     "/1carrusel_1.jpg",
     "/carrusel_3.jpg",
     "/carrusel_2.jpg",
   ];
+  const handleRedirect = () => {
+    router.push("/shop/servicesConfort");
+  };
 
   // Efecto de scroll suave para los botones de navegación
   const scrollToSection = (id: string) => {
@@ -204,7 +210,7 @@ export default function Home() {
                   <Button
                     size="lg"
                     className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 group"
-                    onClick={() => scrollToSection("servicios")}
+                    onClick={handleRedirect}
                   >
                     Ver Servicios
                     <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
@@ -335,7 +341,7 @@ export default function Home() {
       {/* Historia de la Tapicería - Nueva sección que reemplaza a Productos Destacados */}
       <section
         id="historia"
-        className="w-full py-12 md:py-24 lg:py-32 bg-background relative"
+        className="w-full py-12 md:py-24 lg:py-24 bg-background relative"
       >
         {/* Elementos decorativos */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -398,15 +404,7 @@ export default function Home() {
                     ofrecer soluciones de tapicería que superan las expectativas
                     de nuestros clientes más exigentes.
                   </p>
-                  <div className="pt-4">
-                    <Button
-                      className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 group"
-                      onClick={() => scrollToSection("testimonios")}
-                    >
-                      Conoce a nuestro equipo
-                      <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
-                    </Button>
-                  </div>
+                  <div className="pt-4"></div>
                 </div>
               </FadeIn>
 
@@ -427,56 +425,6 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </FadeIn>
-            </div>
-
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <FadeIn delay={100}>
-                <Card className="border-2 border-primary/10 bg-card">
-                  <CardHeader>
-                    <CardTitle className="text-card-foreground text-center">
-                      1985
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-card-foreground/80 text-center">
-                      Fundación del taller familiar especializado en tapicería
-                      automotriz clásica, innovando en la tapiceria automotriz
-                      del sector
-                    </p>
-                  </CardContent>
-                </Card>
-              </FadeIn>
-              <FadeIn delay={200}>
-                <Card className="border-2 border-primary/10 bg-card">
-                  <CardHeader>
-                    <CardTitle className="text-card-foreground text-center">
-                      2005
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-card-foreground/80 text-center">
-                      Expansión del negocio e incorporación de nuevos servicios,
-                      materiales y nuevos productos a la venta
-                    </p>
-                  </CardContent>
-                </Card>
-              </FadeIn>
-              <FadeIn delay={300}>
-                <Card className="border-2 border-primary/10 bg-card">
-                  <CardHeader>
-                    <CardTitle className="text-card-foreground text-center">
-                      Hoy
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-card-foreground/80 text-center">
-                      Reconocidos en la ciudad de Sogamoso por sus servicios y
-                      su buen trabajo de tapizado, restauracion y
-                      personalizacion
-                    </p>
-                  </CardContent>
-                </Card>
               </FadeIn>
             </div>
           </div>
@@ -669,20 +617,19 @@ export default function Home() {
 
           <FadeIn delay={200}>
             <div className="flex flex-col gap-4 min-[400px]:flex-row justify-center mt-8">
-              <Button
-                size="lg"
-                className="bg-background text-primary hover:bg-background/90 transition-all duration-500 hover:shadow-lg hover:shadow-background/20 group cursor-pointer"
+              <a
+                href="https://wa.me/573174109274"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Solicitar Cotización
-                <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-background text-primary-foreground hover:bg-primary-foreground/10 transition-all duration-300 hover:shadow-lg hover:shadow-background/10 cursor-pointer"
-              >
-                Ver Galería de Trabajos
-              </Button>
+                <Button
+                  size="lg"
+                  className="bg-background text-primary hover:bg-background/90 transition-all duration-500 hover:shadow-lg hover:shadow-background/20 group cursor-pointer"
+                >
+                  Solicitar Cotización
+                  <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
+                </Button>
+              </a>
             </div>
           </FadeIn>
 
