@@ -23,6 +23,7 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 // Modificar el componente FadeIn para que las animaciones sean más lentas y naturales
 const FadeIn = ({
@@ -66,22 +67,22 @@ const FadeIn = ({
   const getTransform = () => {
     switch (direction) {
       case "up":
-        return "translateY(15px)";
+        return "translateY(20px)";
       case "down":
-        return "translateY(-15px)";
+        return "translateY(-20px)";
       case "left":
-        return "translateX(15px)";
+        return "translateX(20px)";
       case "right":
-        return "translateX(-15px)";
+        return "translateX(-20px)";
       default:
-        return "translateY(15px)";
+        return "translateY(20px)";
     }
   };
 
   return (
     <div
       ref={domRef}
-      className={`transition-all duration-1000 ease-out ${className}`}
+      className={`transition-all duration-1500 ease-in-out ${className}`}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "none" : getTransform(),
@@ -109,14 +110,14 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
       {images.map((src, index) => (
         <div
           key={index}
-          className="absolute inset-0 transition-opacity duration-2000 ease-in-out"
+          className="absolute inset-0 transition-opacity duration-3000 ease-in-out"
           style={{ opacity: index === currentIndex ? 1 : 0 }}
         >
           <Image
             src={src || "/placeholder.svg"}
             alt={`Imagen de tapicería ${index + 1}`}
             fill
-            className="object-cover transition-transform duration-10000 ease-in-out group-hover:scale-105"
+            className="object-cover transition-transform duration-15000 ease-in-out group-hover:scale-105"
             priority={index === 0}
           />
         </div>
@@ -125,7 +126,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
         {images.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 rounded-full transition-all duration-700 ${
+            className={`w-2 h-2 rounded-full transition-all duration-1000 ${
               index === currentIndex ? "bg-white w-4" : "bg-white/50"
             }`}
             onClick={() => setCurrentIndex(index)}
@@ -146,12 +147,73 @@ const AnimatedCard = ({
 }) => {
   return (
     <div
-      className={`group relative transition-all duration-500 hover:-translate-y-2 hover:shadow-xl ${className}`}
+      className={`group relative transition-all duration-700 hover:-translate-y-2 hover:shadow-xl ${className}`}
     >
       {children}
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-slate-900/10 to-slate-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-slate-900/10 to-slate-900/5 dark:from-slate-100/10 dark:to-slate-100/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
     </div>
   );
+};
+
+// Componente para botones con animación personalizada
+const AnimatedButton = ({
+  children,
+  onClick,
+  variant = "primary",
+  className = "",
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: "primary" | "secondary";
+  className?: string;
+}) => {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Button size="lg" className={className} onClick={onClick}>
+        {children}
+      </Button>
+    );
+  }
+
+  if (variant === "primary") {
+    return (
+      <Button
+        size="lg"
+        className={`cursor-pointer overflow-hidden relative group transition-all duration-700 ${className}`}
+        onClick={onClick}
+      >
+        <span className="relative z-10 transition-transform duration-500 group-hover:translate-x-[-8px]">
+          {children}
+        </span>
+        {typeof children === "string" && (
+          <ChevronRight className="ml-2 h-4 w-4 relative z-10 transition-all duration-700 group-hover:translate-x-2 group-hover:scale-125" />
+        )}
+        <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 dark:from-purple-600 dark:to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-700 transform scale-x-95 scale-y-90 group-hover:scale-100 rounded-md"></span>
+        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-300 dark:bg-purple-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></span>
+      </Button>
+    );
+  } else {
+    return (
+      <Button
+        size="lg"
+        variant="outline"
+        className={`cursor-pointer overflow-hidden relative group border-2 dark:border-primary/50 border-primary/70 hover:border-primary dark:hover:border-primary-foreground transition-all duration-700 ${className}`}
+        onClick={onClick}
+      >
+        <span className="relative z-10">{children}</span>
+        <span className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 dark:from-primary-foreground/20 dark:to-primary-foreground/40 opacity-0 group-hover:opacity-100 transform scale-y-0 group-hover:scale-y-100 transition-all duration-700 origin-bottom"></span>
+        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary dark:bg-primary-foreground group-hover:w-full transition-all duration-700 delay-100"></span>
+        <span className="absolute top-0 right-0 w-0 h-0.5 bg-primary dark:bg-primary-foreground group-hover:w-full transition-all duration-700 delay-100"></span>
+      </Button>
+    );
+  }
 };
 
 export default function Home() {
@@ -161,6 +223,7 @@ export default function Home() {
     "/carrusel_3.jpg",
     "/carrusel_2.jpg",
   ];
+  const { theme } = useTheme();
 
   // Efecto de scroll suave para los botones de navegación
   const scrollToSection = (id: string) => {
@@ -174,13 +237,13 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center overflow-hidden">
+    <main className="flex flex-col items-center justify-center overflow-hidden transition-colors duration-1000">
       {/* Hero Section - Adaptado para modo oscuro */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted relative">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted dark:from-background dark:to-background/80 relative min-h-screen flex items-center">
         {/* Elementos decorativos de fondo */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-foreground/5 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 -left-24 w-64 h-64 bg-foreground/5 rounded-full blur-3xl" />
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-foreground/5 dark:bg-foreground/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 -left-24 w-64 h-64 bg-foreground/5 dark:bg-foreground/10 rounded-full blur-3xl" />
         </div>
 
         <div className="container px-4 md:px-6 relative">
@@ -192,7 +255,7 @@ export default function Home() {
                     <span className="bg-clip-text text-foreground">
                       Renueva el Interior de tu Vehículo
                     </span>
-                    <span className="absolute -bottom-2 left-0 w-20 h-1 bg-primary rounded-full"></span>
+                    <span className="absolute -bottom-2 left-0 w-20 h-1 bg-primary dark:bg-primary rounded-full"></span>
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl mt-4">
                     Especialistas en tapicería automotriz con los mejores
@@ -200,22 +263,15 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row mt-4">
-                  <Button
-                    size="lg"
-                    className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 group"
-                    onClick={() => scrollToSection("servicios")}
-                  >
+                  <AnimatedButton onClick={() => scrollToSection("servicios")}>
                     Ver Servicios
-                    <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
+                  </AnimatedButton>
+                  <AnimatedButton
+                    variant="secondary"
                     onClick={() => scrollToSection("productos")}
                   >
                     Catálogo de Productos
-                  </Button>
+                  </AnimatedButton>
                 </div>
               </div>
             </FadeIn>
@@ -229,7 +285,7 @@ export default function Home() {
       {/* Servicios Section - Adaptado para modo oscuro */}
       <section
         id="servicios"
-        className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-primary to-primary/90 relative"
+        className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-primary to-primary/90 dark:from-primary/80 dark:to-primary/60 relative min-h-screen flex items-center transition-colors duration-1000"
       >
         {/* Elementos decorativos */}
         <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-background to-transparent opacity-5" />
@@ -254,7 +310,7 @@ export default function Home() {
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-12">
             <FadeIn delay={100}>
               <AnimatedCard>
-                <Card className="border-2 border-primary/20 shadow-sm transition-all bg-card h-full">
+                <Card className="border-2 border-primary/20 shadow-sm transition-all bg-card h-full dark:bg-card/90">
                   <CardHeader className="pb-2">
                     <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary transition-transform duration-500 group-hover:scale-110">
                       <Scissors className="h-6 w-6 text-primary-foreground" />
@@ -279,7 +335,7 @@ export default function Home() {
 
             <FadeIn delay={200}>
               <AnimatedCard>
-                <Card className="border-2 border-primary/20 shadow-sm transition-all bg-card h-full">
+                <Card className="border-2 border-primary/20 shadow-sm transition-all bg-card h-full dark:bg-card/90">
                   <CardHeader className="pb-2">
                     <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary transition-transform duration-500 group-hover:scale-110">
                       <Tools className="h-6 w-6 text-primary-foreground" />
@@ -304,7 +360,7 @@ export default function Home() {
 
             <FadeIn delay={300}>
               <AnimatedCard>
-                <Card className="border-2 border-primary/20 shadow-sm transition-all bg-card h-full">
+                <Card className="border-2 border-primary/20 shadow-sm transition-all bg-card h-full dark:bg-card/90">
                   <CardHeader className="pb-2">
                     <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary transition-transform duration-500 group-hover:scale-110">
                       <Car className="h-6 w-6 text-primary-foreground" />
@@ -323,7 +379,6 @@ export default function Home() {
                     </p>
                   </CardContent>
                   <CardFooter></CardFooter>
-                  <CardFooter></CardFooter>
                 </Card>
               </AnimatedCard>
             </FadeIn>
@@ -334,12 +389,12 @@ export default function Home() {
       {/* Productos Section - Adaptado para modo oscuro */}
       <section
         id="productos"
-        className="w-full py-12 md:py-24 lg:py-32 bg-background relative"
+        className="w-full py-12 md:py-24 lg:py-32 bg-background relative min-h-screen flex items-center transition-colors duration-1000"
       >
         {/* Elementos decorativos */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 right-0 w-64 h-64 bg-foreground/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-foreground/5 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 right-0 w-64 h-64 bg-foreground/5 dark:bg-foreground/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-foreground/5 dark:bg-foreground/10 rounded-full blur-3xl" />
         </div>
 
         <div className="container px-4 md:px-6 relative">
@@ -348,7 +403,7 @@ export default function Home() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-foreground inline-block relative">
                   Productos Destacados
-                  <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary rounded-full"></span>
+                  <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary dark:bg-primary rounded-full"></span>
                 </h2>
                 <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mt-4">
                   Materiales de alta calidad para renovar tu vehículo
@@ -388,7 +443,7 @@ export default function Home() {
                   {[1, 2, 3].map((item) => (
                     <FadeIn key={item} delay={item * 100}>
                       <AnimatedCard>
-                        <Card className="overflow-hidden border-2 border-border h-full">
+                        <Card className="overflow-hidden border-2 border-border h-full dark:bg-card/90">
                           <div className="relative h-48 w-full overflow-hidden">
                             <Image
                               src={`/placeholder.svg?height=200&width=300`}
@@ -396,7 +451,7 @@ export default function Home() {
                               fill
                               className="object-cover transition-transform duration-1000 group-hover:scale-110"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent dark:from-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           </div>
                           <CardHeader>
                             <CardTitle className="text-card-foreground">
@@ -412,7 +467,7 @@ export default function Home() {
                             </p>
                             <Button
                               size="sm"
-                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
+                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer hover:bg-blue-500 dark:hover:bg-purple-500 transition-colors duration-300"
                             >
                               Ver Detalles
                             </Button>
@@ -429,7 +484,7 @@ export default function Home() {
                   {[1, 2, 3].map((item) => (
                     <FadeIn key={item} delay={item * 100}>
                       <AnimatedCard>
-                        <Card className="overflow-hidden border-2 border-border h-full">
+                        <Card className="overflow-hidden border-2 border-border h-full dark:bg-card/90">
                           <div className="relative h-48 w-full overflow-hidden">
                             <Image
                               src={`/placeholder.svg?height=200&width=300`}
@@ -437,7 +492,7 @@ export default function Home() {
                               fill
                               className="object-cover transition-transform duration-500 group-hover:scale-110"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent dark:from-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           </div>
                           <CardHeader>
                             <CardTitle className="text-card-foreground">
@@ -453,7 +508,7 @@ export default function Home() {
                             </p>
                             <Button
                               size="sm"
-                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
+                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer hover:bg-blue-500 dark:hover:bg-purple-500 transition-colors duration-300"
                             >
                               Ver Detalles
                             </Button>
@@ -470,7 +525,7 @@ export default function Home() {
                   {[1, 2, 3].map((item) => (
                     <FadeIn key={item} delay={item * 100}>
                       <AnimatedCard>
-                        <Card className="overflow-hidden border-2 border-border h-full">
+                        <Card className="overflow-hidden border-2 border-border h-full dark:bg-card/90">
                           <div className="relative h-48 w-full overflow-hidden">
                             <Image
                               src={`/placeholder.svg?height=200&width=300`}
@@ -478,7 +533,7 @@ export default function Home() {
                               fill
                               className="object-cover transition-transform duration-500 group-hover:scale-110"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent dark:from-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           </div>
                           <CardHeader>
                             <CardTitle className="text-card-foreground">
@@ -494,7 +549,7 @@ export default function Home() {
                             </p>
                             <Button
                               size="sm"
-                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
+                              className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 cursor-pointer hover:bg-blue-500 dark:hover:bg-purple-500 transition-colors duration-300"
                             >
                               Ver Detalles
                             </Button>
@@ -513,7 +568,7 @@ export default function Home() {
       {/* Por qué elegirnos - Adaptado para modo oscuro */}
       <section
         id="por-que-elegirnos"
-        className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-primary/90 to-primary relative overflow-hidden"
+        className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-primary/90 to-primary dark:from-primary/70 dark:to-primary/50 relative overflow-hidden min-h-screen flex items-center transition-colors duration-1000"
       >
         {/* Elementos decorativos */}
         <div className="absolute top-0 left-0 w-full h-full">
@@ -589,12 +644,12 @@ export default function Home() {
       {/* Testimonios - Adaptado para modo oscuro */}
       <section
         id="testimonios"
-        className="w-full py-12 md:py-24 lg:py-32 bg-background relative"
+        className="w-full py-12 md:py-24 lg:py-32 bg-background relative min-h-screen flex items-center transition-colors duration-1000"
       >
         {/* Elementos decorativos */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-1/3 right-0 w-64 h-64 bg-foreground/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/3 left-0 w-64 h-64 bg-foreground/5 rounded-full blur-3xl" />
+          <div className="absolute top-1/3 right-0 w-64 h-64 bg-foreground/5 dark:bg-foreground/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/3 left-0 w-64 h-64 bg-foreground/5 dark:bg-foreground/10 rounded-full blur-3xl" />
         </div>
 
         <div className="container px-4 md:px-6 relative">
@@ -603,7 +658,7 @@ export default function Home() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-foreground inline-block relative">
                   Lo Que Dicen Nuestros Clientes
-                  <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary rounded-full"></span>
+                  <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary dark:bg-primary rounded-full"></span>
                 </h2>
                 <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mt-4">
                   Experiencias reales de quienes han confiado en nosotros
@@ -632,7 +687,7 @@ export default function Home() {
             ].map((testimonial, index) => (
               <FadeIn key={index} delay={index * 100} direction="up">
                 <AnimatedCard>
-                  <Card className="text-center border-2 border-border h-full relative">
+                  <Card className="text-center border-2 border-border h-full relative dark:bg-card/90">
                     <div className="absolute top-6 left-6 text-6xl text-muted font-serif">
                       "
                     </div>
@@ -655,7 +710,7 @@ export default function Home() {
                         {[1, 2, 3, 4, 5].map((star) => (
                           <Star
                             key={star}
-                            className="h-5 w-5 fill-current text-amber-600 transition-transform duration-300 group-hover:scale-110"
+                            className="h-5 w-5 fill-current text-amber-600 dark:text-amber-500 transition-transform duration-300 group-hover:scale-110"
                           />
                         ))}
                       </div>
@@ -671,7 +726,7 @@ export default function Home() {
       {/* CTA Section - Adaptado para modo oscuro */}
       <section
         id="contacto"
-        className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-primary to-primary/90 relative overflow-hidden"
+        className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-primary to-primary/90 dark:from-primary/80 dark:to-primary/60 relative overflow-hidden min-h-screen flex items-center transition-colors duration-1000"
       >
         {/* Elementos decorativos */}
         <div className="absolute top-0 left-0 w-full h-full">
@@ -696,22 +751,15 @@ export default function Home() {
 
           <FadeIn delay={200}>
             <div className="flex flex-col gap-4 min-[400px]:flex-row justify-center mt-8">
-              <Button
-                size="lg"
-                variant="outline"
-                className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
+              <AnimatedButton
+                variant="secondary"
                 onClick={() => scrollToSection("productos")}
               >
                 Solicitar Cotización
-              </Button>
-              <Button
-                size="lg"
-                className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 group"
-                onClick={() => scrollToSection("servicios")}
-              >
+              </AnimatedButton>
+              <AnimatedButton onClick={() => scrollToSection("servicios")}>
                 Ver Galería de Trabajos
-                <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
-              </Button>
+              </AnimatedButton>
             </div>
           </FadeIn>
 

@@ -5,6 +5,9 @@ import { utils } from "@/lib/utils";
 import { IAuthResponse } from "@/types/auth-response-interface";
 
 class AuthService {
+  signIn(email: string, password: string) {
+    throw new Error("Method not implemented.");
+  }
   private readonly url: string;
 
   constructor() {
