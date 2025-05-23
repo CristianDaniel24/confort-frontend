@@ -15,5 +15,59 @@ export interface IBill {
         name: string;
       };
     }[];
+    shoppingCartServices: {
+      id: {
+        shoppingCart: number;
+        service: {
+          id: number;
+          description: string;
+          status: string;
+          dueTo: string;
+          completedAt: string;
+          procedure: {
+            id: number;
+            name: string;
+            price: number;
+            description: string;
+          };
+          car: {
+            id: number;
+            plate: string;
+            color: string;
+            typeCar: {
+              id: number;
+              model: string;
+              year: number;
+            };
+          };
+        };
+      };
+      createdAt: string;
+      updatedAt: string;
+      service: {
+        id: number;
+        description: string;
+        status: string;
+        dueTo: string;
+        completedAt: string;
+        procedure: {
+          id: number;
+          name: string;
+          price: number;
+          description: string;
+        };
+        car: {
+          id: number;
+          plate: string;
+          color: string;
+          typeCar: {
+            id: number;
+            model: string;
+            year: number;
+          };
+        };
+      };
+      amount: number;
+    }[];
   };
 }

@@ -64,6 +64,10 @@ export function NavUser() {
     router.refresh();
   };
 
+  const handleEditAccount = () => {
+    router.push("/home/employee/profile");
+  };
+
   const getInitials = () => {
     const firstNameInitial = person.person?.firstName.charAt(0) ?? "";
     const lastNameInitial = person.person?.lastName.charAt(0) ?? "";
@@ -120,15 +124,17 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={handleEditAccount}
+                className="cursor-pointer"
+              >
                 <User />
-                Perfil
+                Editar perfil
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BadgeHelp />
-                Accesibilidad
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleTheme}>
+              <DropdownMenuItem
+                onClick={handleTheme}
+                className="cursor-pointer"
+              >
                 {currTheme === "dark" ? (
                   <>
                     <Moon /> Modo oscuro
@@ -141,7 +147,10 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="cursor-pointer text-destructive transition-colors duration-200 hover:bg-destructive/10 focus:bg-destructive/10"
+            >
               <LogOut />
               Cerrar sesion
             </DropdownMenuItem>

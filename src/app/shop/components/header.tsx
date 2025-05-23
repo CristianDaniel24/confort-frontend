@@ -76,6 +76,10 @@ export default function Header() {
     setIsLoggedIn(false);
   };
 
+  const handleEditAccount = () => {
+    router.push("/shop/profile");
+  };
+
   return (
     <TooltipProvider>
       <header
@@ -152,18 +156,12 @@ export default function Header() {
                 </Link>
               )}
 
-              <Tooltip>
+              <Tooltip disableHoverableContent>
                 <TooltipTrigger asChild>
-                  <div className="ml-2 transition-transform duration-300 hover:scale-105">
+                  <div className="ml-2 transition-transform duration-300 hover:scale-105 mr-4">
                     <CartSheet />
                   </div>
                 </TooltipTrigger>
-                <TooltipContent
-                  side="bottom"
-                  className="animate-in fade-in-50 zoom-in-95 duration-200"
-                >
-                  Ver carrito
-                </TooltipContent>
               </Tooltip>
 
               {/* Dropdown de ShadCN */}
@@ -183,9 +181,12 @@ export default function Header() {
                       className="animate-in fade-in-50 zoom-in-95 duration-200 border-primary/20"
                     >
                       {isLoggedIn && (
-                        <DropdownMenuItem className="cursor-pointer transition-colors duration-200 hover:text-primary focus:text-primary">
+                        <DropdownMenuItem
+                          onClick={handleEditAccount}
+                          className="cursor-pointer transition-colors duration-200 hover:text-primary focus:text-primary"
+                        >
                           <CircleUserRound className="mr-2 h-4 w-4" />
-                          Perfil
+                          Editar perfil
                         </DropdownMenuItem>
                       )}
                       <DropdownMenuItem
@@ -226,20 +227,6 @@ export default function Header() {
 
           {/* Botón de menú móvil */}
           <div className="md:hidden flex items-center space-x-3">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="transition-transform duration-300 hover:scale-105">
-                  <CartSheet />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent
-                side="bottom"
-                className="animate-in fade-in-50 zoom-in-95 duration-200"
-              >
-                Ver carrito
-              </TooltipContent>
-            </Tooltip>
-
             <button
               className="flex flex-col justify-center items-center w-10 h-10 rounded-full bg-primary/5 hover:bg-primary/10 transition-all duration-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

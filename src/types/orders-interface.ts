@@ -17,6 +17,29 @@ export interface IOrders {
         imgUrl?: string;
       };
     }[];
+    shoppingCartServices: {
+      id: number;
+      service: {
+        id: number;
+        status: string;
+        description: string;
+        dueTo: string | Date;
+        completedAt: string | Date;
+        car: {
+          color: string;
+          plate: string;
+          typeCar: string;
+        };
+        procedure: {
+          name: string;
+          price: number;
+          description: string;
+          date: string | Date;
+          status: string;
+          imgUrl: string;
+        };
+      };
+    };
     client: {
       id: number;
       person: {

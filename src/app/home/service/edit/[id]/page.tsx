@@ -20,6 +20,7 @@ export default function EditService() {
       dueTo: Number(values.dueTo),
       completedAt: Number(values.completedAt),
     } as IService;
+    console.log("Id del servicio " + id);
     serviceService.update(+id, serviceUpdate).then(() => {
       toast.success("Servicio editado!");
       router.push("/home/service");
