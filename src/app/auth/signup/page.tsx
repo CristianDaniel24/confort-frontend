@@ -317,7 +317,7 @@ export default function Signup() {
                         <FormLabel>Contraseña</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Ingresa tu constraseña"
+                            placeholder="Ingresa tu contraseña"
                             {...field}
                             type="password"
                           />
@@ -334,7 +334,7 @@ export default function Signup() {
                         <FormLabel>Repite tu contraseña</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Ingresa tu constraseña otra vez"
+                            placeholder="Ingresa tu contraseña otra vez"
                             {...field}
                             type="password"
                           />

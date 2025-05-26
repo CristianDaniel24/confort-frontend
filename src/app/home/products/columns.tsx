@@ -37,6 +37,16 @@ export const columns: ColumnDef<IProduct>[] = [
   {
     accessorKey: "cost",
     header: "Costo",
+    cell: ({ getValue }) => {
+      const value = getValue() as number;
+      const formatted = new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: 0,
+      }).format(value);
+
+      return <span>{formatted}</span>;
+    },
   },
   {
     accessorKey: "code",

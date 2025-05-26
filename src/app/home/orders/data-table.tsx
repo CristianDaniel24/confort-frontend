@@ -11,12 +11,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
   ColumnDef,
   ColumnFiltersState,
   flexRender,
@@ -27,8 +21,6 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Plus } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -40,9 +32,10 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: Readonly<DataTableProps<TData, TValue>>) {
-  const router = useRouter();
-  const currentPath = usePathname();
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "id", desc: true },
+  ]);
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({

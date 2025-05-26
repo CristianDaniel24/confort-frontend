@@ -51,6 +51,10 @@ export default function LoginForm() {
     toast.success("Bienvenido!");
   };
 
+  const handleRecoveryPassword = () => {
+    router.push("/auth/password");
+  };
+
   return (
     <div className={cn("flex flex-col gap-6")}>
       <Card>
@@ -96,8 +100,8 @@ export default function LoginForm() {
                     )}
                   />
                   <a
-                    href="#"
-                    className="ml-auto text-sm underline-offset-4 hover:underline"
+                    onClick={handleRecoveryPassword}
+                    className="ml-auto text-sm underline-offset-4 hover:underline cursor-pointer"
                   >
                     ¿Olvidaste tu contraseña?
                   </a>

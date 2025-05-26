@@ -1,9 +1,9 @@
-import { IProduct } from "./product-interface";
+import { IService } from "./service-interface";
 import { IShoppingCart } from "./shoppingCart-interface";
 
-export interface IShoppingCartProduct {
+export interface IShoppingCartService {
   id?: number;
   shoppingCart: IShoppingCart;
-  product: IProduct;
+  service: IService;
   amount: number;
 }

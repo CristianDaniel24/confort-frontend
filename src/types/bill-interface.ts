@@ -1,19 +1,10 @@
+import { IShoppingCart } from "./shoppingCart-interface";
+
 export interface IBill {
   id: number;
   date: string;
   costTotal: number;
+  shoppingCart: IShoppingCart;
   createdAt: string;
   updatedAt: string;
-  shoppingCart: {
-    id: number;
-    status: string;
-    shoppingCartProduct: {
-      id: number;
-      amount: number;
-      product: {
-        id: number;
-        name: string;
-      };
-    }[];
-  };
 }

@@ -16,6 +16,38 @@ import { IService } from "@/types/service-interface";
 
 export const columns: ColumnDef<IService>[] = [
   {
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Cliente
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    accessorKey: "car.client.person",
+    cell: ({ row }) => {
+      const person = row.original.car.client?.person;
+      const fullName = `${person?.firstName} ${person?.lastName}`;
+      return <span>{fullName}</span>;
+    },
+  },
+  {
+    accessorKey: "car.typeCar.model",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Carro
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: "status",
     header: ({ column }) => {
       return (
@@ -24,7 +56,6 @@ export const columns: ColumnDef<IService>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Estado
-          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -32,10 +63,15 @@ export const columns: ColumnDef<IService>[] = [
   {
     accessorKey: "description",
     header: "Descripcion",
+    cell: ({ row }) => {
+      const description = row.getValue<number>("description");
+      if (!description) return "No asignado";
+      return description;
+    },
   },
   {
     accessorKey: "dueTo",
-    header: "Listo para",
+    header: "Fecha estimada",
     cell: ({ row }) => {
       const dueTo = row.getValue<number>("dueTo");
       if (!dueTo) return "No asignado";
@@ -50,7 +86,7 @@ export const columns: ColumnDef<IService>[] = [
   },
   {
     accessorKey: "completedAt",
-    header: "Completado el",
+    header: "Fecha de entrega",
     cell: ({ row }) => {
       const dueTo = row.getValue<number>("completedAt");
       if (!dueTo) return "No asignado";

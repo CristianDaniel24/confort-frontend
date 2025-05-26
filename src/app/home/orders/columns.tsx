@@ -11,14 +11,23 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { IOrders } from "@/types/orders-interface";
 import { toast } from "sonner";
 import { billService } from "@/services/bill.service";
 import { ConfirmOrderDialog } from "./_components/ConfirmOrderDialog";
 import { useState } from "react";
 import { IPayment } from "@/types/payment-interface";
+import { IBill } from "@/types/bill-interface";
 
-export const columns: ColumnDef<IOrders>[] = [
+export const columns: ColumnDef<IBill>[] = [
+  {
+    accessorKey: "id",
+    header: "N° Pedido",
+    enableSorting: true,
+    sortDescFirst: true,
+    cell: ({ getValue }) => (
+      <span className="font-medium">#{getValue() as number}</span>
+    ),
+  },
   {
     id: "client",
     header: "Cliente",
@@ -103,7 +112,6 @@ export const columns: ColumnDef<IOrders>[] = [
       const handleDialogConfirm = async (paymentMethod: string) => {
         if (!selectedOrderId) return;
         try {
-          console.log("Metodo de pago:", paymentMethod);
           const payment: IPayment = {
             method: paymentMethod,
           };

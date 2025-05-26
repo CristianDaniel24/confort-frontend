@@ -1,17 +1,18 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { IEmployee } from "@/types/employee-interface";
 import { EmployeeFormType } from "@/lib/definitions/employee-form-definition";
 import { employeeService } from "@/services/employee.service";
-import EmployeeForm from "../../_components/employee-form";
+import { sessionUtils } from "@/app/utils/session.utils";
+import EmployeeFormEditAccount from "../_components/employee-edit-form";
 
-export default function EditEmployee() {
+export default function ProfilePage() {
   const router = useRouter();
-  const { id } = useParams<{ id: string }>();
   const [employee, setEmployee] = useState<IEmployee>();
+  const person = sessionUtils.getPersonFromSession();
 
   const handleSubmit = (values: EmployeeFormType) => {
     const employeeUpdate = {
@@ -31,17 +32,28 @@ export default function EditEmployee() {
         id: values.rol.id,
       },
     } as IEmployee;
-    employeeService
-      .update(employee?.person.id ?? 0, employeeUpdate)
-      .then(() => {
-        toast.success("Empleado editado!");
-        router.push("/home/employee");
-      });
+    employeeService.update(person.id ?? 0, employeeUpdate).then(() => {
+      toast.success("Se edito tu cuenta con exito!");
+      router.push("/home");
+    });
   };
 
   useEffect(() => {
-    employeeService.findById(+id).then((employee) => setEmployee(employee));
-  }, [id]);
+    console.log("Persona en sesión:", person);
+    if (!person?.id) return;
+
+    const fetchEmployee = async () => {
+      try {
+        const employeeData = await employeeService.findByPersonId(person.id);
+        setEmployee(employeeData);
+      } catch (error) {
+        console.error("Error al obtener el empleado:", error);
+        toast.error("No se pudo cargar la información del empleado.");
+      }
+    };
+
+    fetchEmployee();
+  }, [person?.id]);
 
   if (!employee) {
     return <span>Cargando...</span>;
@@ -50,8 +62,8 @@ export default function EditEmployee() {
   return (
     <div className="container max-w-5xl mx-auto md:py-10">
       <div className="grid gap-5">
-        <h1 className="text-4xl leading-none font-medium">Editar Empleado</h1>
-        <EmployeeForm employee={employee} onSubmit={handleSubmit} />
+        <h1 className="text-4xl leading-none font-medium">Editar tu cuenta</h1>
+        <EmployeeFormEditAccount employee={employee} onSubmit={handleSubmit} />
       </div>
     </div>
   );

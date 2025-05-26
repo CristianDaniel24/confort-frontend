@@ -12,7 +12,7 @@ class ServiceFormDefinition {
     description: z
       .string()
       .min(2, { message: "Debes ingresar mas de 2 caracteres" })
-      .max(50),
+      .max(150),
     dueTo: z.date({
       invalid_type_error: "Debe ser una fecha valida",
     }),
@@ -33,9 +33,9 @@ class ServiceFormDefinition {
       resolver: zodResolver(this.serviceFormSchema),
       defaultValues: {
         status: service.status,
-        description: service.description,
-        dueTo: service.dueTo,
-        completedAt: service.completedAt,
+        description: service.description ?? "",
+        dueTo: service.dueTo ?? "",
+        completedAt: service.completedAt ?? "",
       },
     };
     return serviceFormDefaultValues;

@@ -23,6 +23,8 @@ import {
   ChevronRight,
   Clock,
   Award,
+  Sparkles,
+  Eye,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -354,11 +356,11 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-foreground inline-block relative">
-                  Nuestra Historia
+                  Misión y Visión
                   <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary rounded-full"></span>
                 </h2>
                 <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mt-4">
-                  Tradición y excelencia en tapicería automotriz desde 1985
+                  Lo que nos inspira a crear excelencia automotriz
                 </p>
               </div>
             </div>
@@ -368,51 +370,49 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <FadeIn delay={100} direction="right">
                 <div className="space-y-6">
+                  {/* MISIÓN */}
                   <div className="flex items-center space-x-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                      <Clock className="h-5 w-5 text-primary" />
+                      <Sparkles className="h-5 w-5 text-primary" />
                     </div>
                     <h3 className="text-xl font-bold text-foreground">
-                      Más de tres décadas de experiencia
+                      Misión
                     </h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    Nuestra historia comenzó en un pequeño taller familiar en
-                    1985, cuando Don Roberto Méndez, maestro tapicero con más de
-                    15 años de experiencia, decidió especializarse en la
-                    tapicería automotriz de alta gama.
+                    En <strong>Confort Tapicería Automotriz</strong>,
+                    convertimos tu vehículo en una verdadera obra de arte.
+                    Diseñamos interiores con estilo, confort y resistencia,
+                    cuidando cada detalle con pasión y dedicación. Nuestro
+                    compromiso es que cada auto refleje tu personalidad y se
+                    distinga por su calidad y elegancia.
                   </p>
-                  <div className="flex items-center space-x-3">
+
+                  {/* VISIÓN */}
+                  <div className="flex items-center space-x-3 pt-6">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                      <Award className="h-5 w-5 text-primary" />
+                      <Eye className="h-5 w-5 text-primary" />
                     </div>
                     <h3 className="text-xl font-bold text-foreground">
-                      Evolución y reconocimiento
+                      Visión
                     </h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    Con el paso de los años, nuestro taller ha evolucionado
-                    incorporando las técnicas más modernas y materiales de
-                    vanguardia, sin perder la esencia del trabajo artesanal que
-                    nos caracteriza. Hemos sido reconocidos por las principales
-                    marcas de automóviles como taller de confianza para
-                    restauraciones y personalizaciones.
+                    Queremos ser tu primera opción en tapicería automotriz,
+                    reconocidos por transformar cada interior en una experiencia
+                    única. Nuestra meta es crecer contigo, innovar en cada
+                    diseño y mantener siempre el más alto estándar de calidad,
+                    dejando huella en cada cliente y cada vehículo.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Hoy, la segunda generación de la familia Méndez continúa el
-                    legado, combinando la tradición con la innovación para
-                    ofrecer soluciones de tapicería que superan las expectativas
-                    de nuestros clientes más exigentes.
-                  </p>
-                  <div className="pt-4"></div>
                 </div>
               </FadeIn>
 
+              {/* Imagen decorativa (puedes mantener o cambiarla) */}
               <FadeIn delay={300} direction="left">
                 <div className="relative h-[400px] lg:h-[500px] overflow-hidden rounded-xl shadow-xl">
                   <Image
                     src="/historia_imagen.png"
-                    alt="Taller de tapicería en los años 80"
+                    alt="Tapicería Automotriz en acción"
                     fill
                     className="object-cover transition-transform duration-1000 hover:scale-105"
                   />
@@ -420,7 +420,7 @@ export default function Home() {
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <div className="bg-background/80 backdrop-blur-sm p-4 rounded-lg">
                       <p className="text-foreground font-medium">
-                        Don Roberto Méndez en su taller original, 1985
+                        Detalles que hacen la diferencia en cada tapizado
                       </p>
                     </div>
                   </div>

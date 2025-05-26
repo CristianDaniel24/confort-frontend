@@ -55,7 +55,11 @@ export default function ServiceForm({ service, onSubmit }: Readonly<Props>) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Estado</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={service.status === "RECHAZADO"}
+              >
                 <FormControl>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecciona el estado"></SelectValue>
@@ -90,7 +94,7 @@ export default function ServiceForm({ service, onSubmit }: Readonly<Props>) {
           render={({ field }) => {
             return (
               <FormItem>
-                <FormLabel>Fecha de inicio</FormLabel>
+                <FormLabel>Fecha estimada</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -133,7 +137,7 @@ export default function ServiceForm({ service, onSubmit }: Readonly<Props>) {
           render={({ field }) => {
             return (
               <FormItem>
-                <FormLabel>Fecha de terminado</FormLabel>
+                <FormLabel>Fecha de entrega</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
