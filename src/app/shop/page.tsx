@@ -223,7 +223,7 @@ export default function Home() {
                     className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
                     onClick={() => scrollToSection("historia")}
                   >
-                    Nuestra Historia
+                    Nuestra Mision y Vision
                   </Button>
                 </div>
               </div>
