@@ -80,7 +80,6 @@ export default function ServicesEcommerce() {
         const proceduresData = await procedureService.getAll();
         setProcedures(proceduresData);
       } catch (error) {
-        console.error("Error al cargar datos:", error);
         toast.error("Error al cargar los servicios");
       } finally {
         setLoading(false);
@@ -116,7 +115,6 @@ export default function ServicesEcommerce() {
       setUserCars(cars);
       return cars;
     } catch (error) {
-      console.error("Error al obtener carros:", error);
       toast.error("No se pudieron cargar tus vehículos");
       return [];
     } finally {
@@ -165,7 +163,6 @@ export default function ServicesEcommerce() {
         "Servicio solicitado con éxito. Se verá reflejado en el carrito cuando sea aprobado por el administrador."
       );
     } catch (error) {
-      console.error("Error al asignar servicio:", error);
       toast.error("No se pudo asignar el servicio.");
     }
   };
@@ -214,28 +211,6 @@ export default function ServicesEcommerce() {
               </div>
             )}
           </div>
-
-          {procedure.typeProcedure && (
-            <div className="absolute top-3 left-3">
-              <Badge variant="outline" className="bg-white/90 backdrop-blur-sm">
-                {procedure.typeProcedure.type}
-              </Badge>
-            </div>
-          )}
-
-          {procedure.status && (
-            <div className="absolute top-3 right-3">
-              <Badge
-                className={
-                  procedure.status.toLowerCase().includes("disponible")
-                    ? "bg-green-100 text-green-800"
-                    : "bg-amber-100 text-amber-800"
-                }
-              >
-                {procedure.status}
-              </Badge>
-            </div>
-          )}
         </div>
 
         <CardHeader className="pb-2">
@@ -246,12 +221,6 @@ export default function ServicesEcommerce() {
             <div className="text-2xl font-bold text-primary">
               {formatCurrency(procedure.price)}
             </div>
-            {procedure.date && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Calendar className="h-3 w-3" />
-                <span>{formatDate(procedure.date)}</span>
-              </div>
-            )}
           </div>
         </CardHeader>
 
@@ -389,7 +358,7 @@ export default function ServicesEcommerce() {
   }
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
+    <div className="container mx-auto p-6 max-w-7xl mt-20">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Nuestros Servicios</h1>
         <p className="text-muted-foreground">

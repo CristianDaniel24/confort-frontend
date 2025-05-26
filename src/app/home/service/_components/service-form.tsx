@@ -55,7 +55,11 @@ export default function ServiceForm({ service, onSubmit }: Readonly<Props>) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Estado</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                disabled={service.status === "RECHAZADO"}
+              >
                 <FormControl>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecciona el estado"></SelectValue>
@@ -64,12 +68,7 @@ export default function ServiceForm({ service, onSubmit }: Readonly<Props>) {
                 <SelectContent>
                   <SelectItem value="CREADO">Creado</SelectItem>
                   <SelectItem value="APROBADO">Aprobado</SelectItem>
-                  <SelectItem
-                    value="RECHAZADO"
-                    disabled={service.status === "RECHAZADO"}
-                  >
-                    Rechazado
-                  </SelectItem>
+                  <SelectItem value="RECHAZADO">Rechazado</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

@@ -31,10 +31,12 @@ export default function EditEmployee() {
         id: values.rol.id,
       },
     } as IEmployee;
-    employeeService.update(+id, employeeUpdate).then(() => {
-      toast.success("Empleado editado!");
-      router.push("/home/employee");
-    });
+    employeeService
+      .update(employee?.person.id ?? 0, employeeUpdate)
+      .then(() => {
+        toast.success("Empleado editado!");
+        router.push("/home/employee");
+      });
   };
 
   useEffect(() => {

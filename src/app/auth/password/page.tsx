@@ -2,29 +2,21 @@
 
 import { Car } from "lucide-react";
 import PasswordRecoveryForm from "./password-recovery-form";
+import type { IRecoveryPassword } from "@/types/recoveryPassword-response-interface";
+import { recoveryPasswordService } from "@/services/recoveryPassword.service";
+import { toast } from "sonner";
 
 export default function PasswordRecoveryPage() {
-  // Esta función sería la que conecta con tu backend
   const handlePasswordRecovery = async (email: string) => {
     try {
-      // Aquí realizarías la llamada a tu API
-      const response = await fetch("/api/auth/recover-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al procesar la solicitud");
-      }
-
-      // Si todo sale bien, no necesitamos hacer nada más aquí
-      // El componente mostrará el mensaje de éxito
+      const recoveryPassword: IRecoveryPassword = {
+        email: email,
+      };
+      await recoveryPasswordService.postRecoveryPassword(recoveryPassword);
+      toast.success("Correo enviado con exito!");
     } catch (error) {
       // Relanzamos el error para que el componente lo maneje
+      console.log("Error al intentar recuperar la constraseña", error);
       throw error;
     }
   };

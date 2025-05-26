@@ -9,8 +9,6 @@ import {
   Calendar,
   Clock,
   CheckCircle,
-  ChevronRight,
-  DollarSign,
   ShoppingBag,
   Wrench,
   Car,
@@ -59,6 +57,7 @@ export default function Pedidos() {
   const [loading, setLoading] = useState(true);
   const [cancellingId, setCancellingId] = useState<number | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>("todos");
+  const [viewMode, setViewMode] = useState<"cards" | "list">("list");
   const router = useRouter();
 
   const fetchOrders = async () => {
@@ -73,10 +72,14 @@ export default function Pedidos() {
     try {
       setLoading(true);
       const res = await billService.getBillByClientId(person.id);
-      setOrders(res || []);
-      setFilteredOrders(res || []);
+
+      const sortedOrders = (res ?? []).sort(
+        (a: IBill, b: IBill) => b.id - a.id
+      );
+
+      setOrders(sortedOrders);
+      setFilteredOrders(sortedOrders);
     } catch (error) {
-      console.error("Error al obtener los pedidos:", error);
       toast.error("Ocurrió un error al obtener los pedidos.");
     } finally {
       setLoading(false);
@@ -88,13 +91,17 @@ export default function Pedidos() {
   }, []);
 
   useEffect(() => {
-    if (statusFilter === "todos") {
-      setFilteredOrders(orders);
-    } else {
-      setFilteredOrders(
-        orders.filter((order) => order.shoppingCart.status === statusFilter)
+    let filtered = [...orders];
+
+    if (statusFilter !== "todos") {
+      filtered = filtered.filter(
+        (order) => order.shoppingCart.status === statusFilter
       );
     }
+
+    filtered = filtered.sort((a: IBill, b: IBill) => b.id - a.id);
+
+    setFilteredOrders(filtered);
   }, [statusFilter, orders]);
 
   const handleCancelOrder = async (orderId: number) => {
@@ -104,7 +111,6 @@ export default function Pedidos() {
       toast.success("Pedido cancelado con éxito!");
       await fetchOrders();
     } catch {
-      console.log("Hubo un error al cancelar el pedido");
       toast.error("Ocurrió un error con tu petición");
     } finally {
       setCancellingId(null);
@@ -234,9 +240,9 @@ export default function Pedidos() {
           Aún no has realizado ningún pedido. Explora nuestros productos y
           servicios para comenzar.
         </p>
-        <Button onClick={() => router.push("/productos")} className="gap-2">
+        <Button className="gap-2">
           <ShoppingBag className="h-4 w-4" />
-          Explorar productos
+          Explora nuestros servicios y productos
         </Button>
       </div>
     );
@@ -246,8 +252,13 @@ export default function Pedidos() {
     ...new Set(orders.map((order) => order.shoppingCart.status)),
   ];
 
+  function formatStatus(status: string): string {
+    const lower = status.toLowerCase().replace(/_/g, " ");
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  }
+
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
+    <div className="container mx-auto p-6 max-w-7xl mt-20">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Mis pedidos</h2>
@@ -255,37 +266,46 @@ export default function Pedidos() {
             Historial de tus pedidos y su estado actual
           </p>
         </div>
-
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-muted-foreground" />
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filtrar por estado" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todos los estados</SelectItem>
-              {uniqueStatuses.map((status) => (
-                <SelectItem key={status} value={status}>
-                  {status}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
       </div>
 
-      <Tabs defaultValue="cards" className="mb-8">
-        <TabsList className="mb-6">
-          <TabsTrigger value="cards" className="gap-2">
-            <Package className="h-4 w-4" />
-            Tarjetas
-          </TabsTrigger>
-          <TabsTrigger value="list" className="gap-2">
-            <Receipt className="h-4 w-4" />
-            Lista
-          </TabsTrigger>
-        </TabsList>
+      <Tabs
+        value={viewMode}
+        onValueChange={(value) => setViewMode(value as "cards" | "list")}
+        className="mb-8"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          {/* Filtro de estados a la izquierda */}
+          <div className="flex items-center gap-2">
+            <Filter className="h-4 w-4 text-muted-foreground" />
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filtrar por estado" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="todos">Todos los estados</SelectItem>
+                {uniqueStatuses.map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {formatStatus(status)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
+          {/* Tabs de vista a la derecha */}
+          <TabsList>
+            <TabsTrigger value="cards" className="gap-2">
+              <Package className="h-4 w-4" />
+              Tarjetas
+            </TabsTrigger>
+            <TabsTrigger value="list" className="gap-2">
+              <Receipt className="h-4 w-4" />
+              Lista
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
+        {/* Contenido de los tabs */}
         <TabsContent value="cards">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredOrders.map((order) => (
@@ -310,7 +330,6 @@ export default function Pedidos() {
                     {getStatusBadge(order.shoppingCart.status)}
                   </div>
                 </CardHeader>
-
                 <CardContent className="pt-6">
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
@@ -318,7 +337,6 @@ export default function Pedidos() {
                         Total del pedido:
                       </span>
                       <span className="text-lg font-bold text-primary flex items-center">
-                        <DollarSign className="h-4 w-4 mr-1" />
                         {formatCurrency(order.costTotal)}
                       </span>
                     </div>
@@ -413,17 +431,7 @@ export default function Pedidos() {
                   </div>
                 </CardContent>
 
-                <CardFooter className="flex justify-between border-t p-4 bg-muted/20">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-sm"
-                    onClick={() => router.push(`/pedidos/${order.id}`)}
-                  >
-                    Ver detalles
-                    <ChevronRight className="ml-1 h-4 w-4" />
-                  </Button>
-
+                <CardFooter className="flex justify-end p-4 bg-muted/20">
                   {order.shoppingCart.status === "CONFIRMADO" && (
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
@@ -541,16 +549,6 @@ export default function Pedidos() {
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex justify-center gap-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-8 w-8 p-0"
-                            onClick={() => router.push(`/pedidos/${order.id}`)}
-                          >
-                            <span className="sr-only">Ver detalles</span>
-                            <ChevronRight className="h-4 w-4" />
-                          </Button>
-
                           {order.shoppingCart.status === "CONFIRMADO" && (
                             <AlertDialog>
                               <AlertDialogTrigger asChild>

@@ -140,9 +140,9 @@ export function CartSheet() {
       setProducts([]);
       setServices([]);
       toast.success("Pedido confirmado exitosamente");
+      window.location.reload();
     } catch (error) {
-      console.error("Error al confirmar el pedido:", error);
-      toast.error("Ocurrió un error al confirmar tu pedido.");
+      throw error;
     } finally {
       setIsLoading(false);
     }

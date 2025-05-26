@@ -1,4 +1,11 @@
-import { Instagram, MessageCircle, Mail, Phone, MapPin } from "lucide-react";
+import {
+  Instagram,
+  MessageCircle,
+  Mail,
+  Phone,
+  MapPin,
+  CalendarClock,
+} from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
@@ -115,6 +122,16 @@ export default function Footer() {
                 />
                 <span className="text-gray-600 dark:text-gray-300">
                   tapiceria.confort24@gmail.com
+                </span>
+              </div>
+              <div className="flex items-center space-x-3 justify-center md:justify-start">
+                <CalendarClock
+                  className="flex-shrink-0 text-blue-500 dark:text-blue-400"
+                  size={18}
+                />
+                <span className="text-gray-600 dark:text-gray-300">
+                  Hora de atencion: Lunes a viernes 8:00 am - 12:00 pm 1:00pm -
+                  5:00 pm
                 </span>
               </div>
             </div>

@@ -24,28 +24,34 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ArrowLeft, CheckCircle2, KeyRound, Loader2, Mail } from "lucide-react";
+import { ArrowLeft, CheckCircle2, KeyRound, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|outlook\.com)$/;
+const passwordRegex = /^(?=(?:.*\d){2,})[A-Za-z\d.]{5,}$/;
 
-// Validación
-const formSchema = z.object({
-  email: z.string().refine((val) => emailRegex.test(val), {
-    message:
-      "Debes ingresar un correo valido y debe pertenecer a gmail.com, outlook.com o hotmail.com",
-  }),
-});
+// Validación de contraseñas
+const formSchema = z
+  .object({
+    password: z.string().refine((val) => passwordRegex.test(val), {
+      message:
+        "Debes ingresar una contraseña valida, solo puedes ingresar letras(mayuscula o minuscula), numeros(1-9) y puntos(.) ",
+    }),
+    password2: z.string().trim(),
+  })
+  .refine((data) => data.password === data.password2, {
+    message: "Las contraseñas deben ser iguales",
+    path: ["password2"],
+  });
 
 type FormValues = z.infer<typeof formSchema>;
 
-interface PasswordRecoveryFormProps {
+interface PasswordChangeFormProps {
   onSubmit: (email: string) => Promise<void>;
 }
 
-export default function PasswordRecoveryForm({
+export default function ChangePasswordForm({
   onSubmit,
-}: PasswordRecoveryFormProps) {
+}: PasswordChangeFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +60,8 @@ export default function PasswordRecoveryForm({
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      password: "",
+      password2: "",
     },
   });
 
@@ -62,10 +69,10 @@ export default function PasswordRecoveryForm({
     setIsLoading(true);
     setError(null);
     try {
-      const cleanedEmail = values.email.trim().toLowerCase();
-      console.log("Email limpio enviado al Backend", cleanedEmail);
+      const cleanedPassword = values.password.trim();
+      console.log("Contraseña nueva enviada al Backend", cleanedPassword);
 
-      await onSubmit(cleanedEmail);
+      await onSubmit(cleanedPassword);
       setIsSuccess(true);
     } catch (err) {
       setError(
@@ -88,10 +95,10 @@ export default function PasswordRecoveryForm({
         <CardHeader className="text-center">
           <CardTitle className="text-xl flex items-center justify-center gap-2">
             <KeyRound className="h-5 w-5 text-primary" />
-            Recuperar contraseña
+            Cambia tu contraseña
           </CardTitle>
           <CardDescription>
-            Ingresa tu correo electrónico para restablecer tu contraseña
+            Ingresa una nueva contraseña para reestablecerla.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -100,27 +107,13 @@ export default function PasswordRecoveryForm({
               <Alert className="bg-green-50 border-green-200">
                 <CheckCircle2 className="h-5 w-5 text-green-600" />
                 <AlertTitle className="text-green-800">
-                  ¡Correo enviado!
+                  ¡Se ha cambiado tu contraseña!
                 </AlertTitle>
                 <AlertDescription className="text-green-700">
-                  Hemos enviado un correo electrónico con instrucciones para
-                  recuperar tu contraseña. Por favor, revisa tu bandeja de
-                  entrada.
+                  Hemos cambiado tu contraseña, ve al inicio de sesion e intenta
+                  iniciar sesion de nuevo.
                 </AlertDescription>
               </Alert>
-              <div className="text-center text-sm text-muted-foreground mt-4">
-                ¿No recibiste el correo? Revisa tu carpeta de spam o{" "}
-                <Button
-                  variant="link"
-                  className="p-0 h-auto font-normal"
-                  onClick={() => {
-                    setIsSuccess(false);
-                    form.reset();
-                  }}
-                >
-                  intenta nuevamente
-                </Button>
-              </div>
             </div>
           ) : (
             <Form {...form}>
@@ -130,20 +123,32 @@ export default function PasswordRecoveryForm({
               >
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-1">
-                        <Mail className="h-4 w-4" />
-                        Correo electrónico
-                      </FormLabel>
+                      <FormLabel>Contraseña</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="ejemplo@gmail.com"
-                          type="email"
-                          autoComplete="email"
-                          disabled={isLoading}
+                          placeholder="Ingresa tu nueva contraseña"
                           {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password2"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Repite tu contraseña</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ingresa tu nueva contraseña otra vez"
+                          {...field}
+                          type="password"
                         />
                       </FormControl>
                       <FormMessage />
@@ -161,7 +166,7 @@ export default function PasswordRecoveryForm({
                       Enviando...
                     </>
                   ) : (
-                    "Enviar instrucciones"
+                    "Cambiar tu contraseña"
                   )}
                 </Button>
               </form>
@@ -179,8 +184,8 @@ export default function PasswordRecoveryForm({
         </CardFooter>
       </Card>
       <div className="text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
-        Al continuar, se enviara un correo electrónico con las instrucciones
-        para recuperar la contraseña de tu cuenta.
+        Al continuar, se cambiara la contraseña de tu cuenta, despues de
+        cambiarla intenta nuevamente iniciar sesion con tu nueva contraseña.
       </div>
     </div>
   );

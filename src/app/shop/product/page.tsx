@@ -76,7 +76,6 @@ export default function ProductsEcommerce() {
         setProducts(productsData);
         setTypeProducts(typeProductsData);
       } catch (error) {
-        console.error("Error al cargar datos:", error);
         toast.error("Error al cargar los productos");
       } finally {
         setLoading(false);
@@ -138,27 +137,13 @@ export default function ProductsEcommerce() {
       };
 
       await shoppingCartProductService.create(shoppingCartProduct);
-      toast.success(`${quantity} producto(s) agregado(s) al carrito!`);
+      toast.success("Producto agregado al carrito!");
       setQuantities((prev) => ({ ...prev, [productId]: 1 }));
     } catch (error) {
-      console.error("Error al agregar producto:", error);
       toast.error("Ocurrió un error al agregar el producto");
     } finally {
       setLoadingProducts((prev) => ({ ...prev, [productId]: false }));
     }
-  };
-
-  const updateQuantity = (productId: number, change: number) => {
-    setQuantities((prev) => {
-      const currentQuantity = prev[productId] || 1;
-      const newQuantity = Math.max(1, currentQuantity + change);
-      const product = products.find((p) => p.id === productId);
-      const maxQuantity = product?.stock || 1;
-      return {
-        ...prev,
-        [productId]: Math.min(newQuantity, maxQuantity),
-      };
-    });
   };
 
   const formatCurrency = (amount: number) => {
@@ -201,7 +186,6 @@ export default function ProductsEcommerce() {
   };
 
   const ProductCard = ({ product }: { product: IProduct }) => {
-    const quantity = quantities[product.id] || 1;
     const isOutOfStock = product.stock === 0;
 
     return (
@@ -388,7 +372,6 @@ export default function ProductsEcommerce() {
   };
 
   const ProductListItem = ({ product }: { product: IProduct }) => {
-    const quantity = quantities[product.id] || 1;
     const isOutOfStock = product.stock === 0;
 
     return (
@@ -483,7 +466,7 @@ export default function ProductsEcommerce() {
   }
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
+    <div className="container mx-auto p-6 max-w-7xl mt-20">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Nuestros Productos</h1>
         <p className="text-muted-foreground">

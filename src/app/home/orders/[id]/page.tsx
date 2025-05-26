@@ -1,5 +1,5 @@
 "use client";
-
+status;
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,13 +15,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { billService } from "@/services/bill.service";
-import type { IOrders } from "@/types/orders-interface";
 import Image from "next/image";
 import {
   CalendarDays,
   Car,
   Clock,
-  DollarSign,
   Download,
   FileText,
   ImageOff,
@@ -35,20 +33,22 @@ import {
   Wrench,
   BadgeIcon as IdCard,
 } from "lucide-react";
+import { useSidebar } from "@/components/ui/sidebar";
+import { IBill } from "@/types/bill-interface";
 
 interface Props {
   params: Promise<{ id: string }>;
 }
 
 export default function OrderDetails({ params }: Readonly<Props>) {
-  const [bill, setBill] = useState<IOrders>();
+  const [bill, setBill] = useState<IBill>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
       const { id } = await params;
       const result = await billService.findById(+id);
-      setBill(result as IOrders);
+      setBill(result as IBill);
       setLoading(false);
     };
     load();
@@ -189,8 +189,20 @@ export default function OrderDetails({ params }: Readonly<Props>) {
     .filter(Boolean)
     .join(" ");
 
+  const { closeSidebar } = useSidebar();
+
+  const handlePrintOrder = () => {
+    //Se cierra el sidebar si esta abierto
+    closeSidebar();
+
+    //Se espera un poco para imprimir
+    setTimeout(() => {
+      window.print();
+    }, 1000);
+  };
+
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-8">
+    <div className="max-w-6xl w-4xl mx-auto p-4 md:p-8">
       <Card className="shadow-md">
         <CardHeader className="bg-gradient-to-r from-amber-50 to-yellow-50 pb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -210,7 +222,11 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                 <span>{formatDate(bill.date)}</span>
               </div>
             </div>
-            <Button variant="outline" className="gap-2 bg-white">
+            <Button
+              variant="outline"
+              className="gap-2 bg-white cursor-pointer"
+              onClick={handlePrintOrder}
+            >
               <Download className="h-4 w-4" />
               Descargar factura
             </Button>
@@ -348,20 +364,19 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                 <Table>
                   <TableHeader className="bg-slate-50">
                     <TableRow>
-                      <TableHead>Producto</TableHead>
-                      <TableHead className="text-center">Cantidad</TableHead>
-                      <TableHead className="text-right">
+                      <TableHead className="w-[35%]">Producto</TableHead>
+                      <TableHead className="w-[25%] pl-2">Cantidad</TableHead>
+                      <TableHead className="w-[30%]  pl-6">
                         Precio unitario
                       </TableHead>
-                      <TableHead className="text-right">Total</TableHead>
+                      <TableHead className="w-[10%] pr-4">Total</TableHead>
                     </TableRow>
                   </TableHeader>
+
                   <TableBody>
                     {bill.shoppingCart.shoppingCartProduct.map((item) => (
-                      <TableRow
-                        key={`product-${item.id.shoppingCart}-${item.id.product.id}`}
-                      >
-                        <TableCell className="flex items-center gap-3">
+                      <TableRow key={`product-${item.product.id}`}>
+                        <TableCell className="flex items-center gap-3 w-[40%]">
                           <SafeImage
                             src={item.product.imgUrl}
                             alt={item.product.name}
@@ -370,29 +385,22 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                             <span className="font-medium">
                               {item.product.name}
                             </span>
-                            {item.product.code && (
-                              <p className="text-xs text-muted-foreground">
-                                Código: {item.product.code}
-                              </p>
-                            )}
-                            {item.product.typeProduct && (
-                              <p className="text-xs text-muted-foreground">
-                                Tipo: {item.product.typeProduct.type}
-                              </p>
-                            )}
                           </div>
                         </TableCell>
-                        <TableCell className="text-center">
+
+                        <TableCell className="text-left pl-2 w-[10%]">
                           <Badge variant="outline" className="bg-slate-100">
                             {item.amount}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-right">
+
+                        <TableCell className="text-left pl-6 w-[20%]">
                           {item.product.cost
                             ? formatCurrency(item.product.cost)
                             : "No disponible"}
                         </TableCell>
-                        <TableCell className="text-right font-medium">
+
+                        <TableCell className="text-right font-medium pr-4 w-[30%]">
                           {item.product.cost
                             ? formatCurrency(item.amount * item.product.cost)
                             : "No disponible"}
@@ -453,7 +461,6 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                   <TableHeader className="bg-slate-50">
                     <TableRow>
                       <TableHead>Procedimiento</TableHead>
-                      <TableHead>Descripción del Servicio</TableHead>
                       <TableHead>Estado</TableHead>
                       <TableHead>Fechas</TableHead>
                       <TableHead className="text-right">Precio</TableHead>
@@ -463,7 +470,7 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                     {bill.shoppingCart.shoppingCartServices.map(
                       (serviceItem) => (
                         <TableRow
-                          key={`service-${serviceItem.id.shoppingCart}-${serviceItem.id.service.id}`}
+                          key={`service-${serviceItem.shoppingCart}-${serviceItem.service.id}`}
                         >
                           <TableCell>
                             <div className="flex items-center gap-3">
@@ -495,12 +502,6 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                             </div>
                           </TableCell>
                           <TableCell>
-                            <p className="text-sm">
-                              {serviceItem.service?.description ||
-                                "Sin descripción"}
-                            </p>
-                          </TableCell>
-                          <TableCell>
                             <div className="space-y-1">
                               {serviceItem.service?.status && (
                                 <Badge
@@ -528,20 +529,6 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                                   {serviceItem.service.status}
                                 </Badge>
                               )}
-                              {serviceItem.service?.procedure?.status && (
-                                <Badge
-                                  variant="outline"
-                                  className={
-                                    serviceItem.service.procedure.status
-                                      .toLowerCase()
-                                      .includes("completado")
-                                      ? "bg-green-50 text-green-700"
-                                      : "bg-amber-50 text-amber-700"
-                                  }
-                                >
-                                  Proc: {serviceItem.service.procedure.status}
-                                </Badge>
-                              )}
                             </div>
                           </TableCell>
                           <TableCell>
@@ -564,7 +551,9 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                                     Vence:
                                   </span>
                                   <p>
-                                    {formatDateOnly(serviceItem.service.dueTo)}
+                                    {formatDateOnly(
+                                      new Date(serviceItem.service.dueTo)
+                                    )}
                                   </p>
                                 </div>
                               )}
@@ -575,7 +564,7 @@ export default function OrderDetails({ params }: Readonly<Props>) {
                                   </span>
                                   <p className="text-green-600">
                                     {formatDateOnly(
-                                      serviceItem.service.completedAt
+                                      new Date(serviceItem.service.completedAt)
                                     )}
                                   </p>
                                 </div>
@@ -622,7 +611,6 @@ export default function OrderDetails({ params }: Readonly<Props>) {
 
             <div className="bg-amber-50 p-4 rounded-lg border border-amber-100 flex flex-col md:flex-row md:items-center gap-4">
               <div className="flex items-center gap-2">
-                <DollarSign className="h-6 w-6 text-amber-600" />
                 <span className="text-lg font-semibold">Total:</span>
               </div>
               <span className="text-2xl font-bold text-amber-700">

@@ -313,7 +313,6 @@ export default async function ServiceDetails({ params }: Readonly<Props>) {
                       </div>
                       <div>
                         <p className="text-sm font-medium flex items-center">
-                          <DollarSign className="h-4 w-4 mr-1 text-sky-600" />
                           Precio
                         </p>
                         <p className="text-sm font-semibold text-sky-700">
