@@ -3,18 +3,18 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { ClientFormType } from "@/lib/definitions/client-form-definition";
 import { sessionUtils } from "@/app/utils/session.utils";
 import { IClient } from "@/types/client-interface";
 import { clientService } from "@/services/client.service";
 import ClientFormEditAccount from "./client-edit-form";
+import { ClientEditFormType } from "./client-edit-form-definition";
 
 export default function ProfilePageClient() {
   const router = useRouter();
   const [client, setClient] = useState<IClient>();
   const person = sessionUtils.getPersonFromSession();
 
-  const handleSubmit = (values: ClientFormType) => {
+  const handleSubmit = (values: ClientEditFormType) => {
     const clientUpdate = {
       person: {
         firstName: values.firstName,
@@ -25,7 +25,6 @@ export default function ProfilePageClient() {
         phone: values.phone,
         address: values.address,
         email: values.email,
-        password: values.password,
         dateOfBirth: values.dateOfBirth,
       },
     } as IClient;
@@ -59,7 +58,7 @@ export default function ProfilePageClient() {
   return (
     <div className="container max-w-5xl mx-auto md:py-10 mt-15">
       <div className="grid gap-5">
-        <ClientFormEditAccount client={client} onSubmit={handleSubmit} />
+        <ClientFormEditAccount client={client.person} onSubmit={handleSubmit} />
       </div>
     </div>
   );

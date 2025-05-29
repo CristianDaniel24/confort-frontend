@@ -5,6 +5,7 @@ import {
   Cable,
   Car,
   Hammer,
+  Home,
   KeySquare,
   Package,
   PackageSearch,
@@ -40,6 +41,11 @@ const data = {
     },
   ],
   projects: [
+    {
+      name: "Inicio",
+      url: "/home",
+      icon: Home,
+    },
     {
       name: "Roles",
       url: "/home/rols",

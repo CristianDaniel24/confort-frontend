@@ -21,8 +21,6 @@ import {
   PenToolIcon as Tools,
   Users,
   ChevronRight,
-  Clock,
-  Award,
   Sparkles,
   Eye,
 } from "lucide-react";
@@ -122,6 +120,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
             fill
             className="object-cover transition-transform duration-10000 ease-in-out group-hover:scale-105"
             priority={index === 0}
+            aria-label="Image by Wirestock de Freepik"
           />
         </div>
       ))}
@@ -185,7 +184,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center overflow-hidden">
       {/* Hero Section - Adaptado para modo oscuro */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted relative">
+      <section className="w-full py-20 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted relative">
         {/* Elementos decorativos de fondo */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-foreground/5 rounded-full blur-3xl" />
@@ -624,7 +623,7 @@ export default function Home() {
               >
                 <Button
                   size="lg"
-                  className="bg-background text-primary hover:bg-background/90 transition-all duration-500 hover:shadow-lg hover:shadow-background/20 group cursor-pointer"
+                  className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
                 >
                   Solicitar Cotización
                   <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />

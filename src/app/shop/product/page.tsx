@@ -10,9 +10,6 @@ import {
   Filter,
   Grid3X3,
   List,
-  Star,
-  Plus,
-  Minus,
   Eye,
   AlertCircle,
   Loader2,
@@ -49,8 +46,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useCartStore } from "../cart/_components/cart-update-icon";
 
 export default function ProductsEcommerce() {
+  const { incrementItemCount } = useCartStore();
   const [products, setProducts] = useState<IProduct[]>([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
@@ -138,9 +137,10 @@ export default function ProductsEcommerce() {
 
       await shoppingCartProductService.create(shoppingCartProduct);
       toast.success("Producto agregado al carrito!");
+      incrementItemCount();
       setQuantities((prev) => ({ ...prev, [productId]: 1 }));
     } catch (error) {
-      toast.error("Ocurrió un error al agregar el producto");
+      throw error;
     } finally {
       setLoadingProducts((prev) => ({ ...prev, [productId]: false }));
     }
@@ -159,7 +159,7 @@ export default function ProductsEcommerce() {
       return (
         <Badge variant="destructive" className="gap-1">
           <AlertCircle className="h-3 w-3" />
-          Sin stock
+          Sin cantidad disponible
         </Badge>
       );
     } else if (stock < 10) {
@@ -169,7 +169,7 @@ export default function ProductsEcommerce() {
           className="bg-amber-100 text-amber-800 gap-1"
         >
           <AlertCircle className="h-3 w-3" />
-          Stock bajo
+          Cantidad baja
         </Badge>
       );
     } else {
@@ -214,9 +214,11 @@ export default function ProductsEcommerce() {
               </div>
             )}
           </div>
-
           <div className="absolute top-3 left-3">
-            <Badge variant="outline" className="bg-white/90 backdrop-blur-sm">
+            <Badge
+              variant="outline"
+              className="backdrop-blur-sm group:text-primary"
+            >
               {product.typeProduct.type}
             </Badge>
           </div>
@@ -224,7 +226,6 @@ export default function ProductsEcommerce() {
           <div className="absolute top-3 right-3">
             {getStockBadge(product.stock)}
           </div>
-
           {isOutOfStock && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <Badge variant="destructive" className="text-lg px-4 py-2">
@@ -235,11 +236,11 @@ export default function ProductsEcommerce() {
         </div>
 
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg line-clamp-2 group-hover:text-primary transition-colors">
+          <CardTitle className="text-lg line-clamp-2 group:text-primary transition-colors">
             {product.name}
           </CardTitle>
           <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-2xl font-bold group:text-primary">
               {formatCurrency(product.cost)}
             </div>
           </div>
@@ -248,7 +249,9 @@ export default function ProductsEcommerce() {
         <CardContent className="pt-0">
           <div className="space-y-4">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Stock disponible:</span>
+              <span className="text-muted-foreground">
+                Cantidad disponible:
+              </span>
               <span className="font-medium">{product.stock} unidades</span>
             </div>
 
@@ -330,7 +333,7 @@ export default function ProductsEcommerce() {
                                 <span className="text-muted-foreground">
                                   Precio:
                                 </span>
-                                <span className="font-bold text-primary">
+                                <span className="font-bold group:text-primary ">
                                   {formatCurrency(product.cost)}
                                 </span>
                               </div>
@@ -411,7 +414,7 @@ export default function ProductsEcommerce() {
                   </Badge>
                 </div>
                 <div className="text-right">
-                  <div className="text-xl font-bold text-primary">
+                  <div className="text-xl font-bold group:text-primary">
                     {formatCurrency(product.cost)}
                   </div>
                   {getStockBadge(product.stock)}
@@ -420,7 +423,7 @@ export default function ProductsEcommerce() {
 
               <div className="flex items-center justify-between">
                 <div className="text-sm text-muted-foreground">
-                  Stock: {product.stock} unidades
+                  Cantidad: {product.stock} unidades
                 </div>
 
                 {!isOutOfStock && (

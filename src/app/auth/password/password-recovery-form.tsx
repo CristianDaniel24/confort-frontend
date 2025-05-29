@@ -112,7 +112,7 @@ export default function PasswordRecoveryForm({
                 ¿No recibiste el correo? Revisa tu carpeta de spam o{" "}
                 <Button
                   variant="link"
-                  className="p-0 h-auto font-normal"
+                  className="p-0 h-auto text-muted-foreground cursor-pointer"
                   onClick={() => {
                     setIsSuccess(false);
                     form.reset();

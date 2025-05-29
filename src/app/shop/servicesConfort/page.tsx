@@ -214,11 +214,11 @@ export default function ServicesEcommerce() {
         </div>
 
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg line-clamp-1 group-hover:text-primary transition-colors">
+          <CardTitle className="text-lg line-clamp-1 group:text-primary transition-colors">
             {procedure.name}
           </CardTitle>
           <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-2xl font-bold group:text-primary">
               {formatCurrency(procedure.price)}
             </div>
           </div>
@@ -291,7 +291,7 @@ export default function ServicesEcommerce() {
                   )}
                 </div>
                 <div className="text-right">
-                  <div className="text-xl font-bold text-primary">
+                  <div className="text-xl font-bold group:text-primary">
                     {formatCurrency(procedure.price)}
                   </div>
                   {procedure.status && (

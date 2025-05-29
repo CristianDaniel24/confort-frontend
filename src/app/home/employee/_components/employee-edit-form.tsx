@@ -44,24 +44,30 @@ import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
+import { IPerson } from "@/types/person-interface";
+import {
+  employeeEditFormDefinition,
+  EmployeeEditFormType,
+} from "./employee-edit-form-definition";
 
 interface Props {
   employee: IEmployee;
-  onSubmit: (value: EmployeeFormType) => void;
+  onSubmit: (value: EmployeeEditFormType) => void;
 }
 
 export default function EmployeeFormEditAccount({
   employee,
   onSubmit,
 }: Readonly<Props>) {
-  const form = useForm<EmployeeFormType>(
-    employeeFormDefinition.asignDefaultValues(employee)
+  const form = useForm<EmployeeEditFormType>(
+    employeeEditFormDefinition.asignDefaultValues(employee)
   );
+
   const router = useRouter();
 
   return (
     <Card className="w-full shadow-md">
-      <CardHeader className="bg-gradient-to-r from-slate-50 to-slate-100 pb-4">
+      <CardHeader className="bg-inherit">
         <CardTitle className="flex items-center gap-2 text-2xl">
           <UserCircle className="h-6 w-6 text-primary" />
           Editar Perfil
@@ -289,54 +295,6 @@ export default function EmployeeFormEditAccount({
                 />
               </div>
             </div>
-
-            <div>
-              <h3 className="text-lg font-medium flex items-center mb-4">
-                <KeyRound className="mr-2 h-5 w-5 text-primary/80" />
-                Seguridad
-              </h3>
-              <Separator className="mb-4" />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Contraseña</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Ingresa tu contraseña"
-                          {...field}
-                          className="bg-slate-50 focus-visible:bg-white transition-colors"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password2"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Confirmar contraseña</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Repite tu contraseña"
-                          {...field}
-                          className="bg-slate-50 focus-visible:bg-white transition-colors"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-
             <div className="flex justify-end space-x-4 pt-4">
               <Button
                 variant="outline"

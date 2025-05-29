@@ -1,9 +1,9 @@
 import { GenericService } from "./generic.service";
 import iAxios from "@/lib/axios-instance.utils";
 import { utils } from "@/lib/utils";
-import { IOrders } from "@/types/orders-interface";
+import { IBill } from "@/types/bill-interface";
 
-class OrderService extends GenericService<IOrders> {
+class OrderService extends GenericService<IBill> {
   constructor() {
     super({ endpoint: "bill" });
   }

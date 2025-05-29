@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { billService } from "@/services/bill.service";
@@ -21,7 +21,17 @@ import { IBill } from "@/types/bill-interface";
 export const columns: ColumnDef<IBill>[] = [
   {
     accessorKey: "id",
-    header: "N° Pedido",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          N° Pedido
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     enableSorting: true,
     sortDescFirst: true,
     cell: ({ getValue }) => (

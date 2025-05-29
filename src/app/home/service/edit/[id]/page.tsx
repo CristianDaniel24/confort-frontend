@@ -7,11 +7,13 @@ import { IService } from "@/types/service-interface";
 import { serviceService } from "@/services/service.service";
 import { ServiceFormType } from "@/lib/definitions/service-form-definition";
 import ServiceForm from "../../_components/service-form";
+import { useCartStore } from "@/app/shop/cart/_components/cart-update-icon";
 
 export default function EditService() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<IService>();
+  const { incrementItemCount } = useCartStore();
 
   const handleSubmit = (values: ServiceFormType) => {
     const serviceUpdate = {
@@ -22,6 +24,7 @@ export default function EditService() {
     } as IService;
     console.log("Id del servicio " + id);
     serviceService.update(+id, serviceUpdate).then(() => {
+      incrementItemCount();
       toast.success("Servicio editado!");
       router.push("/home/service");
     });

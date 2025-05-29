@@ -261,7 +261,9 @@ export default function Pedidos() {
     <div className="container mx-auto p-6 max-w-7xl mt-20">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Mis pedidos</h2>
+          <h2 className="text-3xl font-bold group:text-primary mb-2">
+            Mis pedidos
+          </h2>
           <p className="text-muted-foreground">
             Historial de tus pedidos y su estado actual
           </p>
@@ -336,7 +338,7 @@ export default function Pedidos() {
                       <span className="text-sm text-muted-foreground">
                         Total del pedido:
                       </span>
-                      <span className="text-lg font-bold text-primary flex items-center">
+                      <span className="text-lg font-bold group:text-primary flex items-center">
                         {formatCurrency(order.costTotal)}
                       </span>
                     </div>
@@ -364,7 +366,10 @@ export default function Pedidos() {
                                     {prod.product.name}
                                   </span>
                                 </div>
-                                <Badge variant="outline" className="bg-blue-50">
+                                <Badge
+                                  variant="outline"
+                                  className="group:text-primary"
+                                >
                                   x{prod.amount}
                                 </Badge>
                               </li>
@@ -404,12 +409,12 @@ export default function Pedidos() {
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                  <span className="text-xs text-muted-foreground">
+                                  <span className="text-xs group:text-primary">
                                     {serviceEntry.service.car.plate}
                                   </span>
                                   <Badge
                                     variant="outline"
-                                    className="bg-amber-50"
+                                    className="group:text-primary"
                                   >
                                     x{serviceEntry.amount}
                                   </Badge>

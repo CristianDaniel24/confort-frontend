@@ -13,13 +13,10 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import {
   CircleUserRound,
-  Cog,
   LogOut,
   Moon,
   Sun,
-  ShoppingCart,
   Home,
-  Settings,
   Package,
   ShoppingBasket,
   Route,
@@ -156,13 +153,15 @@ export default function Header() {
                 </Link>
               )}
 
-              <Tooltip disableHoverableContent>
-                <TooltipTrigger asChild>
-                  <div className="ml-2 transition-transform duration-300 hover:scale-105 mr-4">
-                    <CartSheet />
-                  </div>
-                </TooltipTrigger>
-              </Tooltip>
+              {isLoggedIn && (
+                <Tooltip disableHoverableContent>
+                  <TooltipTrigger asChild>
+                    <div className="ml-2 transition-transform duration-300 hover:scale-105 mr-4">
+                      <CartSheet />
+                    </div>
+                  </TooltipTrigger>
+                </Tooltip>
+              )}
 
               {/* Dropdown de ShadCN */}
               <Tooltip>
@@ -255,7 +254,7 @@ export default function Header() {
         <div
           className={`md:hidden fixed inset-x-0 top-[60px] shadow-lg bg-background/95 backdrop-blur-sm border-b border-border transition-all duration-300 z-40 ${
             mobileMenuOpen
-              ? "max-h-[400px] opacity-100"
+              ? "max-h-[800px] opacity-100"
               : "max-h-0 opacity-0 pointer-events-none"
           } overflow-hidden`}
         >
@@ -274,7 +273,7 @@ export default function Header() {
                 className="flex items-center gap-2 font-medium py-3 text-foreground hover:text-primary transition-all duration-300 border-b border-border"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingBasket className="w-4 h-4" />
                 Productos
               </Link>
               <Link
@@ -282,7 +281,7 @@ export default function Header() {
                 className="flex items-center gap-2 font-medium py-3 text-foreground hover:text-primary transition-all duration-300 border-b border-border"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <Settings className="w-4 h-4" />
+                <Route className="w-4 h-4" />
                 Servicios
               </Link>
               <Link
@@ -294,7 +293,34 @@ export default function Header() {
                 Pedidos
               </Link>
 
-              <div className="flex flex-col space-y-3 pt-2">
+              {isLoggedIn && (
+                <Tooltip disableHoverableContent>
+                  <TooltipTrigger asChild>
+                    <div className="ml-2 transition-transform duration-300  mr-4 cursor-pointer">
+                      <CartSheet />
+                      Carrito de compras
+                    </div>
+                  </TooltipTrigger>
+                </Tooltip>
+              )}
+
+              <Button
+                variant="outline"
+                className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary"
+                onClick={handleTheme}
+              >
+                {currTheme === "dark" ? (
+                  <>
+                    <Moon className="mr-2 h-4 w-4" /> Modo oscuro
+                  </>
+                ) : (
+                  <>
+                    <Sun className="mr-2 h-4 w-4" /> Modo claro
+                  </>
+                )}
+              </Button>
+
+              <div className="flex flex-col space-y-2">
                 {!isLoggedIn ? (
                   <Link
                     href="/auth/signin"
@@ -308,32 +334,11 @@ export default function Header() {
                   <>
                     <Button
                       variant="outline"
+                      onClick={handleEditAccount}
                       className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary"
                     >
                       <CircleUserRound className="mr-2 h-4 w-4" />
-                      Mi perfil
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary"
-                      onClick={handleTheme}
-                    >
-                      {currTheme === "dark" ? (
-                        <>
-                          <Moon className="mr-2 h-4 w-4" /> Modo oscuro
-                        </>
-                      ) : (
-                        <>
-                          <Sun className="mr-2 h-4 w-4" /> Modo claro
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary"
-                    >
-                      <Cog className="mr-2 h-4 w-4" />
-                      Configuraciones
+                      Editar perfil
                     </Button>
                     <Button
                       variant="destructive"

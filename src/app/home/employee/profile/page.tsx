@@ -8,13 +8,14 @@ import { EmployeeFormType } from "@/lib/definitions/employee-form-definition";
 import { employeeService } from "@/services/employee.service";
 import { sessionUtils } from "@/app/utils/session.utils";
 import EmployeeFormEditAccount from "../_components/employee-edit-form";
+import { EmployeeEditFormType } from "../_components/employee-edit-form-definition";
 
 export default function ProfilePage() {
   const router = useRouter();
   const [employee, setEmployee] = useState<IEmployee>();
   const person = sessionUtils.getPersonFromSession();
 
-  const handleSubmit = (values: EmployeeFormType) => {
+  const handleSubmit = (values: EmployeeEditFormType) => {
     const employeeUpdate = {
       person: {
         firstName: values.firstName,
@@ -26,7 +27,6 @@ export default function ProfilePage() {
         address: values.address,
         dateOfBirth: values.dateOfBirth,
         email: values.email,
-        password: values.password,
       },
       rol: {
         id: values.rol.id,

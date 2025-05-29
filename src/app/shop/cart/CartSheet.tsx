@@ -46,6 +46,7 @@ import type { IShoppingCartProduct } from "@/types/shoppingCartProduct-interface
 import type { ICar } from "@/types/car-interface";
 import type { IProcedure } from "@/types/procedure-interface";
 import type { IShoppingCartService } from "@/types/shoppingCartService-interface";
+import { useCartStore } from "./_components/cart-update-icon";
 
 interface CartProduct {
   id: number;
@@ -82,10 +83,10 @@ export function CartSheet() {
         toast.error("Ocurrió un error con tu petición!");
         return;
       }
+
       const res = await shoppingCartService.getShoppingCartByClientId(
         person.id
       );
-
       const productsArray = res.shoppingCartProduct;
       const servicesArray: IShoppingCartService[] = res.shoppingCartServices;
 
@@ -116,6 +117,16 @@ export function CartSheet() {
 
       setProducts(mappedProducts ?? []);
       setServices(mappedServices ?? []);
+
+      const totalProductUnits =
+        mappedProducts?.reduce(
+          (acc: number, item: CartProduct) => acc + item.amount,
+          0
+        ) ?? 0;
+      const totalServiceUnits =
+        groupedServicesArray?.reduce((acc, item) => acc + item.count, 0) ?? 0;
+      const totalItems = totalProductUnits + totalServiceUnits;
+      useCartStore.getState().setItemCount(totalItems);
     } catch (error) {
       console.error("Error al cargar el carrito: ", error);
       toast.error("Error al cargar el carrito");
@@ -238,20 +249,13 @@ export function CartSheet() {
   };
 
   const hasItems = products.length > 0 || services.length > 0;
+  const itemCount = useCartStore((state) => state.itemCount);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <button className="relative cursor-pointer">
           <ShoppingCart className="inline-block mr-1" />
-          {hasItems && (
-            <Badge
-              variant="destructive"
-              className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
-            >
-              {products.length + groupedServicesArray.length}
-            </Badge>
-          )}
         </button>
       </SheetTrigger>
 
@@ -441,7 +445,7 @@ export function CartSheet() {
                 </div>
                 <div className="flex justify-between items-center font-medium text-lg">
                   <span>Total:</span>
-                  <span className="text-primary">
+                  <span className="group:text-primary">
                     {formatCurrency(totalCartPrice)}
                   </span>
                 </div>
