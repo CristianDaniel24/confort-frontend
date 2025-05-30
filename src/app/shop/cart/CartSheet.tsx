@@ -249,14 +249,17 @@ export function CartSheet() {
   };
 
   const hasItems = products.length > 0 || services.length > 0;
-  const itemCount = useCartStore((state) => state.itemCount);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <button className="relative cursor-pointer">
+        <Button
+          variant="outline"
+          className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary cursor-pointer"
+        >
           <ShoppingCart className="inline-block mr-1" />
-        </button>
+          <span className="inline md:hidden">Carrito de compras</span>
+        </Button>
       </SheetTrigger>
 
       <SheetContent

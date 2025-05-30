@@ -478,66 +478,63 @@ export default function ProductsEcommerce() {
       </div>
 
       {/* Filtros y controles */}
-      <div className="bg-muted/30 p-4 rounded-lg mb-6">
-        <div className="flex flex-col lg:flex-row gap-4 items-center">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Buscar productos..."
-              className="pl-10"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:flex gap-4">
+        {/* Búsqueda */}
+        <div className="relative w-full lg:max-w-md">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+          <Input
+            placeholder="Buscar productos..."
+            className="pl-10"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
-          <div className="flex gap-2 items-center">
-            <Filter className="h-4 w-4 text-muted-foreground" />
-            <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Categoría" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todas las categorías</SelectItem>
-                {typeProducts.map((type) => (
-                  <SelectItem key={type.id} value={type.type}>
-                    {type.type}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Ordenar por" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="name">Nombre A-Z</SelectItem>
-                <SelectItem value="price-low">Precio: Menor a mayor</SelectItem>
-                <SelectItem value="price-high">
-                  Precio: Mayor a menor
+        {/* Filtros y opciones */}
+        <div className="flex flex-wrap gap-2 items-center w-full mb-4">
+          <Select value={category} onValueChange={setCategory}>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue placeholder="Categoría" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas las categorías</SelectItem>
+              {typeProducts.map((type) => (
+                <SelectItem key={type.id} value={type.type}>
+                  {type.type}
                 </SelectItem>
-                <SelectItem value="stock">Mayor stock</SelectItem>
-              </SelectContent>
-            </Select>
+              ))}
+            </SelectContent>
+          </Select>
 
-            <Separator orientation="vertical" className="h-8" />
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Ordenar por" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="name">Nombre A-Z</SelectItem>
+              <SelectItem value="price-low">Precio: Menor a mayor</SelectItem>
+              <SelectItem value="price-high">Precio: Mayor a menor</SelectItem>
+              <SelectItem value="stock">Mayor stock</SelectItem>
+            </SelectContent>
+          </Select>
 
-            <Tabs
-              value={viewMode}
-              onValueChange={(value) => setViewMode(value as "grid" | "list")}
-            >
-              <TabsList>
-                <TabsTrigger value="grid" className="gap-2">
-                  <Grid3X3 className="h-4 w-4" />
-                  Cuadrícula
-                </TabsTrigger>
-                <TabsTrigger value="list" className="gap-2">
-                  <List className="h-4 w-4" />
-                  Lista
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
+          <Separator orientation="vertical" className="hidden lg:block h-8" />
+
+          <Tabs
+            value={viewMode}
+            onValueChange={(value) => setViewMode(value as "grid" | "list")}
+          >
+            <TabsList className="flex">
+              <TabsTrigger value="grid" className="gap-2">
+                <Grid3X3 className="h-4 w-4" />
+                Cuadrícula
+              </TabsTrigger>
+              <TabsTrigger value="list" className="gap-2">
+                <List className="h-4 w-4" />
+                Lista
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
       </div>
 

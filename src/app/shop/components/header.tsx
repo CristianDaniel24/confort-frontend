@@ -206,6 +206,7 @@ export default function Header() {
                         <DropdownMenuItem
                           onClick={handleLogout}
                           className="cursor-pointer text-destructive transition-colors duration-200 hover:bg-destructive/10 focus:bg-destructive/10"
+                          aria-label="Cerrar sesión"
                         >
                           <LogOut className="mr-2 h-4 w-4" />
                           Cerrar sesión
@@ -264,6 +265,7 @@ export default function Header() {
                 href="/shop"
                 className="flex items-center gap-2 font-medium py-3 text-foreground hover:text-primary transition-all duration-300 border-b border-border"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Inicio"
               >
                 <Home className="w-4 h-4" />
                 Inicio
@@ -272,6 +274,7 @@ export default function Header() {
                 href="/shop/product"
                 className="flex items-center gap-2 font-medium py-3 text-foreground hover:text-primary transition-all duration-300 border-b border-border"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Productos"
               >
                 <ShoppingBasket className="w-4 h-4" />
                 Productos
@@ -280,6 +283,7 @@ export default function Header() {
                 href="/shop/servicesConfort"
                 className="flex items-center gap-2 font-medium py-3 text-foreground hover:text-primary transition-all duration-300 border-b border-border"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Servicios"
               >
                 <Route className="w-4 h-4" />
                 Servicios
@@ -288,26 +292,18 @@ export default function Header() {
                 href="/shop/pedidos"
                 className="flex items-center gap-2 font-medium py-3 text-foreground hover:text-primary transition-all duration-300 border-b border-border"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Pedidos"
               >
                 <Package className="w-4 h-4" />
                 Pedidos
               </Link>
 
-              {isLoggedIn && (
-                <Tooltip disableHoverableContent>
-                  <TooltipTrigger asChild>
-                    <div className="ml-2 transition-transform duration-300  mr-4 cursor-pointer">
-                      <CartSheet />
-                      Carrito de compras
-                    </div>
-                  </TooltipTrigger>
-                </Tooltip>
-              )}
-
+              {isLoggedIn && <CartSheet />}
               <Button
                 variant="outline"
-                className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary"
+                className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary cursor-pointer"
                 onClick={handleTheme}
+                aria-label="Modo claro y oscuro"
               >
                 {currTheme === "dark" ? (
                   <>
@@ -326,7 +322,10 @@ export default function Header() {
                     href="/auth/signin"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <Button className="w-full transition-all duration-300 hover:shadow-md">
+                    <Button
+                      className="w-full transition-all duration-300 hover:shadow-md cursor-pointer"
+                      aria-label="Iniciar sesión"
+                    >
                       Iniciar sesión
                     </Button>
                   </Link>
@@ -335,15 +334,17 @@ export default function Header() {
                     <Button
                       variant="outline"
                       onClick={handleEditAccount}
-                      className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary"
+                      className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary cursor-pointer"
+                      aria-label="Editar perfil"
                     >
                       <CircleUserRound className="mr-2 h-4 w-4" />
                       Editar perfil
                     </Button>
                     <Button
                       variant="destructive"
-                      className="w-full justify-start transition-all duration-300 hover:bg-destructive/90"
+                      className="w-full justify-start transition-all duration-300 hover:bg-destructive/90 cursor-pointer"
                       onClick={handleLogout}
+                      aria-label="Cerrar sesión"
                     >
                       <LogOut className="mr-2 h-4 w-4" />
                       Cerrar sesión

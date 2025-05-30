@@ -275,7 +275,7 @@ export default function Pedidos() {
         onValueChange={(value) => setViewMode(value as "cards" | "list")}
         className="mb-8"
       >
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           {/* Filtro de estados a la izquierda */}
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4 text-muted-foreground" />

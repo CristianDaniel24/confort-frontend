@@ -51,7 +51,7 @@ class EmployeeFormDefinition {
       phone: z
         .string()
         .min(10, { message: "Debes ingresar un numero de telefono valido" })
-        .max(12),
+        .max(10),
       address: z
         .string()
         .min(3, { message: "Debes ingresar una direccion valida" })

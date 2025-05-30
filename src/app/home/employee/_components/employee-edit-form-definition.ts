@@ -49,9 +49,6 @@ class EmployeeEditFormDefinition {
       .string()
       .min(3, { message: "Debes ingresar una direccion valida" })
       .max(50),
-    dateOfBirth: z.date({
-      invalid_type_error: "Debe ser una fecha valida",
-    }),
     rol: z
       .string()
       .min(1, { message: "Debes ingresar un rol correcto" })

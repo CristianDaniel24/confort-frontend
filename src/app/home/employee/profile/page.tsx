@@ -25,7 +25,6 @@ export default function ProfilePage() {
         document: values.document,
         phone: values.phone,
         address: values.address,
-        dateOfBirth: values.dateOfBirth,
         email: values.email,
       },
       rol: {

@@ -83,7 +83,7 @@ export default function CarForm() {
       color: data.color,
       plate: data.plate,
       typeCar: { id: selectedTypeCar.id } as ITypeCar,
-      client: { id: person.id } as IClient,
+      client: { person: { id: person.id } } as IClient,
     };
 
     console.log("Carro formulario:", car);

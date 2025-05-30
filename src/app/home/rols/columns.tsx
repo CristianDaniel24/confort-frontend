@@ -32,6 +32,16 @@ export const columns: ColumnDef<IRol>[] = [
   {
     accessorKey: "salary",
     header: "Salario",
+    cell: ({ getValue }) => {
+      const value = getValue() as number;
+      const formatted = new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: 0,
+      }).format(value);
+
+      return <span>{formatted}</span>;
+    },
   },
   {
     id: "actions",

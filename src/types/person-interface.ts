@@ -9,5 +9,5 @@ export interface IPerson {
   address: string;
   email: string;
   password: string;
-  dateOfBirth: string | Date;
+  dateOfBirth?: string | Date;
 }

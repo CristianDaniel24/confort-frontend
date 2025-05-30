@@ -118,21 +118,6 @@ export default function HomeMain() {
     }
   };
 
-  const getActivityColor = (status: string) => {
-    switch (status) {
-      case "pending":
-        return "text-yellow-600 bg-yellow-100";
-      case "warning":
-        return "text-red-600 bg-red-100";
-      case "completed":
-        return "text-green-600 bg-green-100";
-      case "new":
-        return "text-blue-600 bg-blue-100";
-      default:
-        return "text-gray-600 bg-gray-100";
-    }
-  };
-
   const getStaticColorByType = (type: string) => {
     switch (type) {
       case "order":
@@ -188,10 +173,10 @@ export default function HomeMain() {
       {/* Header */}
       <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight mt-4">
             Dashboard - Tapicería Confort
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mt-8">
             Bienvenido de vuelta. Aquí tienes un resumen de tu negocio.
           </p>
         </div>
@@ -217,7 +202,7 @@ export default function HomeMain() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
@@ -275,7 +260,7 @@ export default function HomeMain() {
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7 mt-12">
         {/* Quick Actions */}
         <Card className="col-span-4">
           <CardHeader>

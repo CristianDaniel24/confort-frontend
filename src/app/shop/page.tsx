@@ -212,6 +212,7 @@ export default function Home() {
                     size="lg"
                     className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 group"
                     onClick={handleRedirect}
+                    aria-label="Ver Servicios"
                   >
                     Ver Servicios
                     <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
@@ -221,6 +222,7 @@ export default function Home() {
                     variant="outline"
                     className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
                     onClick={() => scrollToSection("historia")}
+                    aria-label="Nuestra Mision y Vision"
                   >
                     Nuestra Mision y Vision
                   </Button>
@@ -411,9 +413,10 @@ export default function Home() {
                 <div className="relative h-[400px] lg:h-[500px] overflow-hidden rounded-xl shadow-xl">
                   <Image
                     src="/historia_imagen.png"
-                    alt="Tapicería Automotriz en acción"
+                    alt="Imagen historia Tapiceria confort"
                     fill
                     className="object-cover transition-transform duration-1000 hover:scale-105"
+                    aria-label="Image by Tapiceria Confort"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -624,6 +627,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   className="cursor-pointer transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
+                  aria-label="Solicitar Cotización"
                 >
                   Solicitar Cotización
                   <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />

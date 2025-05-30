@@ -56,9 +56,6 @@ class PersonFormDefinition {
         .string()
         .min(3, { message: "Debes ingresar una direccion valida" })
         .max(50),
-      dateOfBirth: z.date({
-        invalid_type_error: "Debe ser una fecha valida",
-      }),
     })
     .refine((data) => data.password === data.password2, {
       message: "Las contraseñas deben ser iguales",
