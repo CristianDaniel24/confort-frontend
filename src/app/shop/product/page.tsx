@@ -236,7 +236,7 @@ export default function ProductsEcommerce() {
         </div>
 
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg line-clamp-2 group:text-primary transition-colors">
+          <CardTitle className="text-sm line-clamp-2 group:text-primary transition-colors">
             {product.name}
           </CardTitle>
           <div className="flex items-center justify-between">

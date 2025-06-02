@@ -294,17 +294,6 @@ export default function ServicesEcommerce() {
                   <div className="text-xl font-bold group:text-primary">
                     {formatCurrency(procedure.price)}
                   </div>
-                  {procedure.status && (
-                    <Badge
-                      className={
-                        procedure.status.toLowerCase().includes("disponible")
-                          ? "bg-green-100 text-green-800"
-                          : "bg-amber-100 text-amber-800"
-                      }
-                    >
-                      {procedure.status}
-                    </Badge>
-                  )}
                 </div>
               </div>
 

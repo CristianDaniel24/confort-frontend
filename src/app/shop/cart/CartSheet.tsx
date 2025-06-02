@@ -548,12 +548,16 @@ export function CartSheet() {
                     </div>
 
                     <AlertDialogFooter className="mt-4 ">
-                      <AlertDialogCancel disabled={isLoading}>
+                      <AlertDialogCancel
+                        disabled={isLoading}
+                        className="cursor-pointer"
+                      >
                         Cancelar
                       </AlertDialogCancel>
                       <AlertDialogAction
                         disabled={isLoading}
                         onClick={fetchShoppingCart}
+                        className="cursor-pointer"
                       >
                         {isLoading ? "Procesando..." : "Confirmar pedido"}
                       </AlertDialogAction>

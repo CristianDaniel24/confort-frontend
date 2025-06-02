@@ -20,6 +20,7 @@ import {
   Package,
   ShoppingBasket,
   Route,
+  BookDown,
 } from "lucide-react";
 import { authService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
@@ -50,6 +51,15 @@ export default function Header() {
   const handleTheme = () => {
     setCurrTheme(() => (currTheme === "dark" ? "light" : "dark"));
     theme.setTheme(currTheme);
+  };
+
+  const handleDownloadUserManual = () => {
+    const link = document.createElement("a");
+    link.href = "/manuales/manual-usuario.docx"; // Ruta relativa desde /public
+    link.download = "ManualUsuario.docx"; // Nombre con el que se descargara
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   useEffect(() => {
@@ -188,6 +198,7 @@ export default function Header() {
                           Editar perfil
                         </DropdownMenuItem>
                       )}
+
                       <DropdownMenuItem
                         onClick={handleTheme}
                         className="cursor-pointer transition-colors duration-200 hover:text-primary focus:text-primary"
@@ -202,6 +213,14 @@ export default function Header() {
                           </>
                         )}
                       </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={handleDownloadUserManual}
+                        className="cursor-pointer transition-colors duration-200 hover:text-primary focus:text-primary"
+                      >
+                        <BookDown className="mr-2 h-4 w-4" />
+                        Manual de usuario
+                      </DropdownMenuItem>
+
                       {isLoggedIn && (
                         <DropdownMenuItem
                           onClick={handleLogout}
@@ -314,6 +333,15 @@ export default function Header() {
                     <Sun className="mr-2 h-4 w-4" /> Modo claro
                   </>
                 )}
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start transition-all duration-300 hover:bg-primary/10 hover:text-primary cursor-pointer"
+                onClick={handleDownloadUserManual}
+                aria-label="Descargar manual de usuario"
+              >
+                <BookDown className="mr-2 h-4 w-4" />
+                Manual de usuario
               </Button>
 
               <div className="flex flex-col space-y-2">
