@@ -411,10 +411,15 @@ export default function Backups() {
             <Button
               variant="outline"
               onClick={() => setShowImportDialog(false)}
+              className="cursor-pointer"
             >
               Cancelar
             </Button>
-            <Button onClick={handleImport} disabled={!file || isLoading}>
+            <Button
+              onClick={handleImport}
+              disabled={!file || isLoading}
+              className="cursor-pointer"
+            >
               <Upload className="h-4 w-4 mr-2" />
               {isLoading ? "Importando..." : "Importar"}
             </Button>
@@ -446,12 +451,14 @@ export default function Backups() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel className="cursor-pointer">
+              Cancelar
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={() =>
                 restoreDialog.backup && handleRestore(restoreDialog.backup)
               }
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 cursor-pointer"
             >
               <RotateCcw className="h-4 w-4 mr-2" />
               Restaurar
