@@ -50,8 +50,10 @@ class PersonFormDefinition {
       password2: z.string(),
       phone: z
         .string()
-        .min(10, { message: "Debes ingresar un numero de telefono valido" })
-        .max(12),
+        .min(10, { message: "Debes ingresar minimo 10 numeros de telefono" })
+        .max(10, {
+          message: "El telefono tiene que ser valido, debe tener 10 numeros",
+        }),
       address: z
         .string()
         .min(3, { message: "Debes ingresar una direccion valida" })

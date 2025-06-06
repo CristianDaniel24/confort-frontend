@@ -9,7 +9,13 @@ export type ProcedureFormType = z.infer<
 class ProcedureFormDefinition {
   readonly procedureFormSchema = z.object({
     name: z.string().min(3, { message: "El nombre es requerido" }),
-    price: z.string().min(3, { message: "El precio es requerido" }),
+    price: z
+      .string()
+      .min(1, { message: "Debes ingresar un costo valido" })
+      .transform((val) => Number(val))
+      .refine((val) => !isNaN(val) && val > 0, {
+        message: "Debes ingresar un precio valido, tiene que ser mayor que 0",
+      }),
     description: z.string().min(3, { message: "La descripcion es requerida" }),
     date: z.date({
       invalid_type_error: "Must be a valid date",

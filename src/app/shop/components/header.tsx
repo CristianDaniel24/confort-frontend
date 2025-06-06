@@ -21,6 +21,7 @@ import {
   ShoppingBasket,
   Route,
   BookDown,
+  Badge,
 } from "lucide-react";
 import { authService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
@@ -55,8 +56,8 @@ export default function Header() {
 
   const handleDownloadUserManual = () => {
     const link = document.createElement("a");
-    link.href = "/manuales/manual-usuario.docx"; // Ruta relativa desde /public
-    link.download = "ManualUsuario.docx"; // Nombre con el que se descargara
+    link.href = "/manual-usuario.docx"; // Ruta relativa desde /public
+    link.download = "ManualUsuarioTapiceriaConfort.docx"; // Nombre con el que se descargara
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -166,9 +167,19 @@ export default function Header() {
               {isLoggedIn && (
                 <Tooltip disableHoverableContent>
                   <TooltipTrigger asChild>
-                    <div className="ml-2 transition-transform duration-300 hover:scale-105 mr-4">
-                      <CartSheet />
-                    </div>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="ml-2 transition-transform duration-300 hover:scale-105 mr-4">
+                          <CartSheet />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        side="bottom"
+                        className="animate-in fade-in-50 zoom-in-95 duration-200"
+                      >
+                        Carrito de compras
+                      </TooltipContent>
+                    </Tooltip>
                   </TooltipTrigger>
                 </Tooltip>
               )}

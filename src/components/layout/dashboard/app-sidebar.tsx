@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   Cable,
   Car,
+  DatabaseBackup,
   Hammer,
   Home,
   KeySquare,
@@ -11,6 +12,9 @@ import {
   PackageSearch,
   PersonStanding,
   Pickaxe,
+  RotateCcw,
+  RotateCcwIcon,
+  RotateCcwSquare,
   Route,
   Settings2,
   ShoppingBasket,
@@ -100,6 +104,11 @@ const data = {
       name: "Pedidos",
       url: "/home/orders",
       icon: Package,
+    },
+    {
+      name: "Copias de seguridad",
+      url: "/home/backups",
+      icon: DatabaseBackup,
     },
   ],
 };

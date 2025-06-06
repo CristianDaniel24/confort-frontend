@@ -21,22 +21,18 @@ import { Progress } from "@/components/ui/progress";
 
 export const columns: ColumnDef<IProcedure>[] = [
   {
-    accessorKey: "status",
+    accessorKey: "description",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Estado
+          Descripcion
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-  },
-  {
-    accessorKey: "description",
-    header: "Descripcion",
   },
   {
     header: "Tipo de procedimiento",

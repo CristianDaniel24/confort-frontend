@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useSidebar } from "@/components/ui/sidebar";
 import {
   Table,
   TableBody,
@@ -27,7 +28,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Plus } from "lucide-react";
+import { Download, Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -59,6 +60,15 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+  const { closeSidebar } = useSidebar();
+
+  const handlePrintOrder = () => {
+    closeSidebar();
+
+    setTimeout(() => {
+      window.print();
+    }, 1000);
+  };
   return (
     <div>
       <div className="flex items-center justify-between space-x-5 py-4">
@@ -72,6 +82,22 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                variant="outline"
+                className="ml-auto rounded-full cursor-pointer"
+                onClick={() => handlePrintOrder()}
+              >
+                <Download />
+                <span className="sr-only">Descargar Informe</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent sideOffset={10}>Descargar Informe</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <div className="rounded-md border">
         <Table>

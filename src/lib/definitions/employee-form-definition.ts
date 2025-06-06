@@ -50,8 +50,10 @@ class EmployeeFormDefinition {
       password2: z.string().trim(),
       phone: z
         .string()
-        .min(10, { message: "Debes ingresar un numero de telefono valido" })
-        .max(10),
+        .min(10, { message: "Debes ingresar minimo 10 numeros de telefono" })
+        .max(10, {
+          message: "El telefono tiene que ser valido, debe tener 10 numeros",
+        }),
       address: z
         .string()
         .min(3, { message: "Debes ingresar una direccion valida" })
@@ -101,7 +103,9 @@ class EmployeeFormDefinition {
         email: employee.person.email,
         password: employee.person.password,
         password2: employee.person.password,
-        dateOfBirth: new Date(employee.person.dateOfBirth),
+        dateOfBirth: employee.person.dateOfBirth
+          ? new Date(employee.person.dateOfBirth)
+          : new Date(),
         rol: employee.rol.id.toString(),
       },
     };

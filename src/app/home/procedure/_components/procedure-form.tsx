@@ -129,6 +129,7 @@ export default function ProcedureForm({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
+                      className="text-sm p-2"
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}

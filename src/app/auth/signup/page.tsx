@@ -31,14 +31,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 
 export default function Signup() {
   const form = useForm<PersonFormType>(
@@ -67,7 +59,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-6">
+    <div className="flex flex-col items-center justify-center min-h-screen space-y-6 bg-muted">
       <Link href="#" className="flex items-center  gap-2 mb-6 font-medium">
         <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
           <Car className="size-4" />

@@ -43,8 +43,10 @@ class ClientFormDefinition {
       password2: z.string(),
       phone: z
         .string()
-        .min(10, { message: "Debes ingresar un número de teléfono válido" })
-        .max(12),
+        .min(10, { message: "Debes ingresar minimo 10 numeros de telefono" })
+        .max(10, {
+          message: "El telefono tiene que ser valido, debe tener 10 numeros",
+        }),
       address: z
         .string()
         .min(3, { message: "Debes ingresar una dirección válida" })
@@ -91,7 +93,9 @@ class ClientFormDefinition {
         email: client.person.email,
         password: client.person.password,
         password2: client.person.password,
-        dateOfBirth: new Date(client.person.dateOfBirth),
+        dateOfBirth: client.person.dateOfBirth
+          ? new Date(client.person.dateOfBirth)
+          : new Date(),
       },
     };
   }

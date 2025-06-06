@@ -146,14 +146,20 @@ export default function HomeMain() {
     },
     recentActivity?.lowStock && {
       id: recentActivity.lowStock.id,
-      description: `Producto con mas bajo stock: ${recentActivity.lowStock.name}`,
+      description: `Producto con más bajo stock: ${recentActivity.lowStock.name}`,
       type: "product",
       status: recentActivity.lowStock.stock,
     },
     recentActivity?.billPaid && {
       id: recentActivity.billPaid.id,
-      description: `Costo total de la ultima factura ${
-        recentActivity.billPaid.costTotal ?? "N/A"
+      description: `Costo total de la última factura ${
+        typeof recentActivity.billPaid.costTotal === "number"
+          ? new Intl.NumberFormat("es-CO", {
+              style: "currency",
+              currency: "COP",
+              minimumFractionDigits: 0,
+            }).format(recentActivity.billPaid.costTotal)
+          : "N/A"
       }`,
       type: "bill",
       status: "PAGADO",
