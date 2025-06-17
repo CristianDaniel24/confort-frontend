@@ -4,13 +4,10 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { ArrowUpDown } from "lucide-react";
 import { IClient } from "@/types/client-interface";
 
 export const columns: ColumnDef<IClient>[] = [

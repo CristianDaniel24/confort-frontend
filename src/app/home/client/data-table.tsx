@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useSidebar } from "@/components/ui/sidebar";
 import {
   Table,
   TableBody,
@@ -28,9 +27,10 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Download, Plus } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { Download } from "lucide-react";
 import { useState } from "react";
+import { exportToExcel } from "@/components/layout/dashboard/exportToExcel";
+import { IClient } from "@/types/client-interface";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -41,8 +41,6 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: Readonly<DataTableProps<TData, TValue>>) {
-  const router = useRouter();
-  const currentPath = usePathname();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -60,15 +58,25 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
-  const { closeSidebar } = useSidebar();
 
-  const handlePrintOrder = () => {
-    closeSidebar();
+  const handleDownloadExcel = () => {
+    const exportData = table.getRowModel().rows.map((row) => {
+      const original = row.original as IClient;
 
-    setTimeout(() => {
-      window.print();
-    }, 1000);
+      return {
+        Nombre: `${original.person.firstName} ${
+          original.person.secondName ?? ""
+        } ${original.person.lastName} ${original.person.secondLastName ?? ""}`,
+        Documento: original.person.document,
+        Teléfono: original.person.phone,
+        Dirección: original.person.address,
+        Correo: original.person.email,
+      };
+    });
+
+    exportToExcel(exportData, "Clientes", "Clientes");
   };
+
   return (
     <div>
       <div className="flex items-center justify-between space-x-5 py-4">
@@ -89,7 +97,7 @@ export function DataTable<TData, TValue>({
                 size="icon"
                 variant="outline"
                 className="ml-auto rounded-full cursor-pointer"
-                onClick={() => handlePrintOrder()}
+                onClick={handleDownloadExcel}
               >
                 <Download />
                 <span className="sr-only">Descargar Informe</span>

@@ -31,6 +31,8 @@ import { Download, Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useState } from "react";
+import { exportToExcel } from "@/components/layout/dashboard/exportToExcel";
+import { IProduct } from "@/types/product-interface";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -61,15 +63,25 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const { closeSidebar } = useSidebar();
+  const handleDownloadExcel = () => {
+    const exportData = table.getRowModel().rows.map((row) => {
+      const original = row.original as IProduct;
 
-  const handlePrintOrder = () => {
-    closeSidebar();
+      return {
+        Nombre: original.name,
+        Costo: original.cost,
+        Codigo: original.code,
+        Cantidad: original.stock,
+        Tipo_Producto: original.typeProduct.type,
+        Proveedor: `Nombre: (${original.provider.name ?? ""})     Direccion: (${
+          original.provider.address ?? ""
+        })     Telefono: (${original.provider.phone ?? ""})`,
+      };
+    });
 
-    setTimeout(() => {
-      window.print();
-    }, 1000);
+    exportToExcel(exportData, "Informe-de-servicios", "Servicios");
   };
+
   return (
     <div>
       <div className="flex items-center justify-between space-x-5 py-4">
@@ -88,7 +100,7 @@ export function DataTable<TData, TValue>({
                 size="icon"
                 variant="outline"
                 className="ml-auto rounded-full cursor-pointer"
-                onClick={() => handlePrintOrder()}
+                onClick={handleDownloadExcel}
               >
                 <Download />
                 <span className="sr-only">Descargar Informe</span>

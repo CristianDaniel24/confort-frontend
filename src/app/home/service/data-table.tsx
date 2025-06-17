@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useSidebar } from "@/components/ui/sidebar";
 import {
   Table,
   TableBody,
@@ -30,6 +29,8 @@ import {
 } from "@tanstack/react-table";
 import { Download } from "lucide-react";
 import { useState } from "react";
+import { exportToExcel } from "@/components/layout/dashboard/exportToExcel";
+import { IService } from "@/types/service-interface";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -57,15 +58,30 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
-  const { closeSidebar } = useSidebar();
 
-  const handlePrintOrder = () => {
-    closeSidebar();
+  const handleDownloadExcel = () => {
+    const exportData = table.getRowModel().rows.map((row) => {
+      const original = row.original as IService;
 
-    setTimeout(() => {
-      window.print();
-    }, 1000);
+      return {
+        Cliente: `${original.car.client?.person?.firstName ?? ""} ${
+          original.car.client?.person?.lastName ?? ""
+        }`,
+        Carro: original.car.typeCar?.model ?? "",
+        Estado: original.status,
+        Descripción: original.description ?? "No asignado",
+        "Fecha estimada": original.dueTo
+          ? new Date(original.dueTo).toLocaleDateString("es-CO")
+          : "No asignado",
+        "Fecha de entrega": original.completedAt
+          ? new Date(original.completedAt).toLocaleDateString("es-CO")
+          : "No asignado",
+      };
+    });
+
+    exportToExcel(exportData, "Informe-de-servicios", "Servicios");
   };
+
   return (
     <div>
       <div className="flex items-center justify-between space-x-5 py-4">
@@ -84,7 +100,7 @@ export function DataTable<TData, TValue>({
                 size="icon"
                 variant="outline"
                 className="ml-auto rounded-full cursor-pointer"
-                onClick={() => handlePrintOrder()}
+                onClick={handleDownloadExcel}
               >
                 <Download />
                 <span className="sr-only">Descargar Informe</span>
