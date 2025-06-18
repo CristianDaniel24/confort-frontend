@@ -14,7 +14,9 @@ class PersonService extends GenericService<IPerson> {
         dateOfBirth:
           typeof data.dateOfBirth === "string"
             ? data.dateOfBirth
-            : new Date(data.dateOfBirth).toISOString(),
+            : data.dateOfBirth instanceof Date
+            ? data.dateOfBirth.toISOString()
+            : null,
       },
     };
 

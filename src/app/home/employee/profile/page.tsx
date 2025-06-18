@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { IEmployee } from "@/types/employee-interface";
-import { EmployeeFormType } from "@/lib/definitions/employee-form-definition";
 import { employeeService } from "@/services/employee.service";
 import { sessionUtils } from "@/app/utils/session.utils";
 import EmployeeFormEditAccount from "../_components/employee-edit-form";
@@ -13,7 +12,7 @@ import { EmployeeEditFormType } from "../_components/employee-edit-form-definiti
 export default function ProfilePage() {
   const router = useRouter();
   const [employee, setEmployee] = useState<IEmployee>();
-  const person = sessionUtils.getPersonFromSession();
+  const [personId, setPersonId] = useState<number | null>(null);
 
   const handleSubmit = (values: EmployeeEditFormType) => {
     const employeeUpdate = {
@@ -31,15 +30,21 @@ export default function ProfilePage() {
         id: values.rol.id,
       },
     } as IEmployee;
-    employeeService.update(person.id ?? 0, employeeUpdate).then(() => {
-      toast.success("Se edito tu cuenta con exito!");
-      router.push("/home");
-    });
+
+    if (personId !== null) {
+      employeeService.update(personId, employeeUpdate).then(() => {
+        toast.success("Se editó tu cuenta con éxito!");
+        router.push("/home");
+      });
+    }
   };
 
   useEffect(() => {
+    const person = sessionUtils.getPersonFromSession();
     console.log("Persona en sesión:", person);
     if (!person?.id) return;
+
+    setPersonId(person.id);
 
     const fetchEmployee = async () => {
       try {
@@ -52,7 +57,7 @@ export default function ProfilePage() {
     };
 
     fetchEmployee();
-  }, [person?.id]);
+  }, []);
 
   if (!employee) {
     return <span>Cargando...</span>;

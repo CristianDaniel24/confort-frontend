@@ -92,6 +92,21 @@ export default async function ServiceDetails({ params }: Readonly<Props>) {
   const statusColor = getStatusColor(service.status);
   const overdue = isOverdue();
 
+  const mapStatusToVariant = (
+    status: string
+  ): "default" | "destructive" | "outline" | "secondary" => {
+    switch (status.toLowerCase()) {
+      case "success":
+        return "default";
+      case "warning":
+        return "destructive";
+      case "inactive":
+        return "outline";
+      default:
+        return "secondary";
+    }
+  };
+
   return (
     <div className="grid gap-y-5 p-4">
       <Card className="shadow-md overflow-hidden">
@@ -104,19 +119,12 @@ export default async function ServiceDetails({ params }: Readonly<Props>) {
               <div className="flex flex-col md:flex-row md:items-center gap-2">
                 <h2 className="text-2xl font-bold">Servicio #{id}</h2>
                 <Badge
-                  variant={
-                    statusColor as
-                      | "default"
-                      | "destructive"
-                      | "warning"
-                      | "success"
-                      | "outline"
-                      | "secondary"
-                  }
+                  variant={mapStatusToVariant(statusColor)}
                   className="md:ml-2"
                 >
                   {service.status || "Sin estado"}
                 </Badge>
+
                 {overdue && (
                   <Badge variant="destructive" className="md:ml-2">
                     <Clock className="h-3 w-3 mr-1" />
@@ -165,15 +173,8 @@ export default async function ServiceDetails({ params }: Readonly<Props>) {
                     <div>
                       <p className="text-sm font-medium">Estado</p>
                       <Badge
-                        variant={
-                          statusColor as
-                            | "default"
-                            | "destructive"
-                            | "warning"
-                            | "success"
-                            | "outline"
-                            | "secondary"
-                        }
+                        variant={mapStatusToVariant(statusColor)}
+                        className="md:ml-2"
                       >
                         {service.status || "Sin estado"}
                       </Badge>
@@ -329,7 +330,9 @@ export default async function ServiceDetails({ params }: Readonly<Props>) {
                           Fecha del procedimiento
                         </p>
                         <p className="text-sm">
-                          {formatDate(service.procedure.date) || (
+                          {service.procedure.date ? (
+                            formatDate(service.procedure.date.toISOString())
+                          ) : (
                             <span className="text-slate-400 italic">
                               No especificada
                             </span>
@@ -351,18 +354,10 @@ export default async function ServiceDetails({ params }: Readonly<Props>) {
                     <>
                       Este servicio se encuentra actualmente en estado{" "}
                       <Badge
-                        variant={
-                          statusColor as
-                            | "default"
-                            | "destructive"
-                            | "warning"
-                            | "success"
-                            | "outline"
-                            | "secondary"
-                        }
-                        className="ml-1"
+                        variant={mapStatusToVariant(statusColor)}
+                        className="md:ml-2"
                       >
-                        {service.status}
+                        {service.status || "Sin estado"}
                       </Badge>
                     </>
                   ) : (

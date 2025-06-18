@@ -90,7 +90,9 @@ export default async function EmployeeDetails({ params }: Readonly<Props>) {
                   <div>
                     <p className="text-sm font-medium">Fecha de cumpleaños</p>
                     <p className="text-sm text-slate-600">
-                      {formatDate(employee.person.dateOfBirth.toString())}
+                      {employee.person.dateOfBirth
+                        ? formatDate(employee.person.dateOfBirth.toString())
+                        : "Sin fecha"}
                     </p>
                   </div>
                 </div>

@@ -116,6 +116,19 @@ export default function ProcedureDetails({ params }: Readonly<Props>) {
 
   const statusColor = getStatusColor(procedure.status);
 
+  const mapStatusToVariant = (
+    status: string
+  ): "default" | "destructive" | "outline" | "secondary" => {
+    switch (status) {
+      case "success":
+        return "default"; // o "secondary", si prefieres
+      case "warning":
+        return "destructive"; // o cualquier otro permitido
+      default:
+        return "default";
+    }
+  };
+
   return (
     <div className="grid gap-y-5 p-4">
       <Card className="shadow-md overflow-hidden">
@@ -147,15 +160,7 @@ export default function ProcedureDetails({ params }: Readonly<Props>) {
               <div className="flex flex-col md:flex-row md:items-center gap-2">
                 <h2 className="text-2xl font-bold">{procedure.name}</h2>
                 <Badge
-                  variant={
-                    statusColor as
-                      | "default"
-                      | "destructive"
-                      | "warning"
-                      | "success"
-                      | "outline"
-                      | "secondary"
-                  }
+                  variant={mapStatusToVariant(statusColor)}
                   className="md:ml-2"
                 >
                   {procedure.status}
@@ -235,15 +240,8 @@ export default function ProcedureDetails({ params }: Readonly<Props>) {
                     <div>
                       <p className="text-sm font-medium">Estado</p>
                       <Badge
-                        variant={
-                          statusColor as
-                            | "default"
-                            | "destructive"
-                            | "warning"
-                            | "success"
-                            | "outline"
-                            | "secondary"
-                        }
+                        variant={mapStatusToVariant(statusColor)}
+                        className="md:ml-2"
                       >
                         {procedure.status}
                       </Badge>

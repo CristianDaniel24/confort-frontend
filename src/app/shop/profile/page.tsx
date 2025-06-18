@@ -25,7 +25,6 @@ export default function ProfilePageClient() {
         phone: values.phone,
         address: values.address,
         email: values.email,
-        dateOfBirth: values.dateOfBirth,
       },
     } as IClient;
     clientService.update(person.id ?? 0, clientUpdate).then(() => {
