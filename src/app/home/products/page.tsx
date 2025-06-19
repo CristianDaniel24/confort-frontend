@@ -1,3 +1,7 @@
+"use client";
+
+export const dynamic = "force-dynamic";
+
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { productService } from "@/services/product.service";

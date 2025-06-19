@@ -1,3 +1,5 @@
+"use client";
+
 export const dynamic = "force-dynamic";
 
 import { DataTable } from "./data-table";
