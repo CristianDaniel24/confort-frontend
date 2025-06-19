@@ -1,3 +1,5 @@
+"use client";
+
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { serviceService } from "@/services/service.service";
