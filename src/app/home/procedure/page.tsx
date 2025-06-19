@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useEffect, useState } from "react";
 import { DataTable } from "./date-table"; // ← Verifica si el archivo se llama realmente "date-table"
 import { columns } from "./columns";
