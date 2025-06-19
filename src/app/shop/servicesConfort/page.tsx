@@ -57,13 +57,13 @@ import {
 export default function ServicesEcommerce() {
   const [procedures, setProcedures] = useState<IProcedure[]>([]);
   const [search, setSearch] = useState("");
+  const [person, setPerson] = useState<any>(null);
   const [sortBy, setSortBy] = useState("name");
   const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [loading, setLoading] = useState(true);
   const [requestingId, setRequestingId] = useState<number | null>(null);
 
-  const person = sessionUtils.getPersonFromSession();
   const [userCars, setUserCars] = useState<ICar[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedProcedure, setSelectedProcedure] = useState<IProcedure | null>(
@@ -72,6 +72,11 @@ export default function ServicesEcommerce() {
   const [selectedCarId, setSelectedCarId] = useState<number | null>(null);
   const [loadingCars, setLoadingCars] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const personFromSession = sessionUtils.getPersonFromSession();
+    setPerson(personFromSession);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -253,6 +258,17 @@ export default function ServicesEcommerce() {
     );
   };
 
+  if (!person) {
+    return (
+      <div className="flex flex-col justify-center items-center h-[70vh] text-muted-foreground">
+        <Loader2 className="animate-spin w-12 h-12 mb-4 text-primary" />
+        <h3 className="text-xl font-medium mb-2">Cargando usuario</h3>
+        <p className="text-sm text-muted-foreground">
+          Estamos preparando tus servicios personalizados...
+        </p>
+      </div>
+    );
+  }
   const ServiceListItem = ({ procedure }: { procedure: IProcedure }) => {
     return (
       <Card className="overflow-hidden">
