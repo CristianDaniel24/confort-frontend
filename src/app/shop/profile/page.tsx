@@ -12,7 +12,7 @@ import { ClientEditFormType } from "./client-edit-form-definition";
 export default function ProfilePageClient() {
   const router = useRouter();
   const [client, setClient] = useState<IClient>();
-  const person = sessionUtils.getPersonFromSession();
+  const [personId, setPersonId] = useState<number | null>(null);
 
   const handleSubmit = (values: ClientEditFormType) => {
     const clientUpdate = {
@@ -27,28 +27,31 @@ export default function ProfilePageClient() {
         email: values.email,
       },
     } as IClient;
-    clientService.update(person.id ?? 0, clientUpdate).then(() => {
-      toast.success("Se edito tu cuenta con exito!");
-      router.push("/shop");
-    });
+
+    if (personId != null) {
+      clientService.update(personId, clientUpdate).then(() => {
+        toast.success("Se editó tu cuenta con éxito!");
+        router.push("/shop");
+      });
+    }
   };
 
   useEffect(() => {
+    const person = sessionUtils.getPersonFromSession();
     console.log("Persona en sesión:", person);
-    if (!person?.id) return;
 
-    const fetchClient = async () => {
-      try {
-        const clientData = await clientService.findById(person.id);
-        setClient(clientData);
-      } catch (error) {
-        console.error("Error al obtener el cliente:", error);
-        toast.error("No se pudo cargar la información del cliente.");
-      }
-    };
+    if (person?.id) {
+      setPersonId(person.id);
 
-    fetchClient();
-  }, [person?.id]);
+      clientService
+        .findById(person.id)
+        .then(setClient)
+        .catch((error) => {
+          console.error("Error al obtener el cliente:", error);
+          toast.error("No se pudo cargar la información del cliente.");
+        });
+    }
+  }, []);
 
   if (!client) {
     return <span>Cargando...</span>;
