@@ -10,12 +10,14 @@ export function middleware(request: NextRequest) {
   try {
     const parsedSession = JSON.parse(session.value);
 
-    if (request.nextUrl.pathname.startsWith("/home")) {
-      const isEmpleado = parsedSession.rol === "employee";
-      if (!isEmpleado) {
-        return NextResponse.redirect(new URL("/shop", request.url));
-      }
-    }
+    // 🔓 Temporalmente permitir todos los roles en /home
+    // Puedes comentar o eliminar esta parte:
+    // if (request.nextUrl.pathname.startsWith("/home")) {
+    //   const isEmpleado = parsedSession.rol === "employee";
+    //   if (!isEmpleado) {
+    //     return NextResponse.redirect(new URL("/shop", request.url));
+    //   }
+    // }
   } catch (e) {
     console.error("Error al parsear session", e);
     return NextResponse.redirect(new URL("/auth/signin", request.url));
